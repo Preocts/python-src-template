@@ -40,3 +40,11 @@ To exit the `venv`:
 deactivate
 ```
 
+### First time setup
+
+Used as a template repo, the `module_setup.sh` can be executed in a newly cloned workingdirectory (or a fresh directory). It will create a venv, initial directory structures, git init, and install requiremenets from `requirements-dev.in`. 
+
+```bash
+./module_setup.sh [MODULENAME]
+```
+
