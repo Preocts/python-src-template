@@ -1,5 +1,5 @@
+#!/usr/bin/bash
 # Author: Preocts <preocts@preocts.com>
-
 if [[ $# -eq 0 ]]; then
     echo "Usage: ./module_setup.sh [name_of_module]"
     exit 1
@@ -54,5 +54,6 @@ echo "Done."
 echo "Setup environment..."
 make update
 make install-dev
+pre-commit install
 echo "Done."
 echo "End of Line."

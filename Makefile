@@ -41,9 +41,5 @@ clean-test: ## Remove test artifacts
 	rm -fr htmlcov/
 	find . -name '.pytest_cache' -exec rm -fr {} +
 
-blacken: ## Run Black against code
-	black --line-length 79 $(SRCDIR)
-	black --line-length 79 $(TESTDIR)
-
 tests: ## Run all tests found in the /tests directory.
-	pytest $(TESTDIR)
+	python -m pytest -v $(TESTDIR)

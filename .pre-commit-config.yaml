@@ -13,25 +13,25 @@ repos:
     -   id: debug-statements
     -   id: fix-encoding-pragma
     -   id: check-docstring-first
--   repo: https://github.com/psf/black
-    rev: '20.8b1'
-    hooks:
-    -   id: black
-        args:
-        - '-l 79'
--   repo: https://github.com/PyCQA/pylint
-    rev: 'pylint-2.6.0'
-    hooks:
-    -   id: pylint
--   repo: https://gitlab.com/PyCQA/flake8
-    rev: '3.8.4'
-    hooks:
-    -   id: flake8
--   repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: 'v1.5.4'
-    hooks:
-    -   id: autopep8
+    -   id: check-json
 -   repo: https://github.com/PyCQA/bandit
     rev: '1.7.0'
     hooks:
     - id: bandit
+-   repo: local
+    hooks:
+    -   id: black
+        name: black
+        entry: black
+        language: system
+        types: [python]
+    -   id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+    -   id: mypy
+        name: mypy
+        entry: mypy
+        language: system
+        types: [python]
