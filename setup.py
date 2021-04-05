@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """ Basic setup file """
 from setuptools import find_packages
 from setuptools import setup

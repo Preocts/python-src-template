@@ -3,6 +3,7 @@ default_language_version:
 default_stages:
 - commit
 - push
+exclude: ^pending_rebuild/
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 'v3.4.0'
@@ -17,7 +18,8 @@ repos:
 -   repo: https://github.com/PyCQA/bandit
     rev: '1.7.0'
     hooks:
-    - id: bandit
+    -   id: bandit
+        args: [-s, "B101", -s, "B309"]
 -   repo: local
     hooks:
     -   id: black

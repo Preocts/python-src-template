@@ -1,3 +1,8 @@
+# Files
+.env
+preocts*
+
+# Directories
 venv/
 .git/
 __pycache__/
