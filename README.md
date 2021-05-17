@@ -1,3 +1,20 @@
+# python-template
+
+This is a template example of how I structure an initial python project.
+
+### Why three `requirement` files?
+
+Personal preference. I find it easier when setting up CI pipelines to have a `requirements-test.txt` with all required libraries for testing without needing to install the linters.
+
+Requirement file break-down:
+- `requirements.in` : Any required third-part libraries for the project to run
+- `requirements-dev.in` : Any development requirements which include linters and formatters
+- `requirements-test.in` : Any libraries required specifically for unit testing
+
+*Below this line is my standard README.md*
+
+---
+
 # Module Name
 
 Module Description
@@ -32,18 +49,22 @@ make install
 
 Install the scripts for development/tests:
 ```bash
-make dev-install
+make install-dev
+make install-test
+pre-commit install
+```
+
+To lock present requirement file versions:
+```bash
+make lock
+```
+
+To update versions of requirement libraries:
+```bash
+make update
 ```
 
 To exit the `venv`:
 ```bash
 deactivate
-```
-
-### First time setup
-
-Used as a template repo, the `module_setup.sh` can be executed in a newly cloned working directory (or a fresh directory). It will create a venv, initial directory structures, git init, and install requirements from `requirements-dev.in`.
-
-```bash
-./module_setup.sh [MODULENAME]
 ```

@@ -1,6 +1,4 @@
 pre-commit
-pytest
 black
-pylint
 mypy
 flake8
