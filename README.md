@@ -50,8 +50,6 @@ make install
 Install the scripts for development/tests:
 ```bash
 make install-dev
-make install-test
-pre-commit install
 ```
 
 To lock present requirement file versions:
