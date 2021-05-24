@@ -6,17 +6,6 @@
 
 This is a template example of how I structure an initial python project.
 
-### Why three `requirement` files?
-
-Personal preference. I find it easier when setting up CI pipelines to have a `requirements-test.txt` with all required libraries for testing without needing to install the linters.
-
-Requirement file break-down:
-- `requirements.in` : Any required third-part libraries for the project to run
-- `requirements-dev.in` : Any development requirements which include linters and formatters
-- `requirements-test.in` : Any libraries required specifically for unit testing
-
-*Below this line is my standard README.md*
-
 ---
 
 # Module Name
