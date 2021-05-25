@@ -6,6 +6,7 @@ init:
 
 install: init # install run-time requirements
 	pip install -r requirements.txt
+	pip install -e .
 
 update-hash:  # generate new hashes for requirement files
 	pip-compile --generate-hashes --output-file requirements.txt requirements.in
