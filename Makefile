@@ -23,11 +23,7 @@ install-dev:  # Install development requirements
 	pre-commit install
 
 tests: # Run pytests and coverage report
-	coverage erase
-	coverage run -m pytest -v ./tests
-	coverage report
-	coverage xml
-	coverage html
+	tox -e py
 
 clean-pyc: ## Remove python artifacts.
 	find . -name '*.pyc' -exec rm -f {} +
@@ -37,11 +33,12 @@ clean-pyc: ## Remove python artifacts.
 	find . -name '.mypy_cache' -exec rm -rf {} +
 
 clean-tests: ## Remove pytest and coverage artifacts
-	rm -f .coverage.xml
-	rm -rd .coverage
-	rm -rd .tox
+	rm -rf .tox
+	rm -rf coverage_html_report
+	rm -f coverage.xml
+	rm -rf .coverage
+	rm -rf build
 	find . -name '.pytest_cache' -exec rm -rf {} +
-	find . -name 'coverage_html_report' -exec rm -rf {} +
 
 clean-install: ## Remove build artifacts.
 	find . -name '*.egg-info' -exec rm -rf {} +
