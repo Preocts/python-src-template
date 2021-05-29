@@ -15,7 +15,7 @@ Module Description
 ### Requirements
 - Python 3.8
 
-### Installation
+## Local developer installation
 
 It is **highly** recommended to use a `venv` for installation. Leveraging a `venv` will ensure the installed dependency files will not impact other python projects.
 
@@ -23,39 +23,40 @@ The instruction below make use of a bash shell and a Makefile.  All commands sho
 
 Clone this repo and enter root directory of repo:
 ```bash
-git clone https://github.com/Preocts/[MODULENAME]
-cd [MODULENAME]
+$ git clone https://github.com/Preocts/[MODULE_NAME]
+$ cd [MODULE_NAME]
 ```
 
 Create and activate `venv`:
 ```bash
-python3.8 -m venv venv
-source ./venv/bin/activate
+$ python3 -m venv venv
+$ . venv/bin/activate
 ```
 
 Your command prompt should now have a `(venv)` prefix on it.
 
-Install the scripts:
+Install editable library and development requirements:
 ```bash
-make install
+(venv) $ pip install -r requirements-dev.txt
+(venv) $ pip install --editable .
 ```
 
-Install the scripts for development/tests:
+Run tests
 ```bash
-make install-dev
-```
-
-To lock present requirement file versions:
-```bash
-make lock
-```
-
-To update versions of requirement libraries:
-```bash
-make update
+(venv) $ tox
 ```
 
 To exit the `venv`:
 ```bash
-deactivate
+(venv) $ deactivate
 ```
+
+---
+
+### Makefile
+
+This repo has a Makefile with some quality of life scripts if your system supports `make`.
+
+- `update` : Clean all artifacts, update pip, update requirements, install everything
+- `clean-pyc` : Deletes python/mypy artifacts
+- `clean-tests` : Deletes tox, coverage, and pytest artifacts
