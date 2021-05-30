@@ -60,3 +60,4 @@ This repo has a Makefile with some quality of life scripts if your system suppor
 - `update` : Clean all artifacts, update pip, update requirements, install everything
 - `clean-pyc` : Deletes python/mypy artifacts
 - `clean-tests` : Deletes tox, coverage, and pytest artifacts
+- `build-dist` : Build source distribution and wheel distribution
