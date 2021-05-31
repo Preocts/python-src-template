@@ -6,6 +6,7 @@ init:
 dev-install:  # install development requirements
 	pip install -r requirements-dev.txt
 	pip install --editable .
+	pre-commit install
 
 update: clean-pyc clean-tests init update-deps dev-install
 
@@ -21,6 +22,7 @@ clean-pyc: ## Remove python/mypy artifacts
 	find . -name '.mypy_cache' -exec rm -rf {} +
 
 clean-tests: ## Removes tox, coverage, and pytest artifacts
+	rm -f coverage.xml
 	rm -rf .tox
 	rm -rf coverage_html_report
 	rm -rf .coverage
