@@ -11,11 +11,11 @@ This is a template example of how I structure an initial python project.
 
 ## What's included in (how to use) this template:
 
-### SRC Layout
+## `./src` Layout
 
 This template uses a package layout that forces the developer to have the package installed locally for testing. This is done by nesting the package modules within the `src` directory. The `src` directory is not, itself, a module and should not be referenced from imports. The benefit of this layout is that all tests are run against **installed** code which is closer to an actual deployment. Additionally, the developer will have the confidence that the `setup.cfg` is correctly including the desired modules as the tests will fail if they do not install correctly.
 
-### setup.cfg
+## setup.cfg
 
 The configuration settings of `setup.py` have been moved into `setup.cfg`. In addtion, `setup.cfg` contains the settings for these additional items:
 - mypy
@@ -35,11 +35,11 @@ install_requires =
     other_library_name==2.3
 ```
 
-### pytest
+## pytest
 
 pytest is used to run tests for this template. It supports the unittest framework as well. The only requirement is that all test files be located in the `./tests` directory.
 
-### Coverage
+## Coverage
 
 Coverage is used to run pytest, measuring code coverage and exporting two reports on a successful run. `coverage.xml` and an html version located in `coverage_html_report`.
 
@@ -51,12 +51,40 @@ source_pkgs =
     module_name
 ```
 
-### tox.ini
+## `tox.ini`
 
 tox is the method of choice for running unit tests. The program simplifies the task of running tests against multiple versions of python. Running all tests should be as simple as running `tox` at the command line. Missing interpreter versions will be skipped without error.
 
 **Note:** By default a coverage percentage of **90**% is required to pass. This can be adjusted as desired in the `tox.ini`.
 
+
+## `requirements-dev.in`
+
+The requirements-dev.in (and *.txt) includes the following for a dev environment:
+- `pre-commit`: Linting, formatting, and error checks on local commit
+- `black`: Formatter of choice, installed to allow editor to run on save
+- `mypy`: Type checking and linting of code in editor
+- `flake8`: Linting of code in PEP8 standard in editor
+- `pytest`: Testing framework of choice
+- `coverage`: Identify weak points of testing
+- `tox`: Run tests in isolated environments mirroring clean installs
+
+## pre-commit - [https://pre-commit.com/](https://pre-commit.com/)
+
+Installed with dev requirements, pre-commit will run a series of checks against any file being committed to the local repo by `git`.  See `.pre-commit-config.yaml` for a list of checks used.
+
+**Note:** `pre-commit install` will need to be run the first time the local repo is initialized.
+
+## .github actions
+
+**`pre-commit.yml`**: This registers a GitHub action that runs pre-commit against any pull request against `main` and any push to `main`
+
+**`python-tests.yml`**: This registers a GitHub action that runs tests via tox on any pull request against `main` and any push to `main`. The tests are run on the lastest version of the following OS images:
+- MacOS
+- Windows
+- Ubuntu
+
+Versions and OS choices can be easily changed in this yml file.
 
 ---
 
