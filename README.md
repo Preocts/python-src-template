@@ -88,6 +88,10 @@ Versions and OS choices can be easily changed in this yml file.
 
 ---
 
+# Below is a template README
+
+---
+
 # Module Name
 
 Module Description
@@ -119,6 +123,11 @@ Install editable library and development requirements:
 ```bash
 (venv) $ pip install -r requirements-dev.txt
 (venv) $ pip install --editable .
+```
+
+Install pre-commit hooks to local repo:
+```bash
+(venv) $ pre-commit install
 ```
 
 Run tests
