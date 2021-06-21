@@ -4,7 +4,6 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Preocts/python-template/main.svg)](https://results.pre-commit.ci/latest/github/Preocts/python-template/main)
 
 ### TODO:
-- Auto detect module names and edit `setup.cfg` coverage lines
 - Auto detect use of `requirements.txt` and insert into `setup.cfg`
 
 This is a template example of how I structure an initial python project.
