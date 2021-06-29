@@ -12,6 +12,7 @@ update: clean-pyc clean-tests init update-deps dev-install
 
 update-deps: # update dependancies
 	pip-compile --upgrade --output-file requirements-dev.txt requirements-dev.in
+	pre-commit autoupdate
 
 clean-pyc: ## Remove python/mypy artifacts
 	find . -name '*.egg-info' -exec rm -rf {} +
