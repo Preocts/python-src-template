@@ -103,8 +103,6 @@ Module Description
 
 It is **highly** recommended to use a `venv` for installation. Leveraging a `venv` will ensure the installed dependency files will not impact other python projects or system level requirements.
 
-The instruction below make use of a bash shell and a Makefile.  All commands should be able to be run individually of your shell does not support `make`
-
 Clone this repo and enter root directory of repo:
 ```bash
 $ git clone https://github.com/Preocts/[MODULE_NAME]
