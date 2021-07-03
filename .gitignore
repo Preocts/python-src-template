@@ -3,6 +3,7 @@ octs_*
 .vscode/
 configs/
 !configs/eggbotcore.json
+code_lines.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
