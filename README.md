@@ -6,6 +6,9 @@
 
 ### TODO:
 - Auto detect use of `requirements.txt` and insert into `setup.cfg`
+- Publish write-up on the /src layout
+- CLI tool for starting new project without cloning/using template
+- Version bump shell script
 
 This is a template example of how I structure an initial python project.
 
@@ -15,9 +18,9 @@ This is a template example of how I structure an initial python project.
 
 This template uses a package layout that forces the developer to have the package installed locally for testing. This is done by nesting the package modules within the `src` directory. The `src` directory is not, itself, a module and should not be referenced from imports. The benefit of this layout is that all tests are run against **installed** code which is closer to an actual deployment. Additionally, the developer will have the confidence that the `setup.cfg` is correctly including the desired modules as the tests will fail if they do not install correctly.
 
-## setup.cfg
+## `setup.cfg`
 
-The configuration settings of `setup.py` have been moved into `setup.cfg`. In addtion, `setup.cfg` contains the settings for these additional items:
+The configuration settings of `setup.py` have been moved into `setup.cfg`. In addition, `setup.cfg` contains the settings for these additional items:
 - mypy
 - coverage
 - requirements.txt (see below)
