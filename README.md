@@ -108,7 +108,7 @@ It is **highly** recommended to use a `venv` for installation. Leveraging a `ven
 
 Clone this repo and enter root directory of repo:
 ```bash
-$ git clone https://github.com/Preocts/[MODULE_NAME]
+$ git clone https://github.com/[REPONAME]/[MODULE_NAME]
 $ cd [MODULE_NAME]
 ```
 

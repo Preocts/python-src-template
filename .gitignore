@@ -1,8 +1,6 @@
 # Custom
-octs_*
+temp_*
 .vscode/
-configs/
-!configs/eggbotcore.json
 code_lines.txt
 
 # Byte-compiled / optimized / DLL files
