@@ -81,11 +81,11 @@ toml==0.10.2
     #   pre-commit
     #   pytest
     #   tox
-tox==3.23.1
+tox==3.24.0
     # via -r requirements-dev.in
 typing-extensions==3.10.0.0
     # via mypy
-virtualenv==20.5.0
+virtualenv==20.6.0
     # via
     #   pre-commit
     #   tox
