@@ -104,41 +104,58 @@ Module Description
 
 ## Local developer installation
 
-It is **highly** recommended to use a `venv` for installation. Leveraging a `venv` will ensure the installed dependency files will not impact other python projects or system level requirements.
+It is **highly** recommended to use a `venv` for installation. Leveraging a `venv` will ensure the installed dependency files will not impact other python projects.
 
 Clone this repo and enter root directory of repo:
 ```bash
-$ git clone https://github.com/[REPONAME]/[MODULE_NAME]
-$ cd [MODULE_NAME]
+$ git clone https://github.com/[name]/[module_name]
+$ cd [module_name]
 ```
 
 Create and activate `venv`:
 ```bash
-$ python3 -m venv venv
-$ . venv/bin/activate
+# Linux/MacOS
+python3 -m venv venv
+. venv/bin/activate
+
+# Windows
+python -m venv venv
+venv\Scripts\activate.bat
+# or
+py -m venv venv
+venv\Scripts\activate.bat
 ```
 
 Your command prompt should now have a `(venv)` prefix on it.
 
 Install editable library and development requirements:
 ```bash
-(venv) $ pip install -r requirements-dev.txt
-(venv) $ pip install --editable .
+# Linux/MacOS
+pip install -r requirements-dev.txt
+pip install --editable .
+
+# Windows
+python -m pip install -r requirements-dev.txt
+python -m pip install --editable .
+# or
+py -m pip install -r requirements-dev.txt
+py -m pip install --editable .
 ```
 
 Install pre-commit hooks to local repo:
 ```bash
-(venv) $ pre-commit install
+pre-commit install
+pre-commit autoupdate
 ```
 
 Run tests
 ```bash
-(venv) $ tox
+tox
 ```
 
 To exit the `venv`:
 ```bash
-(venv) $ deactivate
+deactivate
 ```
 
 ---
@@ -147,6 +164,7 @@ To exit the `venv`:
 
 This repo has a Makefile with some quality of life scripts if your system supports `make`.
 
+- `install` : Clean all artifacts, update pip, install requirements with no updates
 - `update` : Clean all artifacts, update pip, update requirements, install everything
 - `clean-pyc` : Deletes python/mypy artifacts
 - `clean-tests` : Deletes tox, coverage, and pytest artifacts
