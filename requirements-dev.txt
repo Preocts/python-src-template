@@ -12,7 +12,7 @@ backports.entry-points-selectable==1.1.0
     # via virtualenv
 black==21.7b0
     # via -r requirements-dev.in
-cfgv==3.3.0
+cfgv==3.3.1
     # via pre-commit
 click==8.0.1
     # via black
@@ -68,7 +68,7 @@ pytest==6.2.4
     # via -r requirements-dev.in
 pyyaml==5.4.1
     # via pre-commit
-regex==2021.8.3
+regex==2021.8.27
     # via black
 six==1.16.0
     # via
@@ -82,7 +82,7 @@ toml==0.10.2
     #   tox
 tomli==1.2.1
     # via black
-tox==3.24.1
+tox==3.24.3
     # via -r requirements-dev.in
 typing-extensions==3.10.0.0
     # via mypy
