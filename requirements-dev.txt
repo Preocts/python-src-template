@@ -14,7 +14,7 @@ cfgv==3.3.1
     # via pre-commit
 click==8.0.3
     # via black
-coverage==6.0.1
+coverage==6.0.2
     # via -r requirements-dev.in
 distlib==0.3.3
     # via virtualenv
@@ -22,7 +22,7 @@ filelock==3.3.0
     # via
     #   tox
     #   virtualenv
-flake8==3.9.2
+flake8==4.0.1
     # via -r requirements-dev.in
 identify==2.3.0
     # via pre-commit
@@ -58,9 +58,9 @@ py==1.10.0
     # via
     #   pytest
     #   tox
-pycodestyle==2.7.0
+pycodestyle==2.8.0
     # via flake8
-pyflakes==2.3.1
+pyflakes==2.4.0
     # via flake8
 pyparsing==2.4.7
     # via packaging
