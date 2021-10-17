@@ -166,7 +166,8 @@ This repo has a Makefile with some quality of life scripts if your system suppor
 
 - `install` : Clean all artifacts, update pip, install requirements with no updates
 - `update` : Clean all artifacts, update pip, update requirements, install everything
+- `build-dist` : Build source distribution and wheel distribution
 - `clean-pyc` : Deletes python/mypy artifacts
 - `clean-tests` : Deletes tox, coverage, and pytest artifacts
-- `build-dist` : Build source distribution and wheel distribution
-- `stats` : Shows line counts of `*.py` code
+- `clean-build` : Deletes build artifacts
+- `clean-all` : Runs all clean scripts
