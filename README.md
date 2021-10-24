@@ -100,7 +100,7 @@ Versions and OS choices can be easily changed in this yml file.
 Module Description
 
 ### Requirements
-- Python >= 3.6
+- Python >= 3.8
 
 ## Local developer installation
 
