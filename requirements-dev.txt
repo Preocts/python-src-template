@@ -18,13 +18,13 @@ coverage==6.0.2
     # via -r requirements-dev.in
 distlib==0.3.3
     # via virtualenv
-filelock==3.3.0
+filelock==3.3.1
     # via
     #   tox
     #   virtualenv
 flake8==4.0.1
     # via -r requirements-dev.in
-identify==2.3.0
+identify==2.3.1
     # via pre-commit
 iniconfig==1.1.1
     # via pytest
@@ -62,13 +62,13 @@ pycodestyle==2.8.0
     # via flake8
 pyflakes==2.4.0
     # via flake8
-pyparsing==2.4.7
+pyparsing==3.0.1
     # via packaging
 pytest==6.2.5
     # via -r requirements-dev.in
-pyyaml==5.4.1
+pyyaml==6.0
     # via pre-commit
-regex==2021.10.8
+regex==2021.10.23
     # via black
 six==1.16.0
     # via
@@ -80,7 +80,7 @@ toml==0.10.2
     #   pre-commit
     #   pytest
     #   tox
-tomli==1.2.1
+tomli==1.2.2
     # via black
 tox==3.24.4
     # via -r requirements-dev.in
@@ -88,7 +88,7 @@ typing-extensions==3.10.0.2
     # via
     #   black
     #   mypy
-virtualenv==20.8.1
+virtualenv==20.9.0
     # via
     #   pre-commit
     #   tox
