@@ -57,7 +57,7 @@ source_pkgs =
 
 ## `tox.ini`
 
-tox is the method of choice for running unit tests. The program simplifies the task of running tests against multiple versions of python. Running all tests should be as simple as running `tox` at the command line. Missing interpreter versions will be skipped without error.
+tox is the method of choice for running unit tests. The program simplifies the task of running tests against multiple versions of python. Running all tests should be as simple as running `tox` at the command line. Missing interpreter versions will be skipped without error. Be sure to install testing specific libraries in the default command list if you add any. `coverage` and `pytest` are installed by default of the template.
 
 **Note:** By default a coverage percentage of **90**% is required to pass. This can be adjusted as desired in the `tox.ini`.
 
