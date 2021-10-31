@@ -7,4 +7,5 @@ coverage_html_report/
 .coverage
 coverage.xml
 build/
+dist/
 __pycache__/
