@@ -3,6 +3,7 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Preocts/python-template/main.svg)](https://results.pre-commit.ci/latest/github/Preocts/python-template/main)
 [![Python package](https://github.com/Preocts/python-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-template/actions/workflows/python-tests.yml)
+[![codecov](https://codecov.io/gh/Preocts/python-template/branch/main/graph/badge.svg?token=5GE4T7XU3L)](https://codecov.io/gh/Preocts/python-template)
 
 ### TODO:
 - Auto detect use of `requirements.txt` and insert into `setup.cfg`
@@ -44,7 +45,7 @@ pytest is used to run tests for this template. It supports the unittest framewor
 
 ## Coverage
 
-Coverage is used to run pytest, measuring code coverage and exporting two reports on a successful run. `coverage.xml` and an html version located in `coverage_html_report`.
+Coverage is used to run pytest, measuring code coverage and exporting two reports on a successful run. `coverage.xml` and an html version located in `coverage_html_report`.  I use both in different places.  `.xml` is for CodeCov and the html goes to a local tool for review. Strip out what you don't need/want.
 
 **Note:** As you add modules to the library you will need to edit the `setup.cfg` and add the module names (directory name) to the `[coverage:run]` list of `source_pkgs`.
 
@@ -56,12 +57,12 @@ source_pkgs =
 
 ## `tox.ini`
 
-tox is the method of choice for running unit tests. The program simplifies the task of running tests against multiple versions of python. Running all tests should be as simple as running `tox` at the command line. Missing interpreter versions will be skipped without error.
+tox is the method of choice for running unit tests. The program simplifies the task of running tests against multiple versions of python. Running all tests should be as simple as running `tox` at the command line. Missing interpreter versions will be skipped without error. Be sure to install testing specific libraries in the default command list if you add any. `coverage` and `pytest` are installed by default of the template.
 
 **Note:** By default a coverage percentage of **90**% is required to pass. This can be adjusted as desired in the `tox.ini`.
 
 
-## `requirements-dev.in`
+## `requirements-dev.txt`
 
 The requirements-dev.in (and *.txt) includes the following for a dev environment:
 - `pre-commit`: Linting, formatting, and error checks on local commit
@@ -87,7 +88,9 @@ Installed with dev requirements, pre-commit will run a series of checks against 
 - Windows
 - Ubuntu
 
-Versions and OS choices can be easily changed in this yml file.
+Versions, OS choices, and when to run the tests can be easily changed in this yml file.
+
+**Additionally** CodeCov is included in the workflow here. This final step can be removed as desired.
 
 ---
 
