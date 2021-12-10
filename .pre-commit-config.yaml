@@ -12,7 +12,7 @@ repos:
 
   # Keep setup.cfg clean
   - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.19.0
+    rev: v1.20.0
     hooks:
       - id: setup-cfg-fmt
 
@@ -25,13 +25,13 @@ repos:
 
   # Format code.
   - repo: https://github.com/psf/black
-    rev: 21.9b0
+    rev: 21.11b1
     hooks:
       - id: black
 
   # Format docs. No, I don't like everything black does either.
   - repo: https://github.com/asottile/blacken-docs
-    rev: v1.11.0
+    rev: v1.12.0
     hooks:
       - id: blacken-docs
         additional_dependencies: [black>=21.9b0]
