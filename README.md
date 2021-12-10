@@ -81,8 +81,6 @@ Installed with dev requirements, pre-commit will run a series of checks against 
 
 ## .github actions
 
-**`pre-commit.yml`**: This registers a GitHub action that runs pre-commit against any pull request against `main` and any push to `main`
-
 **`python-tests.yml`**: This registers a GitHub action that runs tests via tox on any pull request against `main` and any push to `main`. The tests are run on the lastest version of the following OS images:
 - MacOS
 - Windows
@@ -118,7 +116,7 @@ $ cd [module_name]
 Create and activate `venv`:
 ```bash
 # Linux/MacOS
-python3 -m venv venv
+python -m venv venv
 . venv/bin/activate
 
 # Windows
@@ -134,13 +132,16 @@ Your command prompt should now have a `(venv)` prefix on it.
 Install editable library and development requirements:
 ```bash
 # Linux/MacOS
+pip install --upgrade pip wheel setuptools
 pip install -r requirements-dev.txt
 pip install --editable .
 
 # Windows
+python -m pip install --upgrade pip wheel setuptools
 python -m pip install -r requirements-dev.txt
 python -m pip install --editable .
 # or
+py -m pip install --upgrade pip wheel setuptools
 py -m pip install -r requirements-dev.txt
 py -m pip install --editable .
 ```
