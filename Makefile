@@ -7,10 +7,15 @@ dev-install:
 	pip install -r requirements-dev.txt
 	pip install --editable .
 	pre-commit install
-	pre-commit autoupdate
 
 .PHONY: update
-update: clean-artifacts clean-tests init dev-install
+update:
+	pre-commit autoupdate
+
+.PHONY: build-dist
+build-dist:
+	rm -rf ./dist
+	python setup.py sdist bdist_wheel
 
 .PHONY: clean-artifacts
 clean-artifacts:
@@ -37,8 +42,3 @@ clean-build:
 
 .PHONY: clean-all
 clean-all: clean-artifacts clean-tests clean-build
-
-.PHONY: build-dist
-build-dist:
-	rm -rf ./dist
-	python setup.py sdist bdist_wheel
