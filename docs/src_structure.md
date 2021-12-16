@@ -13,13 +13,13 @@ Take a look at this very basic tree showing the structure:
 ├── setup.cfg
 ├── setup.py
 ├── src
-│   └── project_files
-│       ├── __init__.py
-│       ├── helper.py
-│       └── main.py
+│   └── project_files
+│       ├── __init__.py
+│       ├── helper.py
+│       └── main.py
 └── tests
     ├── fixtures
-    │   └── test_input.csv
+    │   └── test_input.csv
     └── main_test.py
 ```
 
