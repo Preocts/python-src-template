@@ -24,13 +24,11 @@ This template uses a package layout that forces the developer to have the packag
 The configuration settings of `setup.py` have been moved into `setup.cfg`. In addition, `setup.cfg` contains the settings for these additional items:
 - mypy
 - coverage
-- requirements.txt (see below)
+- flake8
 
 When using this template, be sure the `setup.py` is edited to reflect the desired `[metadata]` values and supported python versions.
 
-**requirements.txt**
-
-The `requirements.txt` file list of required third-part libraries lives inside of the `setup.cfg`. This field is not reflected in this template as there are no external dependencies.  To add requirements, add this to the `setup.cfg` with a list of libraries and option version requirements:
+Add as needed for third party library requirements:
 
 ```cfg
 [options]
@@ -45,7 +43,7 @@ pytest is used to run tests for this template. It supports the unittest framewor
 
 ## Coverage
 
-Coverage is used to run pytest, measuring code coverage and exporting two reports on a successful run. `coverage.xml` and an html version located in `coverage_html_report`.  I use both in different places.  `.xml` is for CodeCov and the html goes to a local tool for review. Strip out what you don't need/want.
+Coverage is used to run pytest, measuring code coverage and exporting two reports on a successful run. `coverage.xml` and an html version located in `coverage_html_report`. `.xml` is for CodeCov and the html goes to a local tool for review. Strip out what you don't need/want.
 
 **Note:** As you add modules to the library you will need to edit the `setup.cfg` and add the module names (directory name) to the `[coverage:run]` list of `source_pkgs`.
 
@@ -96,81 +94,19 @@ Versions, OS choices, and when to run the tests can be easily changed in this ym
 
 ---
 
-# Module Name
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/{{ORG_NAME}}/{{REPO_NAME}}/main.svg)](https://results.pre-commit.ci/latest/github/{{ORG_NAME}}/{{REPO_NAME}}/main)
+[![Python package](https://github.com/{{ORG_NAME}}/{{REPO_NAME}}/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/{{ORG_NAME}}/{{REPO_NAME}}/actions/workflows/python-tests.yml)
 
-Module Description
+# {{Module Name}}
+
+{{Module Description}}
 
 ### Requirements
-- Python >= 3.8
+- [Python](https://python.org) >= 3.8
 
-## Local developer installation
+## Internal Links
 
-It is **highly** recommended to use a `venv` for installation. Leveraging a `venv` will ensure the installed dependency files will not impact other python projects.
-
-Clone this repo and enter root directory of repo:
-```bash
-$ git clone https://github.com/[name]/[module_name]
-$ cd [module_name]
-```
-
-Create and activate `venv`:
-```bash
-# Linux/MacOS
-python -m venv venv
-. venv/bin/activate
-
-# Windows
-python -m venv venv
-venv\Scripts\activate.bat
-# or
-py -m venv venv
-venv\Scripts\activate.bat
-```
-
-Your command prompt should now have a `(venv)` prefix on it.
-
-Install editable library and development requirements:
-```bash
-# Linux/MacOS
-pip install --upgrade pip wheel setuptools
-pip install -r requirements-dev.txt
-pip install --editable .
-
-# Windows
-python -m pip install --upgrade pip wheel setuptools
-python -m pip install -r requirements-dev.txt
-python -m pip install --editable .
-# or
-py -m pip install --upgrade pip wheel setuptools
-py -m pip install -r requirements-dev.txt
-py -m pip install --editable .
-```
-
-Install pre-commit hooks to local repo:
-```bash
-pre-commit install
-pre-commit autoupdate
-```
-
-Run tests
-```bash
-tox
-```
-
-To exit the `venv`:
-```bash
-deactivate
-```
-
----
-
-### Makefile
-
-This repo has a Makefile with some quality of life scripts if your system supports `make`.
-
-- `update` : Clean all artifacts, update pip, update requirements, install everything
-- `build-dist` : Build source distribution and wheel distribution
-- `clean-artifacts` : Deletes python/mypy artifacts including eggs, cache, and pyc files
-- `clean-tests` : Deletes tox, coverage, and pytest artifacts
-- `clean-build` : Deletes build artifacts
-- `clean-all` : Runs all clean scripts
+- [Development Installation Guide](docs/development.md)
+- [Repo documentation](docs/)
