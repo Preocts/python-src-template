@@ -2,7 +2,7 @@
 
 It is **strongly** recommended to use a virtual environment ([`venv`](https://docs.python.org/3/library/venv.html)) when working with python projects. Leveraging a `venv` will ensure the installed dependency files will not impact other python projects or any system dependencies.
 
-The following steps outline how to install this repo for local development. See the CONTRIBUTIONS file in the repo root for information on contributing to the repo.
+The following steps outline how to install this repo for local development. See the [CONTRIBUTING.md](../CONTRIBUTING.md) file in the repo root for information on contributing to the repo.
 
 **Windows users**: Depending on your python install you will use `py` in place of `python` to create the `venv`.
 
