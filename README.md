@@ -9,13 +9,6 @@ status](https://results.pre-commit.ci/badge/github/Preocts/python-template/main.
 package](https://github.com/Preocts/python-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-template/actions/workflows/python-tests.yml)
 [![codecov](https://codecov.io/gh/Preocts/python-template/branch/main/graph/badge.svg?token=5GE4T7XU3L)](https://codecov.io/gh/Preocts/python-template)
 
-## TODO
-
-- Auto detect use of `requirements.txt` and insert into `setup.cfg`
-- Publish write-up on the /src layout
-- CLI tool for starting new project without cloning/using template
-- Version bump shell script
-
 This is a template example of how I structure an initial python project.
 
 ## What's included in (how to use) this template
