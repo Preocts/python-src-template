@@ -19,10 +19,8 @@ build-dist:
 
 .PHONY: clean-artifacts
 clean-artifacts:
-	find . -name '*.egg-info' -exec rm -rf {} +
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f  {} +
 	find . -name '__pycache__' -exec rm -rf {} +
 	find . -name '.mypy_cache' -exec rm -rf {} +
 
@@ -32,7 +30,6 @@ clean-tests:
 	rm -rf .tox
 	rm -rf coverage_html_report
 	rm -rf .coverage
-	rm -f code_lines.txt
 	find . -name '.pytest_cache' -exec rm -rf {} +
 
 .PHONY: clean-build
