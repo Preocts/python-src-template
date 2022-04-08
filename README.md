@@ -17,7 +17,7 @@ This is a template example of how I structure an initial python project.
 
 This template uses a package layout that forces the developer to have the
 package installed locally for testing. This is done by nesting the package
-modules within the `src` directory. The `src` directory is not, itself, a module
+modules within the `src` directory. The `src` directory is not a module
 and should not be referenced from imports. The benefit of this layout is that
 all tests are run against **installed** code which is closer to an actual
 deployment. Additionally, the developer will have the confidence that the
@@ -30,11 +30,11 @@ The configuration settings of `setup.py` have been moved into `setup.cfg`. In
 addition, `setup.cfg` contains the settings for these additional items:
 
 - mypy
+  - My personal choice of mypy is very strict, adjust to your tastes
 - coverage
+  - coverage will need to know what the package folder under `src/` is named
 - flake8
-
-When using this template, be sure the `setup.py` is edited to reflect the
-desired `[metadata]` values and supported python versions.
+  - Small tweaks to align flake8 with black, the preferred format enforcer
 
 Add as needed for third party library requirements:
 
@@ -48,8 +48,10 @@ install_requires =
 ## pytest
 
 pytest is used to run tests for this template. It supports the unittest
-framework as well. The only requirement is that all test files be located in the
-`./tests` directory.
+framework as well.
+
+    - Place tests in the `tests/` directory
+    - Tests need to start or end with `test` (e.g. `test_file.py` or `file_test.py`)
 
 ## Coverage
 
@@ -68,6 +70,9 @@ source_pkgs =
     module_name
 ```
 
+**Note:** By default a coverage percentage of **90**% is required to pass. This
+can be adjusted as desired in the `tox.ini`.
+
 ## `tox.ini`
 
 tox is the method of choice for running unit tests. The program simplifies the
@@ -76,9 +81,6 @@ should be as simple as running `tox` at the command line. Missing interpreter
 versions will be skipped without error. Be sure to install testing specific
 libraries in the default command list if you add any. `coverage` and `pytest`
 are installed by default of the template.
-
-**Note:** By default a coverage percentage of **90**% is required to pass. This
-can be adjusted as desired in the `tox.ini`.
 
 ## `requirements-dev.txt`
 
@@ -89,7 +91,9 @@ environment:
 - `black`: Formatter of choice, installed to allow editor to run on save
 - `mypy`: Type checking and linting of code in editor
 - `flake8`: Linting of code in PEP8 standard in editor
+- `flake8-builtins`: Add checks to avoid shadowing Python builtins
 - `pytest`: Testing framework of choice
+- `pytest-randomly`: Add a random order to tests, helps detect test pollution
 - `coverage`: Identify weak points of testing
 - `tox`: Run tests in isolated environments mirroring clean installs
 
