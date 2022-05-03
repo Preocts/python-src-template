@@ -1,42 +1,29 @@
 # python-template
 
-[![Code style:
-black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
-[![pre-commit.ci
-status](https://results.pre-commit.ci/badge/github/Preocts/python-template/main.svg)](https://results.pre-commit.ci/latest/github/Preocts/python-template/main)
-[![Python
-package](https://github.com/Preocts/python-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-template/actions/workflows/python-tests.yml)
-[![codecov](https://codecov.io/gh/Preocts/python-template/branch/main/graph/badge.svg?token=5GE4T7XU3L)](https://codecov.io/gh/Preocts/python-template)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Preocts/python-module-template/main.svg)](https://results.pre-commit.ci/latest/github/Preocts/python-module-template/main)
+[![Python package](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml)
+[![codecov](https://codecov.io/gh/Preocts/python-module-template/branch/main/graph/badge.svg?token=sn79oOaqRI)](https://codecov.io/gh/Preocts/python-module-template)
 
-This is a template example of how I structure an initial python project.
+[Project description here]
 
-## What's included in (how to use) this template
+## Requirements
 
-## `./src` Layout
+- [Python](https://python.org) >= 3.8
 
-This template uses a package layout that forces the developer to have the
-package installed locally for testing. This is done by nesting the package
-modules within the `src` directory. The `src` directory is not a module
-and should not be referenced from imports. The benefit of this layout is that
-all tests are run against **installed** code which is closer to an actual
-deployment. Additionally, the developer will have the confidence that the
-`setup.cfg` is correctly including the desired modules as the tests will fail if
-they do not install correctly.
+---
 
-## `setup.cfg`
+## A template for my library style boilerplate.
 
-The configuration settings of `setup.py` have been moved into `setup.cfg`. In
-addition, `setup.cfg` contains the settings for these additional items:
+Straight forward to use!
 
-- mypy
-  - My personal choice of mypy is very strict, adjust to your tastes
-- coverage
-  - coverage will need to know what the package folder under `src/` is named
-- flake8
-  - Small tweaks to align flake8 with black, the preferred format enforcer
+### All module files go under `src/`
 
-Add as needed for third party library requirements:
+- Update requirements.in as needed
+- Rename `module_name` as desired
+- Update `py_modules = module_name` in `setup.cfg` with name
+- Requires are placed in `setup.cfg`:
 
 ```cfg
 [options]
@@ -44,107 +31,128 @@ install_requires =
     library_name
     other_library_name==2.3
 ```
+- Run `make dev-install` or follow steps below to ensure local editible library is installed
 
-## pytest
+---
 
-pytest is used to run tests for this template. It supports the unittest
-framework as well.
+# Local developer installation
 
-    - Place tests in the `tests/` directory
-    - Tests need to start or end with `test` (e.g. `test_file.py` or `file_test.py`)
+It is **strongly** recommended to use a virtual environment
+([`venv`](https://docs.python.org/3/library/venv.html)) when working with python
+projects. Leveraging a `venv` will ensure the installed dependency files will
+not impact other python projects or any system dependencies.
 
-## Coverage
+The following steps outline how to install this repo for local development. See
+the [CONTRIBUTING.md](../CONTRIBUTING.md) file in the repo root for information
+on contributing to the repo.
 
-Coverage is used to run pytest, measuring code coverage and exporting two
-reports on a successful run. `coverage.xml` and an html version located in
-`coverage_html_report`. `.xml` is for CodeCov and the html goes to a local tool
-for review. Strip out what you don't need/want.
+**Windows users**: Depending on your python install you will use `py` in place
+of `python` to create the `venv`.
 
-**Note:** As you add modules to the library you will need to edit the
-`setup.cfg` and add the module names (directory name) to the `[coverage:run]`
-list of `source_pkgs`.
+**Linux/Mac users**: Replace `python`, if needed, with the appropriate call to
+the desired version while creating the `venv`. (e.g. `python3` or `python3.8`)
 
-```cfg
-[coverage:run]
-source_pkgs =
-    module_name
+**All users**: Once inside an active `venv` all systems should allow the use of
+`python` for command line instructions. This will ensure you are using the
+`venv`'s python and not the system level python.
+
+---
+
+## Installation steps
+
+Clone this repo and enter root directory of repo:
+
+```bash
+git clone https://github.com/{{ORG_NAME}}/{{REPO_NAME}}
+cd {{REPO_NAME}}
 ```
 
-**Note:** By default a coverage percentage of **90**% is required to pass. This
-can be adjusted as desired in the `tox.ini`.
+Create the `venv`:
 
-## `tox.ini`
+```bash
+python -m venv venv
+```
 
-tox is the method of choice for running unit tests. The program simplifies the
-task of running tests against multiple versions of python. Running all tests
-should be as simple as running `tox` at the command line. Missing interpreter
-versions will be skipped without error. Be sure to install testing specific
-libraries in the default command list if you add any. `coverage` and `pytest`
-are installed by default of the template.
+Activate the `venv`:
 
-## `requirements-dev.txt`
+```bash
+# Linux/Mac
+. venv/bin/activate
 
-The requirements-dev.in (and *.txt) includes the following for a dev
-environment:
+# Windows
+venv\Scripts\activate
+```
 
-- `pre-commit`: Linting, formatting, and error checks on local commit
-- `black`: Formatter of choice, installed to allow editor to run on save
-- `mypy`: Type checking and linting of code in editor
-- `flake8`: Linting of code in PEP8 standard in editor
-- `flake8-builtins`: Add checks to avoid shadowing Python builtins
-- `pytest`: Testing framework of choice
-- `pytest-randomly`: Add a random order to tests, helps detect test pollution
-- `coverage`: Identify weak points of testing
-- `tox`: Run tests in isolated environments mirroring clean installs
+The command prompt should now have a `(venv)` prefix on it. `python` will now
+call the version of the interpreter used to create the `venv`
 
-## pre-commit - [https://pre-commit.com/](https://pre-commit.com/)
+Install editable library and development requirements:
 
-Installed with dev requirements, pre-commit will run a series of checks against
-any file being committed to the local repo by `git`.  See
-`.pre-commit-config.yaml` for a list of checks used.
+```bash
+# Update pip and tools
+python -m pip install --upgrade pip wheel setuptools
 
-**Note:** `pre-commit install` will need to be run the first time the local repo
-is initialized.
+# Install development requirements
+python -m pip install -r requirements-dev.txt
 
-## .github actions
+# Install editable version of library
+python -m pip install --editable .
+```
 
-**`python-tests.yml`**: This registers a GitHub action that runs tests via tox
-on any pull request against `main` and any push to `main`. The tests are run on
-the lastest version of the following OS images:
+Install pre-commit [(see below for details)](#pre-commit):
 
-- MacOS
-- Windows
-- Ubuntu
-
-Versions, OS choices, and when to run the tests can be easily changed in this
-yml file.
-
-**Additionally** CodeCov is included in the workflow here. This final step can
-be removed as desired.
+```bash
+pre-commit install
+```
 
 ---
 
-# Below is a template README
+## Misc Steps
+
+Run pre-commit on all files:
+
+```bash
+pre-commit run --all-files
+```
+
+Run tests:
+
+```bash
+tox [-r] [-e py3x]
+```
+
+To deactivate (exit) the `venv`:
+
+```bash
+deactivate
+```
 
 ---
 
-[![Code style:
-black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
-[![pre-commit.ci
-status](https://results.pre-commit.ci/badge/github/{{ORG_NAME}}/{{REPO_NAME}}/main.svg)](https://results.pre-commit.ci/latest/github/{{ORG_NAME}}/{{REPO_NAME}}/main)
-[![Python
-package](https://github.com/{{ORG_NAME}}/{{REPO_NAME}}/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/{{ORG_NAME}}/{{REPO_NAME}}/actions/workflows/python-tests.yml)
+## [pre-commit](https://pre-commit.com)
 
-# {{Module Name}}
+> A framework for managing and maintaining multi-language pre-commit hooks.
 
-{{Module Description}}
+This repo is setup with a `.pre-commit-config.yaml` with the expectation that
+any code submitted for review already passes all selected pre-commit checks.
+`pre-commit` is installed with the development requirements and runs seemlessly
+with `git` hooks.
 
-### Requirements
+---
 
-- [Python](https://python.org) >= 3.8
+## Makefile
 
-## Internal Links
+This repo has a Makefile with some quality of life scripts if the system
+supports `make`.  Please note there are no checks for an active `venv` in the
+Makefile.
 
-- [Development Installation Guide](docs/development.md)
-- [Repo documentation](docs/)
+| PHONY             | Description                                                        |
+| ----------------- | ------------------------------------------------------------------ |
+| `init`            | Update pip, setuptools, and wheel to newest version                |
+| `dev-install`     | install development requirements and project                       |
+| `update`          | Run any update scripts for requirements                            |
+| `build-dist`      | Build source distribution and wheel distribution                   |
+| `clean-artifacts` | Deletes python/mypy artifacts including eggs, cache, and pyc files |
+| `clean-tests`     | Deletes tox, coverage, and pytest artifacts                        |
+| `clean-build`     | Deletes build artifacts                                            |
+| `clean-all`       | Runs all clean scripts                                             |
