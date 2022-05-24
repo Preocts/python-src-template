@@ -2,15 +2,15 @@
 init:
 	pip install --upgrade pip setuptools wheel pip-tools
 
-.PHONY: dev-install
-dev-install:
+.PHONY: install
+install:
+	pip install .
+
+.PHONY: install-dev
+install-dev:
 	pip install -r requirements-dev.txt
 	pip install --editable .
 	pre-commit install
-
-.PHONY: update
-update:
-	pre-commit autoupdate
 
 .PHONY: build-dist
 build-dist:
