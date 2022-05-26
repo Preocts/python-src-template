@@ -33,6 +33,12 @@ install_requires =
 ```
 - Run `make dev-install` or follow steps below to ensure local editible library is installed
 
+### GitHub Actions
+
+This module is loaded with a `python-tests.yml` which will execute some github actions running unit tests and coverage checks. This file and directory can be removed if undesired.
+
+Within the `python-tests.yml` there is a commented step `Upload coverave to Codecov`.  If you have the repo associated with Covecov you can uncomment this step and the results of the coverage will be sent automagically.
+
 ---
 
 # Local developer installation
