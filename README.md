@@ -49,7 +49,7 @@ projects. Leveraging a `venv` will ensure the installed dependency files will
 not impact other python projects or any system dependencies.
 
 The following steps outline how to install this repo for local development. See
-the [CONTRIBUTING.md](../CONTRIBUTING.md) file in the repo root for information
+the [CONTRIBUTING.md](CONTRIBUTING.md) file in the repo root for information
 on contributing to the repo.
 
 **Windows users**: Depending on your python install you will use `py` in place
