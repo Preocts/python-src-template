@@ -18,26 +18,36 @@
 
 Straight forward to use!
 
+**Why `src/` structure**?
+
+The benefit I get from this project structure comes from testing. The `src/`
+structure forces us to test on the installed version of the modules within
+`site-packages/` and not our local code. Even though these files are symlinked
+in most cases with the dev install, the calls and import references are the
+same. This ensures we are testing on what will be setup in the not-my machine.
+
+---
+
 ### All module files go under `src/`
 
-- Update requirements.in as needed
-- Rename `module_name` as desired
-- Update `py_modules = module_name` in `setup.cfg` with name
-- Requires are placed in `setup.cfg`:
-
-```cfg
-[options]
-install_requires =
-    library_name
-    other_library_name==2.3
-```
-- Run `make dev-install` or follow steps below to ensure local editible library is installed
+- Rename `src/module_name` as desired
+- Update the `pyproject.toml`
+  - In `[tool.coverage.run]` update `source_pkgs` to the module name(s) from
+    above
+  - Add dependencies to `dependencies`
+  - Add optional dependencies to `[project.optional-dependencies]` as needed
+  - Run `make install-dev` or follow steps below to ensure local editible
+    library is installed
 
 ### GitHub Actions
 
-This module is loaded with a `python-tests.yml` which will execute some github actions running unit tests and coverage checks. This file and directory can be removed if undesired.
+This module is loaded with a `python-tests.yml` which will execute some github
+actions running unit tests and coverage checks. This file and directory can be
+removed if undesired.
 
-Within the `python-tests.yml` there is a commented step `Upload coverave to Codecov`.  If you have the repo associated with Covecov you can uncomment this step and the results of the coverage will be sent automagically.
+Within the `python-tests.yml` there is a commented step `Upload coverave to
+Codecov`.  If you have the repo associated with Covecov you can uncomment this
+step and the results of the coverage will be sent automagically.
 
 ---
 
@@ -49,8 +59,8 @@ projects. Leveraging a `venv` will ensure the installed dependency files will
 not impact other python projects or any system dependencies.
 
 The following steps outline how to install this repo for local development. See
-the [CONTRIBUTING.md](CONTRIBUTING.md) file in the repo root for information
-on contributing to the repo.
+the [CONTRIBUTING.md](CONTRIBUTING.md) file in the repo root for information on
+contributing to the repo.
 
 **Windows users**: Depending on your python install you will use `py` in place
 of `python` to create the `venv`.
@@ -96,13 +106,10 @@ Install editable library and development requirements:
 
 ```bash
 # Update pip and tools
-python -m pip install --upgrade pip wheel setuptools
-
-# Install development requirements
-python -m pip install -r requirements-dev.txt
+python -m pip install --upgrade pip
 
 # Install editable version of library
-python -m pip install --editable .
+python -m pip install --editable .[dev]
 ```
 
 Install pre-commit [(see below for details)](#pre-commit):
@@ -127,10 +134,32 @@ Run tests:
 tox [-r] [-e py3x]
 ```
 
+Build dist:
+
+```bash
+python -m pip install --upgrade build
+
+python -m build
+```
+
 To deactivate (exit) the `venv`:
 
 ```bash
 deactivate
+```
+---
+
+## Note on flake8:
+
+`flake8` is included in the `requirements-dev.txt` of the project. However it
+disagrees with `black`, the formatter of choice, on max-line-length and two
+general linting errors. `.pre-commit-config.yaml` is already configured to
+ignore these. `flake8` doesn't support `pyproject.toml` so be sure to add the
+following to the editor of choice as needed.
+
+```ini
+--ignore=W503,E203
+--max-line-length=88
 ```
 
 ---
@@ -152,13 +181,13 @@ This repo has a Makefile with some quality of life scripts if the system
 supports `make`.  Please note there are no checks for an active `venv` in the
 Makefile.
 
-| PHONY             | Description                                                        |
-| ----------------- | ------------------------------------------------------------------ |
-| `init`            | Update pip, setuptools, and wheel to newest version                |
-| `install`         | install the project                                                |
-| `install-dev`     | install development requirements and project                       |
-| `build-dist`      | Build source distribution and wheel distribution                   |
-| `clean-artifacts` | Deletes python/mypy artifacts including eggs, cache, and pyc files |
-| `clean-tests`     | Deletes tox, coverage, and pytest artifacts                        |
-| `clean-build`     | Deletes build artifacts                                            |
-| `clean-all`       | Runs all clean scripts                                             |
+| PHONY             | Description                                                      |
+| ----------------- | ---------------------------------------------------------------- |
+| `init`            | Update pip to newest version                                     |
+| `install`         | install the project                                              |
+| `install-dev`     | install development requirements and project as editable install |
+| `build-dist`      | Build source distribution and wheel distribution                 |
+| `clean-artifacts` | Deletes python/mypy artifacts, cache, and pyc files              |
+| `clean-tests`     | Deletes tox, coverage, and pytest artifacts                      |
+| `clean-build`     | Deletes build artifacts                                          |
+| `clean-all`       | Runs all clean scripts                                           |

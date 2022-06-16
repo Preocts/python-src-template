@@ -1,9 +1,0 @@
-pre-commit
-black
-mypy
-flake8
-flake8-builtins
-pytest
-pytest-randomly
-coverage
-tox
