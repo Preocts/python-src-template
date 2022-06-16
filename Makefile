@@ -1,21 +1,23 @@
 .PHONY: init
 init:
-	pip install --upgrade pip setuptools wheel pip-tools
+	pip install --upgrade pip setuptools wheel
 
 .PHONY: install
 install:
-	pip install .
+	[ -f "requirements.txt" ] && pip install -r requirements.txt || true
+	python -m pip install --upgrade .
 
 .PHONY: install-dev
 install-dev:
-	pip install -r requirements-dev.txt
-	pip install --editable .
+	[ -f "requirements.txt" ] && pip install -r requirements.txt || true
+	[ -f "requirements-dev.txt" ] && pip install -r requirements-dev.txt || true
+	python -m pip install --editable .
 	pre-commit install
 
 .PHONY: build-dist
 build-dist:
-	rm -rf ./dist
-	python setup.py sdist bdist_wheel
+	pip install --upgrade build
+	python -m build
 
 .PHONY: clean-artifacts
 clean-artifacts:
