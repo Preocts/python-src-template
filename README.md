@@ -20,17 +20,12 @@ Straight forward to use!
 
 ### All module files go under `src/`
 
-- Update requirements.in as needed
-- Rename `module_name` as desired
-- Update `py_modules = module_name` in `setup.cfg` with name
-- Requires are placed in `setup.cfg`:
+Setup the `pyproject.toml`
 
-```cfg
-[options]
-install_requires =
-    library_name
-    other_library_name==2.3
-```
+- Update requirements.in as needed
+- Rename `src/module_name` as desired
+- In `[tool.coverage.run]` update `source_pkgs` to the module names
+- Add dependencies to `dependencies`
 - Run `make dev-install` or follow steps below to ensure local editible library is installed
 
 ### GitHub Actions
@@ -127,10 +122,28 @@ Run tests:
 tox [-r] [-e py3x]
 ```
 
+Build dist:
+
+```bash
+python -m pip install --upgrade build
+
+python -m build
+```
+
 To deactivate (exit) the `venv`:
 
 ```bash
 deactivate
+```
+---
+
+## Note on flake8:
+
+`flake8` is included in the `requirements-dev.txt` of the project. However it disagrees with `black`, the formatter of choice, on max-line-length and two general linting errors. `.pre-commit-config.yaml` is already configured to ignore these. `flake8` doesn't support `pyproject.toml` so be sure to add the following to the editor of choice as needed.
+
+```ini
+--ignore=W503,E203
+--max-line-length=88
 ```
 
 ---
