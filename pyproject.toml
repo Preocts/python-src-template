@@ -27,7 +27,17 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-example = []
+dev = [
+    "pre-commit",
+    "black",
+    "mypy",
+    "flake8",
+    "flake8-builtins",
+    "pytest",
+    "pytest-randomly",
+    "coverage",
+    "tox"
+]
 
 [project.urls]
 homepage = "https://github.com/[your repo]/[repo name]"
