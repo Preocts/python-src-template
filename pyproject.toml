@@ -1,0 +1,108 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "module_name"
+version = "0.0.0"
+requires-python = ">=3.8"
+description = "Module Description"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    # { email = "[YOUR EMAIL]", name = "[YOUR NAME]" }
+]
+maintainers = []
+keywords = []
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython"
+]
+dependencies = []
+
+[project.optional-dependencies]
+example = []
+
+[project.urls]
+homepage = "https://github.com/[your repo]/[repo name]"
+# documentation = ""
+# repository = ""
+# changelog = ""
+
+[project.scripts]
+python-src-example = "module_name.sample:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]  # ["."] by default
+include = ["*"]  # ["*"] by default
+exclude = ["tests"]  # empty by default
+namespaces = true  # true by default
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_incomplete_defs = false
+disallow_untyped_defs = false
+
+[tool.coverage.run]
+branch = true
+source = [ "tests" ]
+source_pkgs = [ "module_name" ]
+
+[tool.coverage.report]
+exclude_lines =[
+    "pragma: no cover",
+    "def __repr__",
+    "if self\\.debug",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:"
+]
+ignore_errors = true
+
+[tool.coverage.html]
+directory = "coverage_html_report"
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+# This is ignored by flake8, here in case they decide to add it in the future
+[tool.flake8]
+ignore = "W503,E203"
+max-line-length = 88
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py38,py39,py310,pre-commit
+skip_missing_interpreters = true
+
+[testenv]
+deps = .
+commands =
+    python -m pip install --upgrade coverage pytest
+    coverage erase
+    coverage run -m pytest {posargs:tests}
+    coverage xml
+    coverage report --fail-under 95 --skip-covered --skip-empty -m
+
+[testenv:pre-commit]
+skip_install = true
+deps = pre-commit
+commands = pre-commit run --all-files --show-diff-on-failure
+"""
