@@ -78,25 +78,25 @@ the desired version while creating the `venv`. (e.g. `python3` or `python3.8`)
 
 Clone this repo and enter root directory of repo:
 
-```bash
-git clone https://github.com/{{ORG_NAME}}/{{REPO_NAME}}
-cd {{REPO_NAME}}
+```console
+$ git clone https://github.com/{{ORG_NAME}}/{{REPO_NAME}}
+$ d {{REPO_NAME}}
 ```
 
 Create the `venv`:
 
-```bash
-python -m venv venv
+```console
+$ python -m venv venv
 ```
 
 Activate the `venv`:
 
-```bash
+```console
 # Linux/Mac
-. venv/bin/activate
+$ . venv/bin/activate
 
 # Windows
-venv\Scripts\activate
+$ venv\Scripts\activate
 ```
 
 The command prompt should now have a `(venv)` prefix on it. `python` will now
@@ -104,18 +104,18 @@ call the version of the interpreter used to create the `venv`
 
 Install editable library and development requirements:
 
-```bash
+```console
 # Update pip and tools
-python -m pip install --upgrade pip
+$ python -m pip install --upgrade pip
 
 # Install editable version of library
-python -m pip install --editable .[dev]
+$ python -m pip install --editable .[dev]
 ```
 
 Install pre-commit [(see below for details)](#pre-commit):
 
-```bash
-pre-commit install
+```console
+$ pre-commit install
 ```
 
 ---
@@ -124,28 +124,28 @@ pre-commit install
 
 Run pre-commit on all files:
 
-```bash
-pre-commit run --all-files
+```console
+$ pre-commit run --all-files
 ```
 
 Run tests:
 
-```bash
-tox [-r] [-e py3x]
+```console
+$ tox [-r] [-e py3x]
 ```
 
 Build dist:
 
-```bash
-python -m pip install --upgrade build
+```console
+$ python -m pip install --upgrade build
 
-python -m build
+$ python -m build
 ```
 
 To deactivate (exit) the `venv`:
 
-```bash
-deactivate
+```console
+$ deactivate
 ```
 ---
 
