@@ -17,9 +17,6 @@ development of the project!
 
 Create your own fork of this repo that you will make your changes on.
 
-See the [Developer Installation Document](docs/development.md) for installation
-instructions.
-
 ## Creating your feature
 
 Always base your changes off the `main` branch, it is the most up to date.
