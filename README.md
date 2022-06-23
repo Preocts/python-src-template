@@ -80,7 +80,7 @@ Clone this repo and enter root directory of repo:
 
 ```console
 $ git clone https://github.com/{{ORG_NAME}}/{{REPO_NAME}}
-$ d {{REPO_NAME}}
+$ cd {{REPO_NAME}}
 ```
 
 Create the `venv`:
