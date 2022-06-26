@@ -33,6 +33,8 @@ dev = [
     "mypy",
     "flake8",
     "flake8-builtins",
+]
+test = [
     "pytest",
     "pytest-randomly",
     "coverage",
@@ -104,9 +106,8 @@ skip_missing_interpreters = true
 isolated_build = True
 
 [testenv]
-deps = .
+deps = .[test]
 commands =
-    python -m pip install --upgrade coverage pytest
     coverage erase
     coverage run -m pytest {posargs:tests}
     coverage xml
