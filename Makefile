@@ -1,6 +1,6 @@
 .PHONY: init
 init:
-	pip install --upgrade pip setuptools wheel
+	pip install --upgrade pip setuptools
 
 .PHONY: install
 install:
