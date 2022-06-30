@@ -1,4 +1,6 @@
 """Tests for sample"""
+from __future__ import annotations
+
 import pytest
 from module_name import sample
 

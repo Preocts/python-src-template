@@ -17,12 +17,19 @@ repos:
     hooks:
       - id: setup-cfg-fmt
 
-  # Adds a standard feel to import segments
+  # Adds a standard feel to import segments, adds future annotations
   - repo: https://github.com/asottile/reorder_python_imports
     rev: v3.1.0
     hooks:
       - id: reorder-python-imports
-        args: [--py3-plus]
+        args: [--py37-plus, --add-import, "from __future__ import annotations"]
+
+  # Automatically upgrade syntax to newer versions
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.34.0
+    hooks:
+      - id: pyupgrade
+        args: [--py37-plus]
 
   # Format code. No, I don't like everything black does either.
   - repo: https://github.com/psf/black
