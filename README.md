@@ -32,10 +32,14 @@ same. This ensures we are testing on what will be setup in the not-my machine.
 
 - Rename `src/module_name` as desired
 - Update the `pyproject.toml`
-  - In `[tool.coverage.run]` update `source_pkgs` to the module name(s) from
-    above
+  - Fill in `[project]` metadata
   - Add dependencies to `dependencies`
   - Add optional dependencies to `[project.optional-dependencies]` as needed
+  - Fill in `[project.urls]` if desired (used by sites like pypi)
+  - Add/remove `[project.scripts]` as needed
+  - Add/remove `[tool.setuptools.package-data]` as needed
+  - In `[tool.coverage.run]` update `source_pkgs` to the module name(s) from
+    above
   - Run `make install-dev` or follow steps below to ensure local editible
     library is installed
 

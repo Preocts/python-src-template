@@ -47,6 +47,7 @@ homepage = "https://github.com/[your repo]/[repo name]"
 # repository = ""
 # changelog = ""
 
+# CLI scripts if needed
 [project.scripts]
 python-src-example = "module_name.sample:main"
 
@@ -56,6 +57,7 @@ include = ["*"]  # ["*"] by default
 exclude = ["tests"]  # empty by default
 namespaces = true  # true by default
 
+# This is optional. Package-data will be included in the build/install
 [tool.setuptools.package-data]
 "module_name.sample_data" = ["*.csv"]
 
