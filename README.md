@@ -40,6 +40,7 @@ same. This ensures we are testing on what will be setup in the not-my machine.
   - Add/remove `[tool.setuptools.package-data]` as needed
   - In `[tool.coverage.run]` update `source_pkgs` to the module name(s) from
     above
+  - In `[tool.tox]` update `mypy -p module_name` to reflect name of module(s)
   - Run `make install-dev` or follow steps below to ensure local editible
     library is installed
 

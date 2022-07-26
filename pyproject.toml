@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "module_name"
 version = "0.0.0"
-requires-python = ">=3.8<3.12"
+requires-python = ">=3.8"
 description = "Module Description"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -59,6 +59,7 @@ namespaces = true  # true by default
 
 # This is optional. Package-data will be included in the build/install
 [tool.setuptools.package-data]
+"module_name" = ["py.typed"]
 "module_name.sample_data" = ["*.csv"]
 
 [tool.mypy]
@@ -102,7 +103,7 @@ max-line-length = 88
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py38,py39,py310,py311,pre-commit
+envlist = py38,py39,py310,py311,mypy,pre-commit
 skip_missing_interpreters = true
 isolated_build = True
 
@@ -113,6 +114,13 @@ commands =
     coverage run -m pytest {posargs:tests}
     coverage xml
     coverage report --fail-under 95 --skip-covered --skip-empty -m
+
+[testenv:mypy]
+deps =
+    .
+    mypy
+commands =
+    mypy -p module_name
 
 [testenv:pre-commit]
 skip_install = true
