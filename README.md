@@ -18,6 +18,19 @@
 
 Straight forward to use!
 
+**Kind of...**
+
+While this is the way **I** usually start my Python project setup, this is not
+the only way to do things. This template leverages the `pyproject.toml` as
+completely as `setuptool` currently supports. I choose to enforce clean commits
+with `pre-commit` and have it baked into the `Makefile` install.  The settings
+for `mypy` are as strict as I can make them.  The default `tox` setup attempts
+tests on all stable versions of Python, runs `mypy` in full strictness, and
+enforces `pre-commit` success.  The GitHub actions are setup to run tox across
+Windows, Linux, and MacOS.  This is all just the setup I'm comfortable and
+familiar with.  I entreat you to take what you need and make something of your
+own.  Every artist is different as is every choice of canvas.
+
 **Why `src/` structure**?
 
 The benefit I get from this project structure comes from testing. The `src/`
