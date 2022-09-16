@@ -11,12 +11,6 @@ repos:
       - id: check-docstring-first
       - id: debug-statements
 
-  # Keep setup.cfg clean
-  - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v2.0.0
-    hooks:
-      - id: setup-cfg-fmt
-
   # Adds a standard feel to import segments, adds future annotations
   - repo: https://github.com/asottile/reorder_python_imports
     rev: v3.8.2
