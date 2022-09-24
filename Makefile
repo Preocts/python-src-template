@@ -1,6 +1,6 @@
 .PHONY: init
 init:
-	pip install --upgrade pip setuptools
+	python -m pip install --upgrade pip setuptools
 
 .PHONY: install
 install:
@@ -17,7 +17,7 @@ install-test:
 
 .PHONY: build-dist
 build-dist:
-	pip install --upgrade build
+	python -m pip install --upgrade build
 	python -m build
 
 .PHONY: clean-artifacts
