@@ -10,7 +10,7 @@
 
 ## Requirements
 
-- [Python](https://python.org) >= 3.8
+- [Python](https://python.org) >= 3.7
 
 ---
 
