@@ -13,14 +13,14 @@ repos:
 
   # Adds a standard feel to import segments, adds future annotations
   - repo: https://github.com/asottile/reorder_python_imports
-    rev: v3.8.2
+    rev: v3.8.3
     hooks:
       - id: reorder-python-imports
         args: [--py37-plus, --add-import, "from __future__ import annotations"]
 
   # Automatically upgrade syntax to newer versions
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.38.0
+    rev: v2.38.2
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
