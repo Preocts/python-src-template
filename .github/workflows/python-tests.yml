@@ -7,7 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  run-tests-and-coverage:
+    name: "Run Tox for tests and coverage"
     strategy:
       matrix:
         os: [macos-latest, windows-latest, ubuntu-latest]
@@ -25,13 +26,11 @@ jobs:
         run: python -m pip install --upgrade pip tox
       - name: Run tox
         run: tox -e py
-      # - name: Upload coverage to Codecov
-      #   uses: codecov/codecov-action@v2
-      #   with:
-      #     directory: "."
-      #     env_vars: OS,PYTHON
-      #     fail_ci_if_error: false
-      #     files: ./coverage.xml
-      #     flags: tests-${{ matrix.os }}-${{ matrix.python-version }}
-      #     name: codecov-umbrella
-      #     verbose: true
+
+  ci-success:
+    name: "CI steps all completed successfully"
+    needs: run-tests-and-coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Success
+        run: echo Success
