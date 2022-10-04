@@ -194,14 +194,15 @@ This repo has a Makefile with some quality of life scripts if the system
 supports `make`.  Please note there are no checks for an active `venv` in the
 Makefile.
 
-| PHONY             | Description                                                           |
-| ----------------- | --------------------------------------------------------------------- |
-| `init`            | Update pip to newest version                                          |
-| `install`         | install the project                                                   |
-| `install-test`    | install test requirements and project as editable install             |
-| `install-dev`     | install development/test requirements and project as editable install |
-| `build-dist`      | Build source distribution and wheel distribution                      |
-| `clean-artifacts` | Deletes python/mypy artifacts, cache, and pyc files                   |
-| `clean-tests`     | Deletes tox, coverage, and pytest artifacts                           |
-| `clean-build`     | Deletes build artifacts                                               |
-| `clean-all`       | Runs all clean scripts                                                |
+| PHONY             | Description                                                                |
+| ----------------- | -------------------------------------------------------------------------- |
+| `init`            | Update pip to newest version                                               |
+| `install`         | install the project                                                        |
+| `install-test`    | install test requirements and project as editable install                  |
+| `install-dev`     | install development/test requirements and project as editable install      |
+| `upgrade-dev`     | update all dependencies, regenerate requirements.txt (disabled by default) |
+| `build-dist`      | Build source distribution and wheel distribution                           |
+| `clean-artifacts` | Deletes python/mypy artifacts, cache, and pyc files                        |
+| `clean-tests`     | Deletes tox, coverage, and pytest artifacts                                |
+| `clean-build`     | Deletes build artifacts                                                    |
+| `clean-all`       | Runs all clean scripts                                                     |

@@ -15,6 +15,14 @@ install-dev:
 install-test:
 	python -m pip install .[test]
 
+# Optional: use requirements.in to manage requirements
+# Use optional dynamic field in pyproject.toml
+# .PHONY: upgrade-dev
+# upgrade-dev:
+# 	python -m pip install pip-tools
+# 	pip-compile --upgrade
+# 	python -m pip install --upgrade --editable .[dev,test]
+
 .PHONY: build-dist
 build-dist:
 	python -m pip install --upgrade build
