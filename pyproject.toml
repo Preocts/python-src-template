@@ -36,6 +36,7 @@ dev = [
     "mypy",
     "flake8",
     "flake8-builtins",
+    "flake8-pep585",
 ]
 test = [
     "pytest",
