@@ -6,6 +6,8 @@ venv/
 coverage_html_report/
 .coverage
 coverage.xml
+coverage.json
+.coverage.*
 build/
 dist/
 __pycache__/
