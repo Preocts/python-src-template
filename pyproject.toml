@@ -137,6 +137,7 @@ commands =
     python -m coverage combine
     python -m coverage report -m
     python -m coverage json
+    python -m coverage html
 
 [testenv:pre-commit]
 depends = coverage
