@@ -201,8 +201,9 @@ Makefile.
 | `install-test`    | install test requirements and project as editable install                  |
 | `install-dev`     | install development/test requirements and project as editable install      |
 | `upgrade-dev`     | update all dependencies, regenerate requirements.txt (disabled by default) |
+| `coverage`        | Runs `tox -p`. results to stdout, json, and html                           |
 | `build-dist`      | Build source distribution and wheel distribution                           |
 | `clean-artifacts` | Deletes python/mypy artifacts, cache, and pyc files                        |
 | `clean-tests`     | Deletes tox, coverage, and pytest artifacts                                |
 | `clean-build`     | Deletes build artifacts                                                    |
-| `clean-all`       | Runs all clean scripts                                                     |
+| `clean`           | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts       |
