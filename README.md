@@ -4,9 +4,7 @@
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Preocts/python-module-template/main.svg)](https://results.pre-commit.ci/latest/github/Preocts/python-module-template/main)
 [![Python tests](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml)
-[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Preocts/f26cb21234ff10087c74b977705af024/raw/python-src-template-covbadge-main)](https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html)
-
-
+[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Preocts/f26cb21234ff10087c74b977705af024/raw/python-src-template-main)](https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html)
 
 # python-src-template
 
@@ -40,16 +38,23 @@ your own template.  The amount of learning in doing so is well worth the effort.
   * `[tool.coverage.run]`
     * `source_pkgs` : Update to reflect new `module_name` and any additional
       modules
-* Update `.github/workflows/python-tests.yml`
-  * [[*place holder step for when coverage badge work is completed*]]
-* Update `README.md`
-  * Replace / update url of `pre-commit.ci` badge
-  * Replace / update url of `python tests` badge
+* Coverage badge setup:
+  * If needed: Create an empty, private gist
+  * Save the gist's id to repository secret `COV_BADGE_GIST`
+  * If needed: Create a personal access token (PAT) with `gist` access
+  * Save the PAT to repository secret `COV_BADGE_TOKEN`
+  * **Note:** The coverage step is completely optional and will be skipped if
+    above secrets are missing.
+* Update `README.md` - Badges:
+  * Update owner and repo name of urls for `pre-commit.ci` badge
+  * Update owner and repo name of urls for `python tests` badge
+  * Update owner and repo name of gist url for `coverage` badge
+  * Replace gistId (from coverage setup) for `coverage` badge
+* Update `README.md` - Content:
   * Replace title and this setup information
   * Under **Local developer installation**
     * Replace `{{ORG_NAME}}` with github name
     * Replace `{{REPO_NAME}}` with repo name
-
 
 ### Why `src/` structure:
 
