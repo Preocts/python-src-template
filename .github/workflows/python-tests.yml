@@ -77,12 +77,27 @@ jobs:
           ls -a src/
           python -m tox -e coverage
           export TOTAL=$(python -c "import json;print(json.load(open('coverage.json'))['totals']['percent_covered_display'])")
-          echo "total=$TOTAL" >> $GITHUB_ENV
+          echo "TOTAL=$TOTAL" >> $GITHUB_ENV
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
 
-      # TODO: Add coverage badge generation
-      # solve: Generate badge per branch
       # https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html
+      # Modified to be a little more portable, filename is unique to branch and repo
+      - name: "Make badge"
+        env:
+          BADGE_TOKEN: "${{ secrets.COV_BADGE_TOKEN }}"
+          GIST_ID: "f26cb21234ff10087c74b977705af024"
+          FILENAME: "${{ github.event.repository.name }}-covbadge-${{ github.HEAD_REF }}"
+        if: "${{ env.BADGE_TOKEN != '' }}"
+        uses: "schneegans/dynamic-badges-action@v1.4.0"
+        with:
+          auth: "${{ env.BADGE_TOKEN }}"
+          gistID: "${{ env.GIST_ID }}"
+          filename: "${{ env.FILENAME }}"
+          label: "Coverage"
+          message: "${{ env.TOTAL }}%"
+          minColorRange: "50"
+          maxColorRange: "90"
+          valColorRange: "${{ env.TOTAL }}"
 
   ci-success:
     name: "CI steps all completed successfully"
