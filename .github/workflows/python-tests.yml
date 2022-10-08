@@ -86,7 +86,7 @@ jobs:
         env:
           BADGE_TOKEN: "${{ secrets.COV_BADGE_TOKEN }}"
           GIST_ID: "f26cb21234ff10087c74b977705af024"
-          FILENAME: "${{ github.event.repository.name }}-covbadge-${{ github.HEAD_REF }}"
+          FILENAME: "${{ github.event.repository.name }}-covbadge-${{ github.ref_name }}"
         if: "${{ env.BADGE_TOKEN != '' }}"
         uses: "schneegans/dynamic-badges-action@v1.4.0"
         with:
