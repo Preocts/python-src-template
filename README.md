@@ -198,7 +198,6 @@ Makefile.
 | ----------------- | -------------------------------------------------------------------------- |
 | `init`            | Update pip to newest version                                               |
 | `install`         | install the project                                                        |
-| `install-test`    | install test requirements and project as editable install                  |
 | `install-dev`     | install development/test requirements and project as editable install      |
 | `upgrade-dev`     | update all dependencies, regenerate requirements.txt (disabled by default) |
 | `coverage`        | Runs `tox -p`. results to stdout, json, and html                           |

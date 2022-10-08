@@ -11,10 +11,6 @@ install-dev:
 	python -m pip install --editable .[dev,test]
 	pre-commit install
 
-.PHONY: install-test
-install-test:
-	python -m pip install .[test]
-
 .PHONY: coverage
 coverage:
 	tox -p
