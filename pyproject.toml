@@ -134,7 +134,7 @@ depends = py37,py38,py39,py310,py311
 parallel_show_output = true
 commands =
     python -m coverage combine
-    python -m coverage report -m
+    python -m coverage report -m --fail-under=50
     python -m coverage json
     python -m coverage html
 
