@@ -1,66 +1,60 @@
-# python-src-template
-
+[![Python 3.7 | 3.8 | 3.9 | 3.10](https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/downloads)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Preocts/python-module-template/main.svg)](https://results.pre-commit.ci/latest/github/Preocts/python-module-template/main)
-[![Python package](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml)
+[![Python tests](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml)
 
-[Project description here]
+# python-src-template
 
-## Requirements
-
-- [Python](https://python.org) >= 3.7
-
----
-
-## A template for my library style boilerplate.
+## A template I use for most projects.
 
 Straight forward to use!
 
 **Kind of...**
 
-While this is the way **I** usually start my Python project setup, this is not
-the only way to do things. This template leverages the `pyproject.toml` as
-completely as `setuptool` currently supports. I choose to enforce clean commits
-with `pre-commit` and have it baked into the `Makefile` install.  The settings
-for `mypy` are as strict as I can make them.  The default `tox` setup attempts
-tests on all stable versions of Python, runs `mypy` in full strictness, and
-enforces `pre-commit` success.  The GitHub actions are setup to run tox across
-Windows, Linux, and MacOS.  This is all just the setup I'm comfortable and
-familiar with.  I entreat you to take what you need and make something of your
-own.  Every artist is different as is every choice of canvas.
+While this is the way I usually start my Python project setup this is far from
+the only way to do things. I invite you to use my template.  I also challenge
+you to craft the structure that works both for your project and you, creating
+your own template.  The amount of learning in doing so is well worth the effort.
 
-**Why `src/` structure**?
+---
+
+### What to change for setup:
+
+* Remove the following place-holder files:
+  * `/src/module_name/sample_data`
+  * `/src/module_name/sample.py`
+  * `/tests/test_sample.py`
+* Raname `/src/module_name` to the desired project name
+* Update `pyproject.toml`:
+  * `[project]` section:
+    * `name`, `version`, `description`, `authors`
+    * `dependencies`
+      * see alternative for requirements.in if desired
+  * `[project.urls]`
+    * Update github homepage values
+  * `[tool.coverage.run]`
+    * `source_pkgs` : Update to reflect new `module_name` and any additional
+      modules
+* Update `.github/workflows/python-tests.yml`
+  * [[*place holder step for when coverage badge work is completed*]]
+* Update `README.md`
+  * Replace / update url of `pre-commit.ci` badge
+  * Replace / update url of `python tests` badge
+  * Replace title and this setup information
+  * Under **Local developer installation**
+    * Replace `{{ORG_NAME}}` with github name
+    * Replace `{{REPO_NAME}}` with repo name
+
+
+### Why `src/` structure:
 
 The benefit I get from this project structure comes from testing. The `src/`
 structure forces us to test on the installed version of the modules within
 `site-packages/` and not our local code. Even though these files are symlinked
 in most cases with the dev install, the calls and import references are the
 same. This ensures we are testing on what will be setup in the not-my machine.
-
----
-
-### All module files go under `src/`
-
-- Rename `src/module_name` as desired
-- Update the `pyproject.toml`
-  - Fill in `[project]` metadata
-  - Add dependencies to `dependencies`
-  - Add optional dependencies to `[project.optional-dependencies]` as needed
-  - Fill in `[project.urls]` if desired (used by sites like pypi)
-  - Add/remove `[project.scripts]` as needed
-  - Add/remove `[tool.setuptools.package-data]` as needed
-  - In `[tool.coverage.run]` update `source_pkgs` to the module name(s) from
-    above
-  - In `[tool.tox]` update `mypy -p module_name` to reflect name of module(s)
-  - Run `make install-dev` or follow steps below to ensure local editible
-    library is installed
-
-### GitHub Actions
-
-This module is loaded with a `python-tests.yml` which will execute some github
-actions running unit tests and coverage checks. This file and directory can be
-removed if undesired.
 
 ---
 
@@ -198,7 +192,6 @@ Makefile.
 | ----------------- | -------------------------------------------------------------------------- |
 | `init`            | Update pip to newest version                                               |
 | `install`         | install the project                                                        |
-| `install-test`    | install test requirements and project as editable install                  |
 | `install-dev`     | install development/test requirements and project as editable install      |
 | `upgrade-dev`     | update all dependencies, regenerate requirements.txt (disabled by default) |
 | `coverage`        | Runs `tox -p`. results to stdout, json, and html                           |

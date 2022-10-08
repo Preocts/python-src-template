@@ -11,10 +11,6 @@ install-dev:
 	python -m pip install --editable .[dev,test]
 	pre-commit install
 
-.PHONY: install-test
-install-test:
-	python -m pip install .[test]
-
 .PHONY: coverage
 coverage:
 	tox -p
@@ -38,10 +34,11 @@ clean:
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -rf {} +
 	find . -name '.mypy_cache' -exec rm -rf {} +
+	rm -rf .tox
 	rm -f coverage.xml
 	rm -f coverage.json
-	rm -rf .tox
 	rm -rf coverage_html_report
+	rm -rf .coverage
 	rm -rf .coverage.*
 	find . -name '.pytest_cache' -exec rm -rf {} +
 	rm -rf dist

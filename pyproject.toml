@@ -52,8 +52,8 @@ homepage = "https://github.com/[your repo]/[repo name]"
 # changelog = ""
 
 # CLI scripts if needed
-[project.scripts]
-python-src-example = "module_name.sample:main"
+# [project.scripts]
+# python-src-example = "module_name.sample:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]  # ["."] by default
@@ -61,10 +61,8 @@ include = ["*"]  # ["*"] by default
 exclude = ["tests"]  # empty by default
 namespaces = true  # true by default
 
-# This is optional. Package-data will be included in the build/install
 [tool.setuptools.package-data]
 "module_name" = ["py.typed"]
-"module_name.sample_data" = ["*.csv"]
 
 [tool.mypy]
 check_untyped_defs = true
@@ -103,7 +101,8 @@ test = [
 exclude_lines =[
     "pragma: no cover",
     "raise NotImplementedError",
-    "if __name__ == .__main__.:"
+    "if __name__ == .__main__.:",
+    "\\.\\.\\.",
 ]
 ignore_errors = true
 
