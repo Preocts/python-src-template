@@ -24,10 +24,10 @@ your own template.  The amount of learning in doing so is well worth the effort.
 ### What to change for setup:
 
 * Remove the following place-holder files:
-  * `/src/module_name/sample_data`
-  * `/src/module_name/sample.py`
-  * `/tests/test_sample.py`
-* Raname `/src/module_name` to the desired project name
+  * `src/module_name/sample_data`
+  * `src/module_name/sample.py`
+  * `tests/test_sample.py`
+* Raname `src/module_name` to the desired project name
 * Update `pyproject.toml`:
   * `[project]` section:
     * `name`, `version`, `description`, `authors`
