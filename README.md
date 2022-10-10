@@ -94,8 +94,8 @@ the desired version while creating the `venv`. (e.g. `python3` or `python3.8`)
 Clone this repo and enter root directory of repo:
 
 ```console
-$ git clone https://github.com/{{ORG_NAME}}/{{REPO_NAME}}
-$ cd {{REPO_NAME}}
+$ git clone https://github.com/[ORG NAME]/[REPO NAME]
+$ cd [REPO NAME]
 ```
 
 Create the `venv`:
