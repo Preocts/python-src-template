@@ -2,8 +2,8 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Preocts/python-module-template/main.svg)](https://results.pre-commit.ci/latest/github/Preocts/python-module-template/main)
-[![Python tests](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-module-template/actions/workflows/python-tests.yml)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Preocts/python-src-template/main.svg)](https://results.pre-commit.ci/latest/github/Preocts/python-src-template/main)
+[![Python tests](https://github.com/Preocts/python-src-template/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/Preocts/python-src-template/actions/workflows/python-tests.yml)
 [![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Preocts/f26cb21234ff10087c74b977705af024/raw/python-src-template-main)](https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html)
 
 # python-src-template
@@ -21,13 +21,26 @@ your own template.  The amount of learning in doing so is well worth the effort.
 
 ---
 
-### What to change for setup:
+### Quick setup:
+
+Clone the repo or click the "Use this template" button in GitHub
+
+If you clone the repo instead of using it as a template; be sure to delete the
+`.git` folder and run `git init` before making any changes.
+
+Run the `init_template.py` script found in the root of the repo. You will be
+prompted for details and the steps listed below completed for you. You may then
+delete the `init_template.py` file, commit all changes, and dev on.
+
+---
+
+### What to change for manual setup:
 
 * Remove the following place-holder files:
-  * `/src/module_name/sample_data`
-  * `/src/module_name/sample.py`
-  * `/tests/test_sample.py`
-* Raname `/src/module_name` to the desired project name
+  * `src/module_name/sample_data`
+  * `src/module_name/sample.py`
+  * `tests/test_sample.py`
+* Raname `src/module_name` to the desired project name
 * Update `pyproject.toml`:
   * `[project]` section:
     * `name`, `version`, `description`, `authors`
@@ -94,8 +107,8 @@ the desired version while creating the `venv`. (e.g. `python3` or `python3.8`)
 Clone this repo and enter root directory of repo:
 
 ```console
-$ git clone https://github.com/{{ORG_NAME}}/{{REPO_NAME}}
-$ cd {{REPO_NAME}}
+$ git clone https://github.com/[ORG NAME]/[REPO NAME]
+$ cd [REPO NAME]
 ```
 
 Create the `venv`:
