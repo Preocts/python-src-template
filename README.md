@@ -21,7 +21,20 @@ your own template.  The amount of learning in doing so is well worth the effort.
 
 ---
 
-### What to change for setup:
+### Quick setup:
+
+Clone the repo or click the "Use this template" button in GitHub
+
+If you clone the repo instead of using it as a template; be sure to delete the
+`.git` folder and run `git init` before making any changes.
+
+Run the `init_template.py` script found in the root of the repo. You will be
+prompted for details and the steps listed below completed for you. You may then
+delete the `init_template.py` file, commit all changes, and dev on.
+
+---
+
+### What to change for manual setup:
 
 * Remove the following place-holder files:
   * `src/module_name/sample_data`
