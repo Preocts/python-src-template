@@ -1,6 +1,6 @@
 .PHONY: init
 init:
-	python -m pip install --upgrade pip setuptools
+	python -m pip install --upgrade pip
 
 .PHONY: install
 install:
@@ -37,7 +37,7 @@ clean:
 	rm -rf .tox
 	rm -f coverage.xml
 	rm -f coverage.json
-	rm -rf coverage_html_report
+	rm -rf htmlcov
 	rm -rf .coverage
 	rm -rf .coverage.*
 	find . -name '.pytest_cache' -exec rm -rf {} +

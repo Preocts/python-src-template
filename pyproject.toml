@@ -104,13 +104,6 @@ exclude_lines =[
     "if __name__ == .__main__.:",
     "\\.\\.\\.",
 ]
-ignore_errors = true
-
-[tool.coverage.html]
-directory = "coverage_html_report"
-
-[tool.coverage.xml]
-output = "coverage.xml"
 
 # This is ignored by flake8, here in case they decide to add it in the future
 [tool.flake8]
@@ -136,7 +129,6 @@ commands =
     python -m coverage combine
     python -m coverage report -m --fail-under=50
     python -m coverage json
-    python -m coverage html
 
 [testenv:pre-commit]
 depends = coverage
