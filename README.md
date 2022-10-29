@@ -215,6 +215,5 @@ Makefile.
 | `install`     | install the project                                                        |
 | `install-dev` | install development/test requirements and project as editable install      |
 | `upgrade-dev` | update all dependencies, regenerate requirements.txt (disabled by default) |
-| `coverage`    | Runs `tox -p`. results to stdout, json, and html                           |
 | `build-dist`  | Build source distribution and wheel distribution                           |
 | `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts       |
