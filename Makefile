@@ -11,10 +11,6 @@ install-dev:
 	python -m pip install --editable .[dev,test]
 	pre-commit install
 
-.PHONY: coverage
-coverage:
-	tox -p
-
 # Optional: use requirements.in to manage requirements
 # Use optional dynamic field in pyproject.toml
 # .PHONY: upgrade-dev
