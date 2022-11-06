@@ -103,6 +103,7 @@ exclude_lines =[
     "raise NotImplementedError",
     "if __name__ == .__main__.:",
     "\\.\\.\\.",
+    "if TYPE_CHECKING:",
 ]
 
 # This is ignored by flake8, here in case they decide to add it in the future
