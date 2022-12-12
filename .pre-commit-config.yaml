@@ -20,14 +20,14 @@ repos:
 
   # Automatically upgrade syntax to newer versions
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.0
+    rev: v3.3.1
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
 
   # Format code. No, I don't like everything black does either.
   - repo: https://github.com/psf/black
-    rev: 22.10.0
+    rev: 22.12.0
     hooks:
       - id: black
 
