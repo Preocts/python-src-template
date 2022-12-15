@@ -135,7 +135,7 @@ commands =
 deps =
     mypy
 commands =
-    mypy -p module_name
+    mypy -p module_name --no-incremental
 
 [testenv:pre-commit]
 depends = coverage
