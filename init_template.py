@@ -19,7 +19,6 @@ PYPROJECT_TARGET = Path("pyproject.toml")
 README_TARGET = Path("README.md")
 ORG = "Preocts"
 REPO = r"python\-src\-template"
-GIST = "f26cb21234ff10087c74b977705af024"
 
 
 @dataclasses.dataclass
@@ -91,14 +90,13 @@ def replace_pyproject_values(data: ProjectData) -> None:
 
 
 @bookends("Updating badges in README.md")
-def replace_readme_values(data: ProjectData, gist_key: str) -> None:
+def replace_readme_values(data: ProjectData) -> None:
     """Update badge urls and placeholders in README.md"""
     readme = README_TARGET.read_text()
     default = ProjectData()
 
     readme = re.sub(ORG, data.org_name, readme)
     readme = re.sub(REPO, data.repo_name, readme)
-    readme = re.sub(GIST, gist_key, readme)
     readme = re.sub(re.escape(default.org_name), data.org_name, readme)
     readme = re.sub(re.escape(default.repo_name), data.repo_name, readme)
 
@@ -110,10 +108,9 @@ if __name__ == "__main__":
     print("Eggcellent template setup:\n")
 
     project_data = get_project_data()
-    gist_key = get_input("Enter gist key for coverage badge, leave empty to skip : ")
 
     replace_pyproject_values(project_data)
-    replace_readme_values(project_data, gist_key or "[GIST KEY]")
+    replace_readme_values(project_data)
 
     delete_placeholder_files()
     delete_placeholder_directories()
