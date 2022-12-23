@@ -103,6 +103,13 @@ def replace_readme_values(data: ProjectData) -> None:
     README_TARGET.write_text(readme)
 
 
+@bookends("Renaming src/module_name folder")
+def rename_module_folder(name: str) -> None:
+    """Rename module folder."""
+    name = name.replace("-", "_")
+    os.rename("src/module_name", f"src/{name}")
+
+
 if __name__ == "__main__":
 
     print("Eggcellent template setup:\n")
@@ -111,6 +118,8 @@ if __name__ == "__main__":
 
     replace_pyproject_values(project_data)
     replace_readme_values(project_data)
+
+    rename_module_folder(project_data.name)
 
     delete_placeholder_files()
     delete_placeholder_directories()
