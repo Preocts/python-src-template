@@ -79,31 +79,6 @@ jobs:
           echo "TOTAL=$TOTAL" >> $GITHUB_ENV
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
 
-      - name: "Capture repo name"
-        env:
-          REF_NAME: ${{ github.ref_name }}
-        run: |
-          echo "REPO_NAME=${REF_NAME//\//-}" >> $GITHUB_ENV
-
-      # https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html
-      # Modified to be a little more portable, filename is unique to branch and repo
-      - name: "Make badge"
-        env:
-          BADGE_TOKEN: "${{ secrets.COV_BADGE_TOKEN }}"
-          GIST_ID: "${{ secrets.COV_BADGE_GIST }}"
-          FILENAME: "${{ github.event.repository.name }}-${{ env.REPO_NAME }}"
-        if: "${{ env.BADGE_TOKEN != '' }} && ${{ env.GIST_ID }}"
-        uses: "schneegans/dynamic-badges-action@v1.6.0"
-        with:
-          auth: "${{ env.BADGE_TOKEN }}"
-          gistID: "${{ env.GIST_ID }}"
-          filename: "${{ env.FILENAME }}"
-          label: "Coverage"
-          message: "${{ env.TOTAL }}%"
-          minColorRange: "50"
-          maxColorRange: "90"
-          valColorRange: "${{ env.TOTAL }}"
-
   ci-success:
     name: "CI steps all completed successfully"
     needs: "coverage-compile"
