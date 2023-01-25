@@ -25,7 +25,7 @@ coverage:
 	coverage report -m
 	coverage html
 	@# This should work for most linux and windows users
-	@# python -c "import os;import webbrowser; webbrowser.open(f'{os.getcwd()}/htmlcov/index.html', new=2, autoraise=True)"
+	@# python -c "import os;import webbrowser; webbrowser.open(f'{os.getcwd()}/htmlcov/index.html')"
 
 	@# WSL users can use this (change Ubuntu-20.04 to your distro name)
 	python -c "import os;import webbrowser; webbrowser.open(f'file://wsl.localhost/Ubuntu-20.04{os.getcwd()}/htmlcov/index.html')"
