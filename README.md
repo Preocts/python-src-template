@@ -199,11 +199,12 @@ This repo has a Makefile with some quality of life scripts if the system
 supports `make`.  Please note there are no checks for an active `venv` in the
 Makefile.
 
-| PHONY         | Description                                                                |
-| ------------- | -------------------------------------------------------------------------- |
-| `init`        | Update pip to newest version                                               |
-| `install`     | install the project                                                        |
-| `install-dev` | install development/test requirements and project as editable install      |
-| `upgrade-dev` | update all dependencies, regenerate requirements.txt (disabled by default) |
-| `build-dist`  | Build source distribution and wheel distribution                           |
-| `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts       |
+| PHONY         | Description                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------ |
+| `init`        | Update pip to newest version                                                               |
+| `install`     | install the project                                                                        |
+| `install-dev` | install development/test requirements and project as editable install                      |
+| `upgrade-dev` | update all dependencies, regenerate requirements.txt (disabled by default)                 |
+| `coverage`    | Run tests with coverage, generate html report, and open browser (double check based on os) |
+| `build-dist`  | Build source distribution and wheel distribution                                           |
+| `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts                       |
