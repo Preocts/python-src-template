@@ -88,7 +88,6 @@ def replace_pyproject_values(data: ProjectData) -> None:
     """Update pyproject values."""
     pyproject = PYPROJECT_TARGET.read_text()
     for key, value in dataclasses.asdict(ProjectData()).items():
-        print(f"Replacing {key}:{value} with {getattr(data, key)}")
         pattern = re.compile(re.escape(value))
         pyproject = pattern.sub(getattr(data, key), pyproject)
 
@@ -122,9 +121,9 @@ if __name__ == "__main__":
     project_data = get_project_data()
 
     replace_pyproject_values(project_data)
-    # replace_readme_values(project_data)
+    replace_readme_values(project_data)
 
-    # rename_module_folder(project_data.name)
+    rename_module_folder(project_data.name)
 
-    # delete_placeholder_files()
-    # delete_placeholder_directories()
+    delete_placeholder_files()
+    delete_placeholder_directories()
