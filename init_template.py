@@ -23,8 +23,9 @@ REPO = r"python\-src\-template"
 
 @dataclasses.dataclass
 class ProjectData:
-    name: str = "module_name"
-    version: str = "0.0.0"
+    name: str = "module-name"
+    module: str = "module_name"
+    version: str = "0.1.0"
     description: str = "Module Description"
     author_email: str = "yourname@email.invalid"
     author_name: str = "[YOUR NAME]"
@@ -71,10 +72,14 @@ def get_input(prompt: str) -> str:
 def get_project_data() -> ProjectData:
     """Query user for details on the project. This is the quiz."""
     data = ProjectData()
+    data.name = os.path.basename(os.getcwd())
+    data.module = data.name.replace("-", "_")
+    data.repo_name = os.path.basename(os.getcwd())
     for key, value in dataclasses.asdict(data).items():
         user_input = get_input(f"Enter {key} (default: {value}) : ")
         if user_input:
             setattr(data, key, user_input)
+    data.module = data.name.replace("-", "_")
     return data
 
 
@@ -83,6 +88,7 @@ def replace_pyproject_values(data: ProjectData) -> None:
     """Update pyproject values."""
     pyproject = PYPROJECT_TARGET.read_text()
     for key, value in dataclasses.asdict(ProjectData()).items():
+        print(f"Replacing {key}:{value} with {getattr(data, key)}")
         pattern = re.compile(re.escape(value))
         pyproject = pattern.sub(getattr(data, key), pyproject)
 
@@ -111,15 +117,14 @@ def rename_module_folder(name: str) -> None:
 
 
 if __name__ == "__main__":
-
     print("Eggcellent template setup:\n")
 
     project_data = get_project_data()
 
     replace_pyproject_values(project_data)
-    replace_readme_values(project_data)
+    # replace_readme_values(project_data)
 
-    rename_module_folder(project_data.name)
+    # rename_module_folder(project_data.name)
 
-    delete_placeholder_files()
-    delete_placeholder_directories()
+    # delete_placeholder_files()
+    # delete_placeholder_directories()
