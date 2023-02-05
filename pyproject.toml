@@ -3,8 +3,8 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "module_name"
-version = "0.0.0"
+name = "module-name"
+version = "0.1.0"
 requires-python = ">=3.7"
 description = "Module Description"
 readme = "README.md"
