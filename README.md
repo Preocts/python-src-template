@@ -127,7 +127,7 @@ Install editable library and development requirements:
 $ python -m pip install --upgrade pip
 
 # Install editable version of library
-$ python -m pip install --editable .[dev]
+$ python -m pip install --editable .[dev,test]
 ```
 
 Install pre-commit [(see below for details)](#pre-commit):
