@@ -1,6 +1,6 @@
 .PHONY: init
 init:
-	python -m pip install --upgrade pip
+	python -m pip install --upgrade -r requirements/requirements-base.txt
 
 .PHONY: install
 install:
@@ -8,16 +8,17 @@ install:
 
 .PHONY: install-dev
 install-dev:
-	python -m pip install --editable .[dev,test]
+	python -m pip install --upgrade --editable .
+	python -m pip install --upgrade -r requirements/requirements-dev.txt
+	python -m pip install --upgrade -r requirements/requirements-test.txt
 	pre-commit install
 
-# Optional: use requirements.in to manage requirements
-# Use optional dynamic field in pyproject.toml
-# .PHONY: upgrade-dev
-# upgrade-dev:
-# 	python -m pip install pip-tools
-# 	pip-compile --upgrade
-# 	python -m pip install --upgrade --editable .[dev,test]
+.PHONY: upgrade-dev
+upgrade-dev:
+	pip-compile --resolver=backtracking requirements/requirements-base.in
+	pip-compile --resolver=backtracking requirements/requirements.in
+	pip-compile --resolver=backtracking requirements/requirements-dev.in
+	pip-compile --resolver=backtracking requirements/requirements-test.in
 
 .PHONY: coverage
 coverage:
