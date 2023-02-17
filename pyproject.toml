@@ -20,30 +20,13 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython"
 ]
-# Define dependencies directly
-dependencies = []
 
-# Optional use requirements.txt as input (generated from pip-tools pip-compile)
-# 20221003 - Does not presently support hashes
-# dynamic = ["dependencies"]
-# [tool.setuptools.dynamic]
-# dependencies = {file = ["requirements.txt"]}
+dynamic = ["dependencies"]
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements/requirements.txt"]}
 
-[project.optional-dependencies]
-dev = [
-    "pre-commit",
-    "black",
-    "mypy",
-    "flake8",
-    "flake8-builtins",
-    "flake8-pep585",
-]
-test = [
-    "pytest",
-    "pytest-randomly",
-    "coverage",
-    "tox"
-]
+# [project.optional-dependencies]
+# name = []
 
 [project.urls]
 homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
@@ -120,7 +103,9 @@ skip_missing_interpreters = true
 isolated_build = True
 
 [testenv]
-deps = .[test]
+deps =
+    .
+    -rrequirements/requirements-test.txt
 commands =
     coverage run -p -m pytest tests/
 
