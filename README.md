@@ -7,6 +7,8 @@
 
 # python-src-template
 
+## Playing around with a new structure. See the releases for previous structures.
+
 ## A template I use for most projects.
 
 Straight forward to use!
@@ -35,29 +37,32 @@ delete the `init_template.py` file, commit all changes, and dev on.
 
 ### What to change for manual setup:
 
-* Remove the following place-holder files:
-  * `src/module_name/sample_data`
-  * `src/module_name/sample.py`
-  * `tests/test_sample.py`
-* Raname `src/module_name` to the desired project name
-* Update `pyproject.toml`:
-  * `[project]` section:
-    * `name`, `version`, `description`, `authors`
-    * `dependencies`
-      * see alternative for requirements.in if desired
-  * `[project.urls]`
-    * Update github homepage values
-  * `[tool.coverage.run]`
-    * `source_pkgs` : Update to reflect new `module_name` and any additional
+- Remove the following place-holder files:
+  - `src/module_name/sample_data`
+  - `src/module_name/sample.py`
+  - `tests/test_sample.py`
+- Raname `src/module_name` to the desired project name
+- Update `pyproject.toml`:
+  - `[project]` section:
+    - `name`, `version`, `description`, `authors`
+  - `[project.urls]`
+    - Update github homepage values
+  - `[tool.coverage.run]`
+    - `source_pkgs` : Update to reflect new `module_name` and any additional
       modules
-* Update `README.md` - Badges:
-  * Update owner and repo name of urls for `pre-commit.ci` badge
-  * Update owner and repo name of urls for `python tests` badge
-* Update `README.md` - Content:
-  * Replace title and this setup information
-  * Under **Local developer installation**
-    * Replace `{{ORG_NAME}}` with github name
-    * Replace `{{REPO_NAME}}` with repo name
+- Update `README.md` - Badges:
+  - Update owner and repo name of urls for `pre-commit.ci` badge
+  - Update owner and repo name of urls for `python tests` badge
+- Update `README.md` - Content:
+  - Replace title and this setup information
+  - Under **Local developer installation**
+    - Replace `{{ORG_NAME}}` with github name
+    - Replace `{{REPO_NAME}}` with repo name
+- Project dependences:
+  - Dependency files are located in `requirements/`
+  - Edit the `requirents*.in` file with unpinned dependencies
+  - Run `make update-dev` or `pip-compile requirements/[requirement*.in]` to update
+  - Run `make install-dev` or `python -m pip install --update -r requirements/[requirement*.txt]
 
 ### Why `src/` structure:
 
@@ -124,10 +129,12 @@ Install editable library and development requirements:
 
 ```console
 # Update pip and tools
-$ python -m pip install --upgrade pip
+$ python -m pip install --upgrade pip pip-tools
 
 # Install editable version of library
-$ python -m pip install --editable .[dev,test]
+$ python -m pip install --editable .
+$ python -m pip install -r requirements/requirements-dev.txt
+$ python -m pip install -r requirements/requirements-test.txt
 ```
 
 Install pre-commit [(see below for details)](#pre-commit):
@@ -199,12 +206,14 @@ This repo has a Makefile with some quality of life scripts if the system
 supports `make`.  Please note there are no checks for an active `venv` in the
 Makefile.
 
-| PHONY         | Description                                                                                |
-| ------------- | ------------------------------------------------------------------------------------------ |
-| `init`        | Update pip to newest version                                                               |
-| `install`     | install the project                                                                        |
-| `install-dev` | install development/test requirements and project as editable install                      |
-| `upgrade-dev` | update all dependencies, regenerate requirements.txt (disabled by default)                 |
-| `coverage`    | Run tests with coverage, generate html report, and open browser (double check based on os) |
-| `build-dist`  | Build source distribution and wheel distribution                                           |
-| `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts                       |
+| PHONY          | Description                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| `init`         | Update pip to newest version                                                               |
+| `install`      | install the project                                                                        |
+| `install-dev`  | install development/test requirements and project as editable install                      |
+| `upgrade-dev`  | update all dependencies, regenerate requirements.txt (disabled by default)                 |
+| `coverage`     | Run tests with coverage, generate html report, and open browser (double check based on os) |
+| `docker-test'  | Run coverage and tests in a docker container.                                              |
+| `docker-clean` | Run `docker system prune -f`                                                               |
+| `build-dist`   | Build source distribution and wheel distribution                                           |
+| `clean`        | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts                       |
