@@ -31,6 +31,15 @@ coverage:
 	@# WSL users can use this (change Ubuntu-20.04 to your distro name)
 	python -c "import os;import webbrowser; webbrowser.open(f'file://wsl.localhost/Ubuntu-20.04{os.getcwd()}/htmlcov/index.html')"
 
+.PHONY: docker-test
+docker-test:
+	docker build -t docker-test .
+	docker run --rm docker-test
+
+.PHONY: docker-clean
+docker-clean:
+	docker system prune -f
+
 .PHONY: build-dist
 build-dist:
 	python -m pip install --upgrade build
