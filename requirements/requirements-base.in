@@ -1,6 +1,0 @@
-# Package requirements - pip, pip-tools,
-# --index-url=http://pypi.example.com/simple
-# --no-cache-dir
-
-pip
-pip-tools

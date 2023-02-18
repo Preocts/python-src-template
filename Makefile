@@ -10,7 +10,6 @@ install-dev:
 .PHONY: upgrade-dev
 upgrade-dev:
 	python -m pip install --upgrade pip-tools
-	pip-compile --resolver=backtracking requirements/requirements-base.in
 	pip-compile --resolver=backtracking requirements/requirements.in
 	pip-compile --resolver=backtracking requirements/requirements-dev.in
 	pip-compile --resolver=backtracking requirements/requirements-test.in
