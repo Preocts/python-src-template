@@ -7,65 +7,13 @@
 
 # python-src-template
 
+## Playing around with a new structure. See the releases for previous structures.
+
 ## A template I use for most projects.
 
 Straight forward to use!
 
 **Kind of...**
-
-While this is the way I usually start my Python project setup this is far from
-the only way to do things. I invite you to use my template.  I also challenge
-you to craft the structure that works both for your project and you, creating
-your own template.  The amount of learning in doing so is well worth the effort.
-
----
-
-### Quick setup:
-
-Clone the repo or click the "Use this template" button in GitHub
-
-If you clone the repo instead of using it as a template; be sure to delete the
-`.git` folder and run `git init` before making any changes.
-
-Run the `init_template.py` script found in the root of the repo. You will be
-prompted for details and the steps listed below completed for you. You may then
-delete the `init_template.py` file, commit all changes, and dev on.
-
----
-
-### What to change for manual setup:
-
-* Remove the following place-holder files:
-  * `src/module_name/sample_data`
-  * `src/module_name/sample.py`
-  * `tests/test_sample.py`
-* Raname `src/module_name` to the desired project name
-* Update `pyproject.toml`:
-  * `[project]` section:
-    * `name`, `version`, `description`, `authors`
-    * `dependencies`
-      * see alternative for requirements.in if desired
-  * `[project.urls]`
-    * Update github homepage values
-  * `[tool.coverage.run]`
-    * `source_pkgs` : Update to reflect new `module_name` and any additional
-      modules
-* Update `README.md` - Badges:
-  * Update owner and repo name of urls for `pre-commit.ci` badge
-  * Update owner and repo name of urls for `python tests` badge
-* Update `README.md` - Content:
-  * Replace title and this setup information
-  * Under **Local developer installation**
-    * Replace `{{ORG_NAME}}` with github name
-    * Replace `{{REPO_NAME}}` with repo name
-
-### Why `src/` structure:
-
-The benefit I get from this project structure comes from testing. The `src/`
-structure forces us to test on the installed version of the modules within
-`site-packages/` and not our local code. Even though these files are symlinked
-in most cases with the dev install, the calls and import references are the
-same. This ensures we are testing on what will be setup in the not-my machine.
 
 ---
 
@@ -123,10 +71,6 @@ call the version of the interpreter used to create the `venv`
 Install editable library and development requirements:
 
 ```console
-# Update pip and tools
-$ python -m pip install --upgrade pip
-
-# Install editable version of library
 $ python -m pip install --editable .[dev,test]
 ```
 
@@ -199,12 +143,13 @@ This repo has a Makefile with some quality of life scripts if the system
 supports `make`.  Please note there are no checks for an active `venv` in the
 Makefile.
 
-| PHONY         | Description                                                                                |
-| ------------- | ------------------------------------------------------------------------------------------ |
-| `init`        | Update pip to newest version                                                               |
-| `install`     | install the project                                                                        |
-| `install-dev` | install development/test requirements and project as editable install                      |
-| `upgrade-dev` | update all dependencies, regenerate requirements.txt (disabled by default)                 |
-| `coverage`    | Run tests with coverage, generate html report, and open browser (double check based on os) |
-| `build-dist`  | Build source distribution and wheel distribution                                           |
-| `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts                       |
+| PHONY          | Description                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| `install`      | install the project                                                                        |
+| `install-dev`  | install development/test requirements and project as editable install                      |
+| `upgrade-dev`  | update all dependencies, regenerate requirements.txt (disabled by default)                 |
+| `coverage`     | Run tests with coverage, generate html report, and open browser (double check based on os) |
+| `docker-test'  | Run coverage and tests in a docker container.                                              |
+| `docker-clean` | Run `docker system prune -f`                                                               |
+| `build-dist`   | Build source distribution and wheel distribution                                           |
+| `clean`        | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts                       |

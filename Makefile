@@ -1,23 +1,18 @@
-.PHONY: init
-init:
-	python -m pip install --upgrade pip
-
 .PHONY: install
 install:
 	python -m pip install --upgrade .
 
 .PHONY: install-dev
 install-dev:
-	python -m pip install --editable .[dev,test]
+	python -m pip install --upgrade --editable .[dev,test]
 	pre-commit install
 
-# Optional: use requirements.in to manage requirements
-# Use optional dynamic field in pyproject.toml
-# .PHONY: upgrade-dev
-# upgrade-dev:
-# 	python -m pip install pip-tools
-# 	pip-compile --upgrade
-# 	python -m pip install --upgrade --editable .[dev,test]
+.PHONY: upgrade-dev
+upgrade-dev:
+	python -m pip install --upgrade pip-tools
+	pip-compile --resolver=backtracking requirements/requirements.in
+	pip-compile --resolver=backtracking requirements/requirements-dev.in
+	pip-compile --resolver=backtracking requirements/requirements-test.in
 
 .PHONY: coverage
 coverage:
@@ -29,6 +24,15 @@ coverage:
 
 	@# WSL users can use this (change Ubuntu-20.04 to your distro name)
 	python -c "import os;import webbrowser; webbrowser.open(f'file://wsl.localhost/Ubuntu-20.04{os.getcwd()}/htmlcov/index.html')"
+
+.PHONY: docker-test
+docker-test:
+	docker build -t docker-test .
+	docker run --rm docker-test
+
+.PHONY: docker-clean
+docker-clean:
+	docker system prune -f
 
 .PHONY: build-dist
 build-dist:

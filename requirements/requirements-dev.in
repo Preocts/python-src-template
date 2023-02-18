@@ -1,0 +1,10 @@
+# Development Requirements - linting, formatting, etc.
+# --index-url=http://pypi.example.com/simple
+# --no-cache-dir
+
+pre-commit
+black
+mypy
+flake8
+flake8-builtins
+flake8-pep585
