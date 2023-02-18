@@ -122,10 +122,4 @@ deps =
     mypy
 commands =
     mypy -p module_name --no-incremental
-
-[testenv:pre-commit]
-parallel_show_output = true
-skip_install = true
-deps = pre-commit
-commands = pre-commit run --all-files
 """
