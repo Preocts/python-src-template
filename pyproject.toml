@@ -20,13 +20,14 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython"
 ]
+dynamic = ["dependencies", "optional-dependencies"]
 
-dynamic = ["dependencies"]
-[tool.setuptools.dynamic]
-dependencies = {file = ["requirements/requirements.txt"]}
+[tool.setuptools.dynamic.dependencies]
+file = ["requirements/requirements.txt"]
 
-# [project.optional-dependencies]
-# name = []
+[tool.setuptools.dynamic.optional-dependencies]
+dev = {file = ["requirements/requirements-dev.txt"]}
+test = {file = ["requirements/requirements-test.txt"]}
 
 [project.urls]
 homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
@@ -104,8 +105,7 @@ isolated_build = True
 
 [testenv]
 deps =
-    .
-    -rrequirements/requirements-test.txt
+    .[test]
 commands =
     coverage run -p -m pytest tests/
 
