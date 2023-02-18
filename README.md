@@ -15,63 +15,6 @@ Straight forward to use!
 
 **Kind of...**
 
-While this is the way I usually start my Python project setup this is far from
-the only way to do things. I invite you to use my template.  I also challenge
-you to craft the structure that works both for your project and you, creating
-your own template.  The amount of learning in doing so is well worth the effort.
-
----
-
-### Quick setup:
-
-Clone the repo or click the "Use this template" button in GitHub
-
-If you clone the repo instead of using it as a template; be sure to delete the
-`.git` folder and run `git init` before making any changes.
-
-Run the `init_template.py` script found in the root of the repo. You will be
-prompted for details and the steps listed below completed for you. You may then
-delete the `init_template.py` file, commit all changes, and dev on.
-
----
-
-### What to change for manual setup:
-
-- Remove the following place-holder files:
-  - `src/module_name/sample_data`
-  - `src/module_name/sample.py`
-  - `tests/test_sample.py`
-- Raname `src/module_name` to the desired project name
-- Update `pyproject.toml`:
-  - `[project]` section:
-    - `name`, `version`, `description`, `authors`
-  - `[project.urls]`
-    - Update github homepage values
-  - `[tool.coverage.run]`
-    - `source_pkgs` : Update to reflect new `module_name` and any additional
-      modules
-- Update `README.md` - Badges:
-  - Update owner and repo name of urls for `pre-commit.ci` badge
-  - Update owner and repo name of urls for `python tests` badge
-- Update `README.md` - Content:
-  - Replace title and this setup information
-  - Under **Local developer installation**
-    - Replace `{{ORG_NAME}}` with github name
-    - Replace `{{REPO_NAME}}` with repo name
-- Project dependences:
-  - Dependency files are located in `requirements/`
-  - Edit the `requirents*.in` file with unpinned dependencies
-  - Run `make update-dev` or `pip-compile requirements/[requirement*.in]` to update
-  - Run `make install-dev` or `python -m pip install --update -r requirements/[requirement*.txt]
-
-### Why `src/` structure:
-
-The benefit I get from this project structure comes from testing. The `src/`
-structure forces us to test on the installed version of the modules within
-`site-packages/` and not our local code. Even though these files are symlinked
-in most cases with the dev install, the calls and import references are the
-same. This ensures we are testing on what will be setup in the not-my machine.
-
 ---
 
 # Local developer installation
@@ -128,13 +71,7 @@ call the version of the interpreter used to create the `venv`
 Install editable library and development requirements:
 
 ```console
-# Update pip and tools
-$ python -m pip install --upgrade pip pip-tools
-
-# Install editable version of library
-$ python -m pip install --editable .
-$ python -m pip install -r requirements/requirements-dev.txt
-$ python -m pip install -r requirements/requirements-test.txt
+$ python -m pip install --editable .[dev,test]
 ```
 
 Install pre-commit [(see below for details)](#pre-commit):
@@ -208,7 +145,6 @@ Makefile.
 
 | PHONY          | Description                                                                                |
 | -------------- | ------------------------------------------------------------------------------------------ |
-| `init`         | Update pip to newest version                                                               |
 | `install`      | install the project                                                                        |
 | `install-dev`  | install development/test requirements and project as editable install                      |
 | `upgrade-dev`  | update all dependencies, regenerate requirements.txt (disabled by default)                 |
