@@ -99,7 +99,7 @@ max-line-length = 88
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py37,py38,py39,py310,py311,py312,coverage,mypy,pre-commit
+envlist = py37,py38,py39,py310,py311,py312,coverage,mypy
 skip_missing_interpreters = true
 isolated_build = True
 
@@ -124,9 +124,8 @@ commands =
     mypy -p module_name --no-incremental
 
 [testenv:pre-commit]
-depends = coverage
 parallel_show_output = true
 skip_install = true
 deps = pre-commit
-commands = pre-commit run --all-files --show-diff-on-failure
+commands = pre-commit run --all-files
 """

@@ -16,4 +16,4 @@ RUN python3.8 -m pip install --upgrade -r requirements/requirements-dev.txt -r r
 COPY . /src
 RUN python3.8 -m pip install .
 
-CMD ["tox", "-e", "py38,coverage,mypy"]
+CMD ["tox", "-r"]
