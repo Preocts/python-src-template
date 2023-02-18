@@ -1,20 +1,15 @@
-.PHONY: init
-init:
-	python -m pip install --upgrade -r requirements/requirements-base.txt
-
 .PHONY: install
 install:
 	python -m pip install --upgrade .
 
 .PHONY: install-dev
 install-dev:
-	python -m pip install --upgrade --editable .
-	python -m pip install --upgrade -r requirements/requirements-dev.txt
-	python -m pip install --upgrade -r requirements/requirements-test.txt
+	python -m pip install --upgrade --editable .[dev,test]
 	pre-commit install
 
 .PHONY: upgrade-dev
 upgrade-dev:
+	python -m pip install --upgrade pip-tools
 	pip-compile --resolver=backtracking requirements/requirements-base.in
 	pip-compile --resolver=backtracking requirements/requirements.in
 	pip-compile --resolver=backtracking requirements/requirements-dev.in
