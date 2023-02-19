@@ -5,7 +5,7 @@ import pytest
 from module_name import sample
 
 
-def test_main() -> None:
+def test_main():
     """Main test"""
     assert sample.main()
 
@@ -18,5 +18,5 @@ def test_main() -> None:
         (16, 256),
     ),
 )
-def test_squared(value_in: int, expected: int) -> None:
+def test_squared(value_in, expected):
     assert sample.squared(value_in) == expected
