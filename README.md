@@ -7,13 +7,18 @@
 
 # python-src-template
 
-## Playing around with a new structure. See the releases for previous structures.
+A template I use for most projects and is setup to jive with my environment at the company I work with.
 
-## A template I use for most projects.
+This is not the one-shot solution to project structure or packaging. This is
+just what works well for one egg on the Internet. Feel free to use it as you see
+fit.
 
-Straight forward to use!
-
-**Kind of...**
+The primary setup here uses dynamically loaded requirement files from the
+`./requirements` directory in the pyproject.toml file. This is ideal for
+micro-services, applications, or scripts that need all requirements pinned.
+Pinning is handled by `pip-compile`. The files in `./alt_files` offer an
+alternative where all requirements are kept within the pyproject.toml file and
+any pinning is manually managed.
 
 ---
 
@@ -90,10 +95,16 @@ Run pre-commit on all files:
 $ pre-commit run --all-files
 ```
 
-Run tests:
+Run tests (quick):
 
 ```console
-$ tox [-r] [-e py3x]
+$ pytest
+```
+
+Run tests (slow):
+
+```console
+$ tox
 ```
 
 Build dist:
@@ -143,13 +154,11 @@ This repo has a Makefile with some quality of life scripts if the system
 supports `make`.  Please note there are no checks for an active `venv` in the
 Makefile.
 
-| PHONY          | Description                                                                                |
-| -------------- | ------------------------------------------------------------------------------------------ |
-| `install`      | install the project                                                                        |
-| `install-dev`  | install development/test requirements and project as editable install                      |
-| `upgrade-dev`  | update all dependencies, regenerate requirements.txt (disabled by default)                 |
-| `coverage`     | Run tests with coverage, generate html report, and open browser (double check based on os) |
-| `docker-test'  | Run coverage and tests in a docker container.                                              |
-| `docker-clean` | Run `docker system prune -f`                                                               |
-| `build-dist`   | Build source distribution and wheel distribution                                           |
-| `clean`        | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts                       |
+| PHONY         | Description                                                           |
+| ------------- | --------------------------------------------------------------------- |
+| `install-dev` | install development/test requirements and project as editable install |
+| `upgrade-dev` | update all dependencies, regenerate requirements.txt                  |
+| `coverage`    | Run tests with coverage, generate console report                      |
+| `docker-test' | Run coverage and tests in a docker container.                         |
+| `build-dist`  | Build source distribution and wheel distribution                      |
+| `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts  |
