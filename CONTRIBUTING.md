@@ -19,43 +19,25 @@ Create your own fork of this repo that you will make your changes on.
 
 ## Creating your feature
 
-Always base your changes off the `main` branch, it is the most up to date.
+Always base your changes off the `main` branch unless otherwise asked.
 
 ## Pull Request
 
-Once the feature is tested and ready, open a pull request to the `main` branch.
+All pull requests must:
 
-Please ensure your tests are passing in your local environment and any new
-features are have appropriate tests added.  Untested code will not be approved.
+- Pass all linting and formatting checks
+- Have tests that cover all branches of the added feature
+- If the PR is a bug fix there must be a test that duplicates the bug, proving
+  it is fixed
 
 ## Code Style
 
 Follow the patterns seen in the code. Walk where others have walked.
 
-The majority of code style nits will be met simply by passing `pre-commit`
-checks prior to submitting a pull request.
+The majority of code style nits will be met when passing `pre-commit` checks
+prior to submitting a pull request.
 
-- ### Do
-
-  - snake_case modules, variables, methods, and functions
-  - PascalCase classes
-  - Type-hint function/method signatures
-  - Use verbs for getters/setters (`get_`, `fetch_`, `pull_`, `save_`, `put_`)
-  - Use singular form for objects
-  - Use plural form for lists/sequences
-
-- ### Do Not
-
-  - Fight `black` formatting
-
-- ### Comments
-
-  - Keep comments short and to the point
-  - Let code explain "what" and comments explain "why"
-  - All modules, functions, class, and methods must have a doc-string
-  - Doc-strings are optional in tests when the test name explains "what"
-
-- ### Tests
+## Tests
 
   - Smaller tests are easier to work with
   - Mock at a minimum

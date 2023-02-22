@@ -10,8 +10,6 @@ WORKDIR /src
 
 ENV PATH=/venv/bin:$PATH
 RUN python3.8 -m venv /venv
-COPY requirements/ /src/requirements/
-RUN python3.8 -m pip install --upgrade -r requirements/requirements-dev.txt -r requirements/requirements-test.txt --no-cache-dir
 
 COPY . /src
 RUN python3.8 -m pip install . --no-cache-dir
