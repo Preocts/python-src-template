@@ -1,7 +1,3 @@
-.PHONY: install
-install:
-	python -m pip install --upgrade .
-
 .PHONY: install-dev
 install-dev:
 	python -m pip install --upgrade --editable .[dev,test]
@@ -18,21 +14,11 @@ upgrade-dev:
 coverage:
 	coverage run -m pytest tests/
 	coverage report -m
-	coverage html
-	@# This should work for most linux and windows users
-	@# python -c "import os;import webbrowser; webbrowser.open(f'{os.getcwd()}/htmlcov/index.html')"
-
-	@# WSL users can use this (change Ubuntu-20.04 to your distro name)
-	python -c "import os;import webbrowser; webbrowser.open(f'file://wsl.localhost/Ubuntu-20.04{os.getcwd()}/htmlcov/index.html')"
 
 .PHONY: docker-test
 docker-test:
-	docker build -t docker-test .
-	docker run --rm docker-test
-
-.PHONY: docker-clean
-docker-clean:
-	docker system prune -f
+	docker build -t pydocker-test .
+	docker run --rm pydocker-test
 
 .PHONY: build-dist
 build-dist:
