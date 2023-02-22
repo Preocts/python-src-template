@@ -11,7 +11,7 @@ coverage:
 .PHONY: docker-test
 docker-test:
 	docker build -t pydocker-test .
-	docker run --rm pydocker-test
+	docker run -it --rm pydocker-test
 
 .PHONY: build-dist
 build-dist:
