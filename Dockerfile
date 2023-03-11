@@ -10,7 +10,6 @@ WORKDIR /src
 
 ENV PATH=/venv/bin:$PATH
 RUN python3.8 -m venv /venv
-RUN . /venv/bin/activate
 RUN python -m pip install --upgrade tox --no-cache-dir
 
 COPY . /src
