@@ -17,6 +17,7 @@ PLACEHOLDER_FILES = [
 PLACEHOLDER_DIR = [Path("src/module_name/sample_data")]
 PYPROJECT_TARGET = Path("pyproject.toml")
 README_TARGET = Path("README.md")
+ALT_FILE_DIR = Path("alt_files")
 ORG = "Preocts"
 REPO = r"python\-src\-template"
 
@@ -69,6 +70,19 @@ def get_input(prompt: str) -> str:
     return input(prompt)
 
 
+def select_project_type() -> None:
+    """Select whether alt_files should be used."""
+    user_input = get_input("Switch to dependencies in pyproject.toml? (y/N) : ")
+    if user_input.lower() == "y":
+        for file in ALT_FILE_DIR.iterdir():
+            file.replace(file.name)
+
+    # Remove alt_files directory and all contents
+    for file in ALT_FILE_DIR.iterdir():
+        os.remove(file)
+    os.rmdir(ALT_FILE_DIR)
+
+
 def get_project_data() -> ProjectData:
     """Query user for details on the project. This is the quiz."""
     data = ProjectData()
@@ -117,6 +131,8 @@ def rename_module_folder(name: str) -> None:
 
 if __name__ == "__main__":
     print("Eggcellent template setup:\n")
+
+    select_project_type()
 
     project_data = get_project_data()
 
