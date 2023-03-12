@@ -159,6 +159,6 @@ Makefile.
 | `install-dev` | install development/test requirements and project as editable install |
 | `upgrade-dev` | update all dependencies, regenerate requirements.txt                  |
 | `coverage`    | Run tests with coverage, generate console report                      |
-| `docker-test' | Run coverage and tests in a docker container.                         |
+| `docker-test` | Run coverage and tests in a docker container.                         |
 | `build-dist`  | Build source distribution and wheel distribution                      |
 | `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts  |
