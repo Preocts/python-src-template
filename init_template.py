@@ -18,6 +18,7 @@ PLACEHOLDER_DIR = [Path("src/module_name/sample_data")]
 PYPROJECT_TARGET = Path("pyproject.toml")
 README_TARGET = Path("README.md")
 ALT_FILE_DIR = Path("alt_files")
+REQUIREMENTS_DIR = Path("requirements")
 ORG = "Preocts"
 REPO = r"python\-src\-template"
 
@@ -76,6 +77,11 @@ def select_project_type() -> None:
     if user_input.lower() == "y":
         for file in ALT_FILE_DIR.iterdir():
             file.replace(file.name)
+
+        # Remove requirements directory and all contents
+        for file in REQUIREMENTS_DIR.iterdir():
+            os.remove(file)
+        os.rmdir(REQUIREMENTS_DIR)
 
     # Remove alt_files directory and all contents
     for file in ALT_FILE_DIR.iterdir():
