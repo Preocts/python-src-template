@@ -1,6 +1,7 @@
 # Development Requirements - linting, formatting, etc.
 # --index-url=http://pypi.example.com/simple
 # --no-cache-dir
+-c requirements.txt
 
 pre-commit
 black
