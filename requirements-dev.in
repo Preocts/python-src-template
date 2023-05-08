@@ -1,0 +1,15 @@
+# Development Requirements - linting, formatting, etc.
+# Ensure to set PIP_INDEX_URL to the correct value for your environment
+# This is the URL to the Artifactory instance that hosts the Python packages (default: pypi.org)
+# This will not be emitted to the requirements*.txt files and must be set in the environment
+# before running pip install
+
+# Constrain versions installed to be compatible with core dependencies
+--constraint requirements.txt
+
+pre-commit
+black
+mypy
+flake8
+flake8-builtins
+flake8-pep585

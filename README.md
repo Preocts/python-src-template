@@ -7,18 +7,12 @@
 
 # python-src-template
 
-A template I use for most projects and is setup to jive with my environment at the company I work with.
+A template I use for most projects and is setup to jive with my environment at
+the company I work with.
 
 This is not the one-shot solution to project structure or packaging. This is
 just what works well for one egg on the Internet. Feel free to use it as you see
 fit.
-
-The primary setup here uses dynamically loaded requirement files from the
-`./requirements` directory in the pyproject.toml file. This is ideal for
-micro-services, applications, or scripts that need all requirements pinned.
-Pinning is handled by `pip-compile`. The files in `./alt_files` offer an
-alternative where all requirements are kept within the pyproject.toml file and
-any pinning is manually managed.
 
 ---
 
@@ -47,12 +41,30 @@ the desired version while creating the `venv`. (e.g. `python3` or `python3.8`)
 
 ## Installation steps
 
+### Makefile
+
+This repo has a Makefile with some quality of life scripts if the system
+supports `make`.  Please note there are no checks for an active `venv` in the
+Makefile.  If you are on Windows you can install make using scoop or chocolatey.
+
+| PHONY         | Description                                                           |
+| ------------- | --------------------------------------------------------------------- |
+| `install-dev` | install development/test requirements and project as editable install |
+| `update-dev`  | regenerate requirements-*.txt (will keep existing pins)               |
+| `upgrade-dev` | attempt to update all dependencies, regenerate requirements-*.txt     |
+| `coverage`    | Run tests with coverage, generate console report                      |
+| `docker-test` | Run coverage and tests in a docker container.                         |
+| `build-dist`  | Build source distribution and wheel distribution                      |
+| `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts  |
+
+
 Clone this repo and enter root directory of repo:
 
 ```console
 $ git clone https://github.com/[ORG NAME]/[REPO NAME]
 $ cd [REPO NAME]
 ```
+
 
 Create the `venv`:
 
@@ -74,6 +86,14 @@ The command prompt should now have a `(venv)` prefix on it. `python` will now
 call the version of the interpreter used to create the `venv`
 
 Install editable library and development requirements:
+
+### With Makefile:
+
+```console
+make install-dev
+```
+
+### Without Makefile:
 
 ```console
 $ python -m pip install --editable .[dev,test]
@@ -120,19 +140,48 @@ To deactivate (exit) the `venv`:
 ```console
 $ deactivate
 ```
+
 ---
 
-## Note on flake8:
+## Updating dependencies
 
-`flake8` is included in the `requirements-dev.txt` of the project. However it
-disagrees with `black`, the formatter of choice, on max-line-length and two
-general linting errors. `.pre-commit-config.yaml` is already configured to
-ignore these. `flake8` doesn't support `pyproject.toml` so be sure to add the
-following to the editor of choice as needed.
+New dependencys can be added to the `requirements-*.in` file. It is recommended
+to only use pins when specific versions or upgrades beyond a certain version are
+to be avoided. Otherwise, allow `pip-compile` to manage the pins in the
+generated `requirements-*.txt` files.
 
-```ini
---ignore=W503,E203
---max-line-length=88
+Once updated following the steps below, the package can be installed if needed.
+
+### With Makefile
+
+To update the generated files with a dependency:
+
+```console
+make update-dev
+```
+
+To attempt to upgrade all generated dependencies:
+
+```console
+make upgrade-dev
+```
+
+### Without Makefile
+
+To update the generated files with a dependency:
+
+```console
+pip-compile --resolver=backtracking --no-emit-index-url requirements.in
+pip-compile --resolver=backtracking --no-emit-index-url requirements-dev.in
+pip-compile --resolver=backtracking --no-emit-index-url requirements-test.in
+```
+
+To attempt to upgrade all generated dependencies:
+
+```console
+pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements.in
+pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements-dev.in
+pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements-test.in
 ```
 
 ---
@@ -147,18 +196,3 @@ any code submitted for review already passes all selected pre-commit checks.
 with `git` hooks.
 
 ---
-
-## Makefile
-
-This repo has a Makefile with some quality of life scripts if the system
-supports `make`.  Please note there are no checks for an active `venv` in the
-Makefile.
-
-| PHONY         | Description                                                           |
-| ------------- | --------------------------------------------------------------------- |
-| `install-dev` | install development/test requirements and project as editable install |
-| `upgrade-dev` | update all dependencies, regenerate requirements.txt                  |
-| `coverage`    | Run tests with coverage, generate console report                      |
-| `docker-test` | Run coverage and tests in a docker container.                         |
-| `build-dist`  | Build source distribution and wheel distribution                      |
-| `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts  |

@@ -71,24 +71,6 @@ def get_input(prompt: str) -> str:
     return input(prompt)
 
 
-def select_project_type() -> None:
-    """Select whether alt_files should be used."""
-    user_input = get_input("Switch to dependencies in pyproject.toml? (y/N) : ")
-    if user_input.lower() == "y":
-        for file in ALT_FILE_DIR.iterdir():
-            file.replace(file.name)
-
-        # Remove requirements directory and all contents
-        for file in REQUIREMENTS_DIR.iterdir():
-            os.remove(file)
-        os.rmdir(REQUIREMENTS_DIR)
-
-    # Remove alt_files directory and all contents
-    for file in ALT_FILE_DIR.iterdir():
-        os.remove(file)
-    os.rmdir(ALT_FILE_DIR)
-
-
 def get_project_data() -> ProjectData:
     """Query user for details on the project. This is the quiz."""
     data = ProjectData()
@@ -138,14 +120,12 @@ def rename_module_folder(name: str) -> None:
 if __name__ == "__main__":
     print("Eggcellent template setup:\n")
 
-    select_project_type()
-
     project_data = get_project_data()
 
     replace_pyproject_values(project_data)
     replace_readme_values(project_data)
 
-    rename_module_folder(project_data.name)
-
     delete_placeholder_files()
     delete_placeholder_directories()
+
+    rename_module_folder(project_data.name)

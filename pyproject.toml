@@ -20,14 +20,22 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython"
 ]
+# Dynamic dependencies are loaded from requirements*.txt files
 dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.setuptools.dynamic.dependencies]
-file = ["requirements/requirements.txt"]
+file = ["requirements.txt"]
 
 [tool.setuptools.dynamic.optional-dependencies]
-dev = {file = ["requirements/requirements-dev.txt"]}
-test = {file = ["requirements/requirements-test.txt"]}
+dev = {file = ["requirements-dev.txt"]}
+test = {file = ["requirements-test.txt"]}
+
+# Alertative way to specify dependencies
+# dependencies = []
+
+# [project.optional-dependencies]
+# dev = []
+# test = []
 
 [project.urls]
 homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
@@ -90,11 +98,6 @@ exclude_lines =[
     "\\.\\.\\.",
     "if TYPE_CHECKING:",
 ]
-
-# This is ignored by flake8, here in case they decide to add it in the future
-[tool.flake8]
-ignore = "W503,E203"
-max-line-length = 88
 
 [tool.tox]
 legacy_tox_ini = """
