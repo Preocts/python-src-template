@@ -6,9 +6,9 @@ install-dev:
 .PHONY: upgrade-dev
 upgrade-dev:
 	python -m pip install --upgrade pip-tools
-	pip-compile --resolver=backtracking requirements/requirements.in
-	pip-compile --resolver=backtracking requirements/requirements-dev.in
-	pip-compile --resolver=backtracking requirements/requirements-test.in
+	pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements.in
+	pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements-dev.in
+	pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements-test.in
 
 .PHONY: coverage
 coverage:
