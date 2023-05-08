@@ -99,11 +99,6 @@ exclude_lines =[
     "if TYPE_CHECKING:",
 ]
 
-# This is ignored by flake8, here in case they decide to add it in the future
-[tool.flake8]
-ignore = "W503,E203"
-max-line-length = 88
-
 [tool.tox]
 legacy_tox_ini = """
 [tox]
