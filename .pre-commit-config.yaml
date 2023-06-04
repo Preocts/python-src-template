@@ -16,14 +16,20 @@ repos:
     rev: v3.9.0
     hooks:
       - id: reorder-python-imports
-        args: [--py37-plus, --add-import, "from __future__ import annotations"]
+        args:
+          - "--py37-plus"
+          - "--add-import"
+          - "from __future__ import annotations"
+          - "--application-directories"
+          - ".:src"
 
   # Automatically upgrade syntax to newer versions
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.4.0
     hooks:
       - id: pyupgrade
-        args: [--py37-plus]
+        args:
+          - "--py38-plus"
 
   # Format code. No, I don't like everything black does either.
   - repo: https://github.com/psf/black
@@ -47,8 +53,10 @@ repos:
           - flake8-builtins
           - flake8-pep585
         args:
-          - --ignore=W503,E203
-          - --max-line-length=88
+          - "--ignore"
+          - "W503,E203"
+          - "--max-line-length"
+          - "88"
 
   # Type enforcement for Python
   - repo: https://github.com/pre-commit/mirrors-mypy
