@@ -171,17 +171,17 @@ make upgrade-dev
 To update the generated files with a dependency:
 
 ```console
-pip-compile --resolver=backtracking --no-emit-index-url requirements.in
-pip-compile --resolver=backtracking --no-emit-index-url requirements-dev.in
-pip-compile --resolver=backtracking --no-emit-index-url requirements-test.in
+pip-compile --no-emit-index-url requirements.in
+pip-compile --no-emit-index-url requirements-dev.in
+pip-compile --no-emit-index-url requirements-test.in
 ```
 
 To attempt to upgrade all generated dependencies:
 
 ```console
-pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements.in
-pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements-dev.in
-pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements-test.in
+pip-compile --upgrade --no-emit-index-url requirements.in
+pip-compile --upgrade --no-emit-index-url requirements-dev.in
+pip-compile --upgrade --no-emit-index-url requirements-test.in
 ```
 
 ---
@@ -196,3 +196,16 @@ any code submitted for review already passes all selected pre-commit checks.
 with `git` hooks.
 
 ---
+
+## Error: File "setup.py" not found.
+
+If you recieve this error while installing an editible version of this project you have two choices:
+
+1. Update your `pip` to *at least* version 22.3.1
+2. Add the following empty `setup.py` to the project if upgrading pip is not an option
+
+```py
+from setuptools import setup
+
+setup()
+```
