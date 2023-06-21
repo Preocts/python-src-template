@@ -171,17 +171,17 @@ make upgrade-dev
 To update the generated files with a dependency:
 
 ```console
-pip-compile --no-emit-index-url requirements.in
-pip-compile --no-emit-index-url requirements-dev.in
-pip-compile --no-emit-index-url requirements-test.in
+pip-compile --no-emit-index-url requirements/requirements.in
+pip-compile --no-emit-index-url requirements/requirements-dev.in
+pip-compile --no-emit-index-url requirements/requirements-test.in
 ```
 
 To attempt to upgrade all generated dependencies:
 
 ```console
-pip-compile --upgrade --no-emit-index-url requirements.in
-pip-compile --upgrade --no-emit-index-url requirements-dev.in
-pip-compile --upgrade --no-emit-index-url requirements-test.in
+pip-compile --upgrade --no-emit-index-url requirements/requirements.in
+pip-compile --upgrade --no-emit-index-url requirements/requirements-dev.in
+pip-compile --upgrade --no-emit-index-url requirements/requirements-test.in
 ```
 
 ---
