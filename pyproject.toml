@@ -24,11 +24,11 @@ classifiers = [
 dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.setuptools.dynamic.dependencies]
-file = ["requirements.txt"]
+file = ["requirements/requirements.txt"]
 
 [tool.setuptools.dynamic.optional-dependencies]
-dev = {file = ["requirements-dev.txt"]}
-test = {file = ["requirements-test.txt"]}
+dev = {file = ["requirements/requirements-dev.txt"]}
+test = {file = ["requirements/requirements-test.txt"]}
 
 # Alertative way to specify dependencies
 # dependencies = []
