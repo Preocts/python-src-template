@@ -17,6 +17,7 @@ PLACEHOLDER_FILES = [
 PLACEHOLDER_DIR = [Path("src/module_name/sample_data")]
 PYPROJECT_TARGET = Path("pyproject.toml")
 README_TARGET = Path("README.md")
+TOX_TARGET = Path("tox.ini")
 ALT_FILE_DIR = Path("alt_files")
 REQUIREMENTS_DIR = Path("requirements")
 ORG = "Preocts"
@@ -110,6 +111,14 @@ def replace_readme_values(data: ProjectData) -> None:
     README_TARGET.write_text(readme)
 
 
+@bookends("Updating tox.ini values")
+def replace_tox_values(data: ProjectData) -> None:
+    """Update tox value, replacing module_name with actual module name."""
+    tox = Path(TOX_TARGET).read_text()
+    tox = tox.replace("module_name", data.module)
+    Path(TOX_TARGET).write_text(tox)
+
+
 @bookends("Renaming src/module_name folder")
 def rename_module_folder(name: str) -> None:
     """Rename module folder."""
@@ -123,6 +132,7 @@ if __name__ == "__main__":
     project_data = get_project_data()
 
     replace_pyproject_values(project_data)
+    replace_tox_values(project_data)
     replace_readme_values(project_data)
 
     delete_placeholder_files()
