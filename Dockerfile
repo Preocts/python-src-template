@@ -1,5 +1,7 @@
 FROM ubuntu:focal
 
+ENV LANG=C.UTF-8
+
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends software-properties-common
 RUN add-apt-repository -y 'ppa:deadsnakes/ppa'
