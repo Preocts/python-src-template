@@ -1,5 +1,7 @@
 [flake8]
+# E501: Allow lines to be too long (black will take care of it)
+# E203: Allow whitespace before ':'
 extend-ignore =
-    W503
+    E501
     E203
 max-line-length = 88
