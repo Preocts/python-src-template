@@ -6,16 +6,16 @@ install-dev:
 .PHONY: update-dev
 update-dev:
 	python -m pip install --upgrade pip-tools
-	pip-compile --resolver=backtracking --no-emit-index-url requirements/requirements.in
-	pip-compile --resolver=backtracking --no-emit-index-url requirements/requirements-dev.in
-	pip-compile --resolver=backtracking --no-emit-index-url requirements/requirements-test.in
+	pip-compile --no-emit-index-url requirements/requirements.in
+	pip-compile --no-emit-index-url requirements/requirements-dev.in
+	pip-compile --no-emit-index-url requirements/requirements-test.in
 
 .PHONY: upgrade-dev
 upgrade-dev:
 	python -m pip install --upgrade pip-tools
-	pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements/requirements.in
-	pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements/requirements-dev.in
-	pip-compile --resolver=backtracking --upgrade --no-emit-index-url requirements/requirements-test.in
+	pip-compile --upgrade --no-emit-index-url requirements/requirements.in
+	pip-compile --upgrade --no-emit-index-url requirements/requirements-dev.in
+	pip-compile --upgrade --no-emit-index-url requirements/requirements-test.in
 
 
 .PHONY: coverage
