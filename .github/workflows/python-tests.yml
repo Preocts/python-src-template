@@ -1,4 +1,9 @@
 name: "python tests and coverage"
+# Uses:
+# https://github.com/actions/setup-python
+# https://github.com/actions/checkout
+# https://github.com/actions/download-artifact
+# https://github.com/actions/upload-artifact
 
 on:
   pull_request:
@@ -28,10 +33,10 @@ jobs:
 
     steps:
       - name: "Repo checkout"
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9"
 
       - name: "Set up Python ${{ matrix.python-version }}"
-        uses: "actions/setup-python@v4"
+        uses: "actions/setup-python@61a6322f88396a6271a6ee3565807d608ecaddd1"
         with:
           python-version: "${{ matrix.python-version }}"
           allow-prereleases: true
@@ -45,7 +50,7 @@ jobs:
           tox -e py
 
       - name: "Save coverage artifact"
-        uses: "actions/upload-artifact@v3"
+        uses: "actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce"
         with:
           name: "coverage-artifact"
           path: ".coverage.*"
@@ -57,10 +62,10 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Repo checkout"
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9"
 
       - name: "Set up Python"
-        uses: "actions/setup-python@v4"
+        uses: "actions/setup-python@61a6322f88396a6271a6ee3565807d608ecaddd1"
         with:
           python-version: "3.10"
 
@@ -69,7 +74,7 @@ jobs:
           python -m pip install --upgrade pip tox
 
       - name: "Download coverage artifacts"
-        uses: actions/download-artifact@v3
+        uses: "actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a"
         with:
           name: coverage-artifact
 
