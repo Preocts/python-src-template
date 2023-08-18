@@ -2,7 +2,7 @@ temp_*
 .env
 venv/
 *egg-info/
-.tox/
+.nox/
 .coverage
 .coverage.*
 coverage.xml

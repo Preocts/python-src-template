@@ -12,8 +12,8 @@ WORKDIR /src
 
 ENV PATH=/venv/bin:$PATH
 RUN python3.8 -m venv /venv
-RUN python -m pip install --upgrade tox --no-cache-dir
+RUN python -m pip install --upgrade nox --no-cache-dir
 
 COPY . /src
 
-CMD ["tox", "-r"]
+CMD ["nox"]
