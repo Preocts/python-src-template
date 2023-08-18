@@ -79,7 +79,7 @@ Makefile.  If you are on Windows you can install make using scoop or chocolatey.
 | `coverage`    | Run tests with coverage, generate console report                      |
 | `docker-test` | Run coverage and tests in a docker container.                         |
 | `build-dist`  | Build source distribution and wheel distribution                      |
-| `clean`       | Deletes build, tox, coverage, pytest, mypy, cache, and pyc artifacts  |
+| `clean`       | Deletes build, nox, coverage, pytest, mypy, cache, and pyc artifacts  |
 
 
 Clone this repo and enter root directory of repo:

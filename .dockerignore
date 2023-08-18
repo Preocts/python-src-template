@@ -2,7 +2,7 @@ venv/
 Dockerfile
 .dockerignore
 build/
-.tox/
+.nox/
 .pytest_cache/
 .mypy_cache/
 .github/
