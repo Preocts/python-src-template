@@ -11,4 +11,4 @@
 pytest
 pytest-randomly
 coverage
-tox
+nox

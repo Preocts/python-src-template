@@ -148,7 +148,7 @@ $ pytest
 Run tests (slow):
 
 ```console
-$ tox
+$ nox
 ```
 
 Build dist:
