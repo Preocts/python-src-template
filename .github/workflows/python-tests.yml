@@ -15,7 +15,7 @@ on:
 
 jobs:
   run-tests-and-coverage:
-    name: "Run Tox for tests and coverage"
+    name: "Run nox for tests and coverage"
     runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
@@ -41,13 +41,13 @@ jobs:
           python-version: "${{ matrix.python-version }}"
           allow-prereleases: true
 
-      - name: "Install tox"
+      - name: "Install nox"
         run: |
-          python -m pip install --upgrade pip tox
+          python -m pip install --upgrade pip nox
 
-      - name: "Run tests and coverage via tox"
+      - name: "Run tests and coverage via nox"
         run: |
-          tox -e py
+          nox --session tests_with_coverage-${{ matrix.python-version }}
 
       - name: "Save coverage artifact"
         uses: "actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce"
@@ -69,9 +69,9 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: "Install tox"
+      - name: "Install nox"
         run: |
-          python -m pip install --upgrade pip tox
+          python -m pip install --upgrade pip nox
 
       - name: "Download coverage artifacts"
         uses: "actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a"
@@ -80,14 +80,34 @@ jobs:
 
       - name: "Compile coverage data, print report"
         run: |
-          python -m tox -e coverage
+          nox --session coverage_combine_and_report
           export TOTAL=$(python -c "import json;print(json.load(open('coverage.json'))['totals']['percent_covered_display'])")
           echo "TOTAL=$TOTAL" >> $GITHUB_ENV
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
 
+  mypy-check:
+    name: "mypy strict enforcement"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Repo checkout"
+        uses: "actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9"
+
+      - name: "Set up Python"
+        uses: "actions/setup-python@61a6322f88396a6271a6ee3565807d608ecaddd1"
+        with:
+          python-version: "3.10"
+
+      - name: "Install nox"
+        run: |
+          python -m pip install --upgrade pip nox
+
+      - name: "Enforce strict type annotations with mypy"
+        run: |
+          nox --session mypy_check
+
   ci-success:
     name: "CI steps all completed successfully"
-    needs: "coverage-compile"
+    needs: ["coverage-compile", "mypy-check"]
     runs-on: "ubuntu-latest"
     steps:
       - name: "Success"
