@@ -1,4 +1,4 @@
-# Testing Requirements - pytest, tox, etc.
+# Testing Requirements
 # ----------------------------------------
 # Ensure to set PIP_INDEX_URL to the correct value for your environment
 # This is the URL to the Artifactory instance that hosts the Python packages (default: pypi.org)
