@@ -65,45 +65,27 @@ the desired version while creating the `venv`. (e.g. `python3` or `python3.8`)
 
 ## Installation steps
 
-### Makefile
-
-This repo has a Makefile with some quality of life scripts if the system
-supports `make`.  Please note there are no checks for an active `venv` in the
-Makefile.  If you are on Windows you can install make using scoop or chocolatey.
-
-| PHONY         | Description                                                           |
-| ------------- | --------------------------------------------------------------------- |
-| `install-dev` | install development/test requirements and project as editable install |
-| `update-dev`  | regenerate requirements-*.txt (will keep existing pins)               |
-| `upgrade-dev` | attempt to update all dependencies, regenerate requirements-*.txt     |
-| `coverage`    | Run tests with coverage, generate console report                      |
-| `docker-test` | Run coverage and tests in a docker container.                         |
-| `build-dist`  | Build source distribution and wheel distribution                      |
-| `clean`       | Deletes build, nox, coverage, pytest, mypy, cache, and pyc artifacts  |
-
-
 Clone this repo and enter root directory of repo:
 
 ```console
-$ git clone https://github.com/[ORG NAME]/[REPO NAME]
-$ cd [REPO NAME]
+git clone https://github.com/[ORG NAME]/[REPO NAME]
+cd [REPO NAME]
 ```
-
 
 Create the `venv`:
 
 ```console
-$ python -m venv venv
+python -m venv venv
 ```
 
 Activate the `venv`:
 
 ```console
 # Linux/Mac
-$ . venv/bin/activate
+. venv/bin/activate
 
 # Windows
-$ venv\Scripts\activate
+venv\Scripts\activate
 ```
 
 The command prompt should now have a `(venv)` prefix on it. `python` will now
@@ -111,22 +93,14 @@ call the version of the interpreter used to create the `venv`
 
 Install editable library and development requirements:
 
-### With Makefile:
-
 ```console
-make install-dev
-```
-
-### Without Makefile:
-
-```console
-$ python -m pip install --editable .[dev,test]
+python -m pip install --editable .[dev,test]
 ```
 
 Install pre-commit [(see below for details)](#pre-commit):
 
 ```console
-$ pre-commit install
+pre-commit install
 ```
 
 ---
@@ -136,33 +110,32 @@ $ pre-commit install
 Run pre-commit on all files:
 
 ```console
-$ pre-commit run --all-files
+pre-commit run --all-files
 ```
 
 Run tests (quick):
 
 ```console
-$ pytest
+pytest
 ```
 
-Run tests (slow):
+Run tests:
 
 ```console
-$ nox
+nox
 ```
 
 Build dist:
 
 ```console
-$ python -m pip install --upgrade build
-
-$ python -m build
+python -m pip install --upgrade build
+python -m build
 ```
 
 To deactivate (exit) the `venv`:
 
 ```console
-$ deactivate
+deactivate
 ```
 
 ---
@@ -176,22 +149,6 @@ generated `requirements-*.txt` files.
 
 Once updated following the steps below, the package can be installed if needed.
 
-### With Makefile
-
-To update the generated files with a dependency:
-
-```console
-make update-dev
-```
-
-To attempt to upgrade all generated dependencies:
-
-```console
-make upgrade-dev
-```
-
-### Without Makefile
-
 To update the generated files with a dependency:
 
 ```console
@@ -200,13 +157,7 @@ pip-compile --no-emit-index-url requirements/requirements-dev.in
 pip-compile --no-emit-index-url requirements/requirements-test.in
 ```
 
-To attempt to upgrade all generated dependencies:
-
-```console
-pip-compile --upgrade --no-emit-index-url requirements/requirements.in
-pip-compile --upgrade --no-emit-index-url requirements/requirements-dev.in
-pip-compile --upgrade --no-emit-index-url requirements/requirements-test.in
-```
+To attempt to upgrade all generated dependencies add the `--upgrade` flag.
 
 ---
 
