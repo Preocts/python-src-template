@@ -17,13 +17,13 @@ REQUIREMENT_IN_FILES = [
 
 # What we allowed to clean (delete)
 CLEANABLE_TARGETS = [
-    "./**/__pycache__",
+    "./**/dist",
+    "./**/build",
+    "./**/.nox",
     "./**/.mypy_cache",
     "./**/.pytest_cache",
     "./**/.coverage",
-    "./**/.nox",
-    "./**/dist",
-    "./**/build",
+    "./**/__pycache__",
     "./**/*.pyc",
     "./**/*.pyo",
     "./**/coverage.json",
