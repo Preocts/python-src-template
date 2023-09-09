@@ -9,16 +9,14 @@ requires-python = ">=3.8"
 description = "Module Description"
 readme = "README.md"
 license = { file = "LICENSE" }
-authors = [
-    { email = "yourname@email.invalid", name = "[YOUR NAME]" }
-]
+authors = [{ email = "yourname@email.invalid", name = "[YOUR NAME]" }]
 maintainers = []
 keywords = []
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: Implementation :: CPython"
+    "Programming Language :: Python :: Implementation :: CPython",
 ]
 # Dynamic dependencies are loaded from requirements*.txt files
 dynamic = ["dependencies", "optional-dependencies"]
@@ -27,8 +25,8 @@ dynamic = ["dependencies", "optional-dependencies"]
 file = ["requirements/requirements.txt"]
 
 [tool.setuptools.dynamic.optional-dependencies]
-dev = {file = ["requirements/requirements-dev.txt"]}
-test = {file = ["requirements/requirements-test.txt"]}
+dev = { file = ["requirements/requirements-dev.txt"] }
+test = { file = ["requirements/requirements-test.txt"] }
 
 # Alertative way to specify dependencies
 # dependencies = []
@@ -73,25 +71,15 @@ warn_unused_ignores = false
 
 [tool.coverage.run]
 branch = true
-source = [
-    "tests",
-]
-source_pkgs = [
-    "module_name",
-]
+source = ["tests"]
+source_pkgs = ["module_name"]
 
 [tool.coverage.paths]
-source = [
-    "src/",
-    "*/site-packages",
-]
-test = [
-    "tests/",
-    "*/tests",
-]
+source = ["src/", "*/site-packages"]
+test = ["tests/", "*/tests"]
 
 [tool.coverage.report]
-exclude_lines =[
+exclude_lines = [
     "pragma: no cover",
     "raise NotImplementedError",
     "if __name__ == .__main__.:",
