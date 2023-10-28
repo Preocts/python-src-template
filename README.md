@@ -48,7 +48,15 @@ contributing to the repo.
 
 ## Prerequisites
 
-### It is recommended to use a virtual environment
+### Clone repo
+
+```console
+git clone https://github.com/[ORG NAME]/[REPO NAME]
+
+cd [REPO NAME]
+```
+
+### Virtual Environment
 
 Use a ([`venv`](https://docs.python.org/3/library/venv.html)), or equivalent,
 when working with python projects. Leveraging a `venv` will ensure the installed
@@ -90,25 +98,17 @@ To deactivate (exit) the `venv`:
 deactivate
 ```
 
-
 ---
 
 ## Developer Installation Steps
 
-Clone this repo and enter root directory of repo:
-
-```console
-git clone https://github.com/[ORG NAME]/[REPO NAME]
-cd [REPO NAME]
-```
-
-Install editable library and development requirements:
+### Install editable library and development requirements
 
 ```console
 python -m pip install --editable .[dev,test]
 ```
 
-Install pre-commit [(see below for details)](#pre-commit):
+### Install pre-commit [(see below for details)](#pre-commit)
 
 ```console
 pre-commit install
@@ -118,25 +118,25 @@ pre-commit install
 
 ## Pre-commit and nox tools
 
-Run pre-commit on all files:
+### Run pre-commit on all files
 
 ```console
 pre-commit run --all-files
 ```
 
-Run tests with coverage (quick):
+### Run tests with coverage (quick)
 
 ```console
 nox -e coverage
 ```
 
-Run tests (slow):
+### Run tests (slow)
 
 ```console
 nox
 ```
 
-Build dist:
+### Build dist
 
 ```console
 nox -e build
@@ -153,13 +153,13 @@ generated `requirements-*.txt` files.
 
 Once updated following the steps below, the package can be installed if needed.
 
-To update the generated files with a dependency:
+### Update the generated files with changes
 
 ```console
 nox -e update
 ```
 
-To attempt to upgrade all generated dependencies:
+### Upgrade all generated dependencies
 
 ```console
 nox -e upgrade
@@ -176,6 +176,6 @@ any code submitted for review already passes all selected pre-commit checks.
 
 ---
 
-## Error: File "setup.py" not found.
+## Error: File "setup.py" not found
 
 Update `pip` to at least version 22.3.1
