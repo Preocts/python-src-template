@@ -42,14 +42,18 @@ fit.
 
 # Local developer installation
 
-It is **strongly** recommended to use a virtual environment
-([`venv`](https://docs.python.org/3/library/venv.html)) when working with python
-projects. Leveraging a `venv` will ensure the installed dependency files will
-not impact other python projects or any system dependencies.
-
 The following steps outline how to install this repo for local development. See
 the [CONTRIBUTING.md](CONTRIBUTING.md) file in the repo root for information on
 contributing to the repo.
+
+## Prerequisites
+
+### It is recommended to use a virtual environment
+
+Use a ([`venv`](https://docs.python.org/3/library/venv.html)), or equivalent,
+when working with python projects. Leveraging a `venv` will ensure the installed
+dependency files will not impact other python projects or any system
+dependencies.
 
 **Windows users**: Depending on your python install you will use `py` in place
 of `python` to create the `venv`.
@@ -61,18 +65,7 @@ the desired version while creating the `venv`. (e.g. `python3` or `python3.8`)
 `python` for command line instructions. This will ensure you are using the
 `venv`'s python and not the system level python.
 
----
-
-## Installation steps
-
-Clone this repo and enter root directory of repo:
-
-```console
-git clone https://github.com/[ORG NAME]/[REPO NAME]
-cd [REPO NAME]
-```
-
-Create the `venv`:
+### Create the `venv`:
 
 ```console
 python -m venv venv
@@ -91,6 +84,24 @@ venv\Scripts\activate
 The command prompt should now have a `(venv)` prefix on it. `python` will now
 call the version of the interpreter used to create the `venv`
 
+To deactivate (exit) the `venv`:
+
+```console
+deactivate
+```
+
+
+---
+
+## Developer Installation Steps
+
+Clone this repo and enter root directory of repo:
+
+```console
+git clone https://github.com/[ORG NAME]/[REPO NAME]
+cd [REPO NAME]
+```
+
 Install editable library and development requirements:
 
 ```console
@@ -105,7 +116,7 @@ pre-commit install
 
 ---
 
-## Misc Steps
+## Pre-commit and nox tools
 
 Run pre-commit on all files:
 
@@ -113,13 +124,13 @@ Run pre-commit on all files:
 pre-commit run --all-files
 ```
 
-Run tests (quick):
+Run tests with coverage (quick):
 
 ```console
-pytest
+nox -e coverage
 ```
 
-Run tests:
+Run tests (slow):
 
 ```console
 nox
@@ -128,14 +139,7 @@ nox
 Build dist:
 
 ```console
-python -m pip install --upgrade build
-python -m build
-```
-
-To deactivate (exit) the `venv`:
-
-```console
-deactivate
+nox -e build
 ```
 
 ---
@@ -152,12 +156,14 @@ Once updated following the steps below, the package can be installed if needed.
 To update the generated files with a dependency:
 
 ```console
-pip-compile --no-emit-index-url requirements/requirements.in
-pip-compile --no-emit-index-url requirements/requirements-dev.in
-pip-compile --no-emit-index-url requirements/requirements-test.in
+nox -e update
 ```
 
-To attempt to upgrade all generated dependencies add the `--upgrade` flag.
+To attempt to upgrade all generated dependencies:
+
+```console
+nox -e upgrade
+```
 
 ---
 
@@ -167,20 +173,9 @@ To attempt to upgrade all generated dependencies add the `--upgrade` flag.
 
 This repo is setup with a `.pre-commit-config.yaml` with the expectation that
 any code submitted for review already passes all selected pre-commit checks.
-`pre-commit` is installed with the development requirements and runs seemlessly
-with `git` hooks.
 
 ---
 
 ## Error: File "setup.py" not found.
 
-If you recieve this error while installing an editible version of this project you have two choices:
-
-1. Update your `pip` to *at least* version 22.3.1
-2. Add the following empty `setup.py` to the project if upgrading pip is not an option
-
-```py
-from setuptools import setup
-
-setup()
-```
+Update `pip` to at least version 22.3.1
