@@ -12,29 +12,16 @@ repos:
       - id: debug-statements
       - id: mixed-line-ending
 
-  # Adds a standard feel to import segments, adds future annotations
-  - repo: https://github.com/asottile/reorder-python-imports
-    rev: v3.12.0
+  # Adds a standard feel to import segments
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
     hooks:
-      - id: reorder-python-imports
-        args:
-          - "--py37-plus"
-          - "--add-import"
-          - "from __future__ import annotations"
-          - "--application-directories"
-          - ".:src"
-
-  # Automatically upgrade syntax to newer versions
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
-    hooks:
-      - id: pyupgrade
-        args:
-          - "--py38-plus"
+      - id: isort
+        args: ["--profile", "black"]
 
   # Format code. No, I don't like everything black does either.
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 23.12.1
+    rev: 24.1.1
     hooks:
       - id: black
 
