@@ -114,6 +114,15 @@ python -m pip install --editable .[dev,test]
 pre-commit install
 ```
 
+### Install with nox
+
+If you have `nox` installed with `pipx` or in the current venv you can use the
+following session. This is an alternative to the two steps above.
+
+```console
+nox -s install
+```
+
 ---
 
 ## Pre-commit and nox tools
