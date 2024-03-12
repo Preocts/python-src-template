@@ -11,9 +11,8 @@ import nox
 MODULE_NAME = "module_name"
 TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
+DEFAULT_PYTHON_VERSION = "3.11"
 VENV_PATH = "venv"
-WINDOWS_PYTHON = "py"
-LINUX_PYTHON = "python3"
 REQUIREMENT_IN_FILES = [
     pathlib.Path("requirements/requirements.in"),
     pathlib.Path("requirements/requirements-dev.in"),
@@ -55,7 +54,7 @@ def tests_with_coverage(session: nox.Session) -> None:
     session.run("coverage", "run", "-p", "-m", "pytest", TESTS_PATH)
 
 
-@nox.session()
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def coverage_combine_and_report(session: nox.Session) -> None:
     """Combine all coverage partial files and generate JSON report."""
     print_standard_logs(session)
@@ -68,7 +67,7 @@ def coverage_combine_and_report(session: nox.Session) -> None:
     session.run("python", "-m", "coverage", "json")
 
 
-@nox.session()
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def mypy_check(session: nox.Session) -> None:
     """Run mypy against package and all required dependencies."""
     print_standard_logs(session)
@@ -93,7 +92,7 @@ def docker(session: nox.Session) -> None:
     session.run("docker", "run", "-it", "--rm", "pydocker-test")
 
 
-@nox.session()
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def build(session: nox.Session) -> None:
     """Build distrobution files."""
     print_standard_logs(session)
@@ -113,7 +112,7 @@ def install(session: nox.Session) -> None:
         venv_path = f"{venv_path}/Scripts"
         activate_command = f"{venv_path}/activate"
     else:
-        py_command = "python3"
+        py_command = f"python{DEFAULT_PYTHON_VERSION}"
         venv_path = f"{venv_path}/bin"
         activate_command = f"source {venv_path}/activate"
 
@@ -128,7 +127,7 @@ def install(session: nox.Session) -> None:
         session.log(f"\n\nRun '{activate_command}' to enter the virtual environment.\n")
 
 
-@nox.session()
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def update(session: nox.Session) -> None:
     """Process requirement*.in files, updating only additions/removals."""
     print_standard_logs(session)
@@ -138,7 +137,7 @@ def update(session: nox.Session) -> None:
         session.run("pip-compile", "--no-emit-index-url", str(filename))
 
 
-@nox.session()
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def upgrade(session: nox.Session) -> None:
     """Process requirement*.in files and upgrade all libraries as possible."""
     print_standard_logs(session)
