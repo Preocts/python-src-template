@@ -76,7 +76,6 @@ jobs:
       - name: "Download coverage artifacts"
         uses: "actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427"
         with:
-          name: "coverage-artifacts"
           pattern: "coverage-artifact-*"
           merge-multiple: true
 
