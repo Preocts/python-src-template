@@ -4,29 +4,29 @@
 #
 #    pip-compile --no-emit-index-url requirements/requirements-dev.in
 #
-black==23.10.1
+black==24.2.0
     # via -r requirements/requirements-dev.in
 cfgv==3.4.0
     # via pre-commit
 click==8.1.7
     # via black
-distlib==0.3.7
+distlib==0.3.8
     # via virtualenv
-filelock==3.13.0
+filelock==3.13.1
     # via virtualenv
-flake8==6.1.0
+flake8==7.0.0
     # via
     #   -r requirements/requirements-dev.in
     #   flake8-builtins
-flake8-builtins==2.1.0
+flake8-builtins==2.2.0
     # via -r requirements/requirements-dev.in
 flake8-pep585==0.1.7
     # via -r requirements/requirements-dev.in
-identify==2.5.31
+identify==2.5.35
     # via pre-commit
 mccabe==0.7.0
     # via flake8
-mypy==1.6.1
+mypy==1.9.0
     # via -r requirements/requirements-dev.in
 mypy-extensions==1.0.0
     # via
@@ -34,25 +34,25 @@ mypy-extensions==1.0.0
     #   mypy
 nodeenv==1.8.0
     # via pre-commit
-packaging==23.2
+packaging==24.0
     # via black
-pathspec==0.11.2
+pathspec==0.12.1
     # via black
-platformdirs==3.11.0
+platformdirs==4.2.0
     # via
     #   black
     #   virtualenv
-pre-commit==3.5.0
+pre-commit==3.6.2
     # via -r requirements/requirements-dev.in
 pycodestyle==2.11.1
     # via flake8
-pyflakes==3.1.0
+pyflakes==3.2.0
     # via flake8
 pyyaml==6.0.1
     # via pre-commit
-typing-extensions==4.8.0
+typing-extensions==4.10.0
     # via mypy
-virtualenv==20.24.6
+virtualenv==20.25.1
     # via pre-commit
 
 # The following packages are considered to be unsafe in a requirements file:
