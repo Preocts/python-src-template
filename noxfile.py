@@ -12,6 +12,7 @@ MODULE_NAME = "module_name"
 TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
 DEFAULT_PYTHON_VERSION = "3.11"
+PYTHON_MATRIX = ["3.8", "3.9", "3.10", "3.11", "3.12"]
 VENV_PATH = "venv"
 REQUIREMENT_IN_FILES = [
     pathlib.Path("requirements/requirements.in"),
@@ -43,9 +44,7 @@ nox.options.sessions = [
 ]
 
 
-@nox.session(
-    python=["3.8", "3.9", "3.10", "3.11", "3.12"],
-)
+@nox.session(python=PYTHON_MATRIX)
 def tests_with_coverage(session: nox.Session) -> None:
     """Run unit tests with coverage saved to partial file."""
     print_standard_logs(session)
