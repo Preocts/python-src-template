@@ -86,7 +86,7 @@ def coverage(session: nox.Session) -> None:
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def build(session: nox.Session) -> None:
-    """Build distrobution files."""
+    """Build distribution files."""
     print_standard_logs(session)
 
     session.install("build")
