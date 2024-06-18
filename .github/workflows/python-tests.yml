@@ -105,12 +105,3 @@ jobs:
       - name: "Enforce strict type annotations with mypy"
         run: |
           nox --session mypy_check
-
-  ci-success:
-    name: "CI steps all completed successfully"
-    needs: ["coverage-compile", "mypy-check"]
-    runs-on: "ubuntu-latest"
-    steps:
-      - name: "Success"
-        run: |
-          echo "If you are seeing this, the CI run was successful."
