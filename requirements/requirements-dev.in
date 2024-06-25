@@ -13,3 +13,4 @@ mypy
 flake8
 flake8-builtins
 flake8-pep585
+pep8-naming

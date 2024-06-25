@@ -18,6 +18,7 @@ flake8==7.0.0
     # via
     #   -r requirements/requirements-dev.in
     #   flake8-builtins
+    #   pep8-naming
 flake8-builtins==2.2.0
     # via -r requirements/requirements-dev.in
 flake8-pep585==0.1.7
@@ -38,6 +39,8 @@ packaging==24.0
     # via black
 pathspec==0.12.1
     # via black
+pep8-naming==0.14.1
+    # via -r requirements/requirements-dev.in
 platformdirs==4.2.0
     # via
     #   black
