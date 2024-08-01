@@ -12,7 +12,7 @@ MODULE_NAME = "module_name"
 TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
 DEFAULT_PYTHON_VERSION = "3.12"
-PYTHON_MATRIX = ["3.9", "3.10", "3.11", "3.12"]
+PYTHON_MATRIX = ["3.9", "3.10", "3.11", "3.12", "3.13"]
 VENV_PATH = "venv"
 REQUIREMENT_IN_FILES = [
     pathlib.Path("requirements/requirements.in"),
