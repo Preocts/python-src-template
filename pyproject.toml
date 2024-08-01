@@ -19,56 +19,27 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
-# Dynamic dependencies are loaded from requirements*.txt files
-dynamic = [
-    "dependencies",
-    "optional-dependencies",
-    "version",
-]
+dynamic = ["dependencies", "optional-dependencies", "version"]
 
 [tool.setuptools_scm]
 # Purposely left empty
 
 [tool.setuptools.dynamic.dependencies]
-file = [
-    "requirements/requirements.txt",
-]
+file = ["requirements/requirements.txt"]
 
 [tool.setuptools.dynamic.optional-dependencies]
-dev = { file = [
-        "requirements/requirements-dev.txt",
-    ] }
-test = { file = [
-        "requirements/requirements-test.txt",
-    ] }
-
-# Alertative way to specify dependencies
-# dependencies = []
-
-# [project.optional-dependencies]
-# dev = []
-# test = []
+dev = { file = ["requirements/requirements-dev.txt"] }
+test = { file = ["requirements/requirements-test.txt"] }
 
 [project.urls]
 homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
-# documentation = ""
-# repository = ""
-# changelog = ""
 
 # CLI scripts if needed
 # [project.scripts]
 # python-src-example = "module_name.sample:main"
 
-# [tool.setuptools.packages.find]
-# where = ["src"]  # ["."] by default
-# include = ["*"]  # ["*"] by default
-# exclude = ["tests"]  # empty by default
-# namespaces = true  # true by default
-
 [tool.setuptools.package-data]
-"module_name" = [
-    "py.typed",
-]
+"module_name" = ["py.typed"]
 
 [tool.mypy]
 check_untyped_defs = true
@@ -87,22 +58,12 @@ warn_unused_ignores = false
 
 [tool.coverage.run]
 branch = true
-source = [
-    "tests",
-]
-source_pkgs = [
-    "module_name",
-]
+source = ["tests"]
+source_pkgs = ["module_name"]
 
 [tool.coverage.paths]
-source = [
-    "src/",
-    "*/site-packages",
-]
-test = [
-    "tests/",
-    "*/tests",
-]
+source = ["src/", "*/site-packages"]
+test = ["tests/", "*/tests"]
 
 [tool.coverage.report]
 exclude_lines = [
