@@ -16,8 +16,6 @@ PYTHON_MATRIX = ["3.9", "3.10", "3.11", "3.12", "3.13"]
 VENV_PATH = "venv"
 REQUIREMENT_IN_FILES = [
     pathlib.Path("requirements/requirements.in"),
-    pathlib.Path("requirements/requirements-dev.in"),
-    pathlib.Path("requirements/requirements-test.in"),
 ]
 
 # What we allowed to clean (delete)
