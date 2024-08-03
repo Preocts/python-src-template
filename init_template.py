@@ -17,6 +17,7 @@ PLACEHOLDER_FILES = [
 PLACEHOLDER_DIR = [Path("src/module_name/sample_data")]
 PYPROJECT_TARGET = Path("pyproject.toml")
 README_TARGET = Path("README.md")
+CONTRIBUTING_TARGET = Path("CONTRIBUTING.md")
 NOX_TARGET = Path("noxfile.py")
 ALT_FILE_DIR = Path("alt_files")
 REQUIREMENTS_DIR = Path("requirements")
@@ -111,6 +112,20 @@ def replace_readme_values(data: ProjectData) -> None:
     README_TARGET.write_text(readme)
 
 
+@bookends("Updating references in CONTRIBUTING.md")
+def replace_contributing_values(data: ProjectData) -> None:
+    """Update badge urls and placeholders in README.md"""
+    readme = CONTRIBUTING_TARGET.read_text()
+    default = ProjectData()
+
+    readme = re.sub(ORG, data.org_name, readme)
+    readme = re.sub(REPO, data.repo_name, readme)
+    readme = re.sub(re.escape(default.org_name), data.org_name, readme)
+    readme = re.sub(re.escape(default.repo_name), data.repo_name, readme)
+
+    CONTRIBUTING_TARGET.write_text(readme)
+
+
 @bookends("Updating noxfile.py values")
 def replace_nox_values(data: ProjectData) -> None:
     """Update nox value, replacing module_name with actual module name."""
@@ -134,6 +149,7 @@ if __name__ == "__main__":
     replace_pyproject_values(project_data)
     replace_nox_values(project_data)
     replace_readme_values(project_data)
+    replace_contributing_values(project_data)
 
     delete_placeholder_files()
     delete_placeholder_directories()
