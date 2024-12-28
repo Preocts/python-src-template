@@ -4,4 +4,3 @@
 extend-ignore =
     E501
     E203
-max-line-length = 88
