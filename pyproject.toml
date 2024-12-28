@@ -38,6 +38,10 @@ homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
 # [project.scripts]
 # python-src-example = "module_name.sample:main"
 
+[tool.black]
+line-length = 100
+target-version = ['py39']
+
 [tool.setuptools.package-data]
 "module_name" = ["py.typed"]
 
