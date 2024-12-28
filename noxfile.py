@@ -107,12 +107,13 @@ def install(session: nox.Session) -> None:
         activate_command = f"source {venv_path}/activate"
 
     if not os.path.exists(VENV_PATH):
-        session.run(py_command, "-m", "venv", VENV_PATH, "--upgrade-deps")
+        session.run(py_command, "-m", "venv", VENV_PATH)
+        session.run(f"{venv_path}/python", "-m", "pip", "install", "--upgrade", "pip")
 
     session.run(f"{venv_path}/python", "-m", "pip", "install", "-e", ".[dev,test]")
     session.run(f"{venv_path}/pre-commit", "install")
 
-    if not venv_path:
+    if not os.environ.get("VIRTUAL_ENV"):
         session.log(f"\n\nRun '{activate_command}' to enter the virtual environment.\n")
 
 
