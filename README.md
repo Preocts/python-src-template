@@ -21,12 +21,6 @@ fit.
     one-size-fits-most template I've put together. Use what you want how you
     want.
 
-- **Q:** Why do you hard pin your development and test requirements?
-  - **A:** For control over the environment used to develop on the package. It
-    is also beneficial in many of the areas I work where artifactory proxies are
-    between `pip` and the pypi public index. Versions remaining hard pinned
-    ensure the package is always cleared for use through the artifactory.
-
 - **Q:** Why not put the requirements into the `pyproject.toml`?
   - **A:** Mostly because `pip-compile` does all the work for me and doesn't
     target the `pyproject.toml`. Partly because many of my projects need to be
@@ -37,3 +31,10 @@ fit.
   - **A:** I'm constantly finding new tweaks that make the template fit just a
     little better. I'm also open to ideas and suggestions so please drop an
     issue if you have one.
+
+- **Q:** Have I heard of uv?
+  - **A:** Yes. I'm already exploring a uv driven workflow for this template.
+    You can see it on the `uv-workflow` branch. I will be waiting until the
+    April 2025 release of pip for support of
+    [dependency-groups](https://packaging.python.org/en/latest/specifications/dependency-groups/)
+    before committing to any changes.
