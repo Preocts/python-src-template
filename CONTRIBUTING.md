@@ -72,17 +72,17 @@ the desired version while creating the `venv`. (e.g. `python3` or `python3.12`)
 ### Create the `venv`:
 
 ```console
-python -m venv venv
+python -m venv .venv
 ```
 
 Activate the `venv`:
 
 ```console
 # Linux/Mac
-. venv/bin/activate
+. .venv/bin/activate
 
 # Windows
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 
 The command prompt should now have a `(venv)` prefix on it. `python` will now

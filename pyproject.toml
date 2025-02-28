@@ -21,6 +21,12 @@ classifiers = [
 ]
 dynamic = ["dependencies", "optional-dependencies", "version"]
 
+[project.urls]
+homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
+
+# [project.scripts]
+# python-src-example = "module_name.sample:main"
+
 [tool.setuptools_scm]
 # Purposely left empty
 
@@ -30,13 +36,6 @@ file = ["requirements/requirements.txt"]
 [tool.setuptools.dynamic.optional-dependencies]
 dev = { file = ["requirements/requirements-dev.txt"] }
 test = { file = ["requirements/requirements-test.txt"] }
-
-[project.urls]
-homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
-
-# CLI scripts if needed
-# [project.scripts]
-# python-src-example = "module_name.sample:main"
 
 [tool.black]
 line-length = 100
