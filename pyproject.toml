@@ -19,7 +19,28 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
-dynamic = ["dependencies", "optional-dependencies", "version"]
+dynamic = ["version"]
+
+dependencies = []
+
+[dependency-groups]
+lint = [
+    "mypy",
+]
+tool = [
+    "pre-commit",
+    "nox",
+]
+test = [
+    "pytest",
+    "pytest-randomly",
+    "coverage",
+]
+dev = [
+    {include-group = "lint"},
+    {include-group = "test"},
+    {include-group = "tool"},
+]
 
 [project.urls]
 homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
@@ -29,13 +50,6 @@ homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
 
 [tool.setuptools_scm]
 # Purposely left empty
-
-[tool.setuptools.dynamic.dependencies]
-file = ["requirements/requirements.txt"]
-
-[tool.setuptools.dynamic.optional-dependencies]
-dev = { file = ["requirements/requirements-dev.txt"] }
-test = { file = ["requirements/requirements-test.txt"] }
 
 [tool.black]
 line-length = 100
