@@ -47,7 +47,7 @@ jobs:
 
       - name: "Run tests and coverage via nox"
         run: |
-          nox --session tests_with_coverage-${{ matrix.python-version }}
+          nox --session version_coverage-${{ matrix.python-version }}
 
       - name: "Save coverage artifact"
         uses: "actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b"
@@ -82,7 +82,7 @@ jobs:
 
       - name: "Compile coverage data, print report"
         run: |
-          nox --session coverage_combine_and_report
+          nox --session coverage_combine
           export TOTAL=$(python -c "import json;print(json.load(open('coverage.json'))['totals']['percent_covered_display'])")
           echo "TOTAL=$TOTAL" >> $GITHUB_ENV
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
@@ -105,4 +105,4 @@ jobs:
 
       - name: "Enforce strict type annotations with mypy"
         run: |
-          nox --session mypy_check
+          nox --session mypy

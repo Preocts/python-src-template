@@ -13,7 +13,8 @@ TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
 DEFAULT_PYTHON_VERSION = "3.12"
 PYTHON_MATRIX = ["3.9", "3.10", "3.11", "3.12", "3.13"]
-VENV_PATH = "venv"
+VENV_BACKEND = "venv"
+VENV_PATH = ".venv"
 REQUIREMENT_IN_FILES = [
     pathlib.Path("requirements/requirements.in"),
 ]
@@ -36,14 +37,14 @@ CLEANABLE_TARGETS = [
 
 # Define the default sessions run when `nox` is called on the CLI
 nox.options.sessions = [
-    "tests_with_coverage",
-    "coverage_combine_and_report",
-    "mypy_check",
+    "version_coverage",
+    "coverage_combine",
+    "mypy",
 ]
 
 
-@nox.session(python=PYTHON_MATRIX)
-def tests_with_coverage(session: nox.Session) -> None:
+@nox.session(python=PYTHON_MATRIX, venv_backend=VENV_BACKEND)
+def version_coverage(session: nox.Session) -> None:
     """Run unit tests with coverage saved to partial file."""
     print_standard_logs(session)
 
@@ -51,8 +52,8 @@ def tests_with_coverage(session: nox.Session) -> None:
     session.run("coverage", "run", "-p", "-m", "pytest", TESTS_PATH)
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
-def coverage_combine_and_report(session: nox.Session) -> None:
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
+def coverage_combine(session: nox.Session) -> None:
     """Combine all coverage partial files and generate JSON report."""
     print_standard_logs(session)
 
@@ -64,8 +65,8 @@ def coverage_combine_and_report(session: nox.Session) -> None:
     session.run("python", "-m", "coverage", "json")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
-def mypy_check(session: nox.Session) -> None:
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
+def mypy(session: nox.Session) -> None:
     """Run mypy against package and all required dependencies."""
     print_standard_logs(session)
 
@@ -74,7 +75,7 @@ def mypy_check(session: nox.Session) -> None:
     session.run("mypy", "-p", MODULE_NAME, "--no-incremental")
 
 
-@nox.session(python=False)
+@nox.session(python=False, venv_backend=VENV_BACKEND)
 def coverage(session: nox.Session) -> None:
     """Generate a coverage report. Does not use a venv."""
     session.run("coverage", "erase")
@@ -82,7 +83,7 @@ def coverage(session: nox.Session) -> None:
     session.run("coverage", "report", "-m")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 def build(session: nox.Session) -> None:
     """Build distribution files."""
     print_standard_logs(session)
@@ -91,7 +92,7 @@ def build(session: nox.Session) -> None:
     session.run("python", "-m", "build")
 
 
-@nox.session(python=False)
+@nox.session(python=False, venv_backend=VENV_BACKEND)
 def install(session: nox.Session) -> None:
     """Setup a development environment. Uses active venv if available, builds one if not."""
     # Use the active environement if it exists, otherwise create a new one
@@ -116,7 +117,7 @@ def install(session: nox.Session) -> None:
         session.log(f"\n\nRun '{activate_command}' to enter the virtual environment.\n")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 def update(session: nox.Session) -> None:
     """Process requirement*.in files, updating only additions/removals."""
     print_standard_logs(session)
@@ -126,7 +127,7 @@ def update(session: nox.Session) -> None:
         session.run("pip-compile", "--no-emit-index-url", str(filename))
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 def upgrade(session: nox.Session) -> None:
     """Process requirement*.in files and upgrade all libraries as possible."""
     print_standard_logs(session)
@@ -136,7 +137,7 @@ def upgrade(session: nox.Session) -> None:
         session.run("pip-compile", "--no-emit-index-url", "--upgrade", str(filename))
 
 
-@nox.session(python=False)
+@nox.session(python=False, venv_backend=VENV_BACKEND)
 def clean(_: nox.Session) -> None:
     """Clean cache, .pyc, .pyo, and test/build artifact files from project."""
     count = 0
