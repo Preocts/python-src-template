@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-import os
+import functools
 import pathlib
 import shutil
-import sys
 
 import nox
 
@@ -11,13 +10,9 @@ import nox
 MODULE_NAME = "module_name"
 TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
-DEFAULT_PYTHON_VERSION = "3.12"
+DEFAULT_PYTHON_VERSION = None
 PYTHON_MATRIX = ["3.9", "3.10", "3.11", "3.12", "3.13"]
-VENV_BACKEND = "venv"
-VENV_PATH = ".venv"
-REQUIREMENT_IN_FILES = [
-    pathlib.Path("requirements/requirements.in"),
-]
+VENV_BACKEND = "uv"
 
 # What we allowed to clean (delete)
 CLEANABLE_TARGETS = [
@@ -47,98 +42,55 @@ nox.options.sessions = [
 def version_coverage(session: nox.Session) -> None:
     """Run unit tests with coverage saved to partial file."""
     print_standard_logs(session)
+    uv_run = functools.partial(session.run, "uv", "run", "--active")
 
-    session.install(".[test]")
-    session.run("coverage", "run", "-p", "-m", "pytest", TESTS_PATH)
+    session.run("uv", "sync", "--active", "--no-dev", "--group", "test")
+    uv_run("coverage", "run", "-p", "-m", "pytest", TESTS_PATH)
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 def coverage_combine(session: nox.Session) -> None:
     """Combine all coverage partial files and generate JSON report."""
     print_standard_logs(session)
+    uv_run = functools.partial(session.run, "uv", "run", "--active")
 
-    fail_under = f"--fail-under={COVERAGE_FAIL_UNDER}"
-
-    session.install(".[test]")
-    session.run("python", "-m", "coverage", "combine")
-    session.run("python", "-m", "coverage", "report", "-m", fail_under)
-    session.run("python", "-m", "coverage", "json")
+    session.run("uv", "sync", "--active", "--no-dev", "--group", "test")
+    uv_run("coverage", "combine")
+    uv_run("coverage", "report", "-m", f"--fail-under={COVERAGE_FAIL_UNDER}")
+    uv_run("coverage", "json")
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 def mypy(session: nox.Session) -> None:
     """Run mypy against package and all required dependencies."""
     print_standard_logs(session)
+    uv_run = functools.partial(session.run, "uv", "run", "--active")
 
-    session.install(".")
-    session.install("mypy")
-    session.run("mypy", "-p", MODULE_NAME, "--no-incremental")
+    session.run("uv", "sync", "--active", "--no-dev", "--group", "lint")
+    uv_run("mypy", "-p", MODULE_NAME, "--no-incremental")
 
 
-@nox.session(python=False, venv_backend=VENV_BACKEND)
+@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
 def coverage(session: nox.Session) -> None:
     """Generate a coverage report. Does not use a venv."""
-    session.run("coverage", "erase")
-    session.run("coverage", "run", "-m", "pytest", TESTS_PATH)
-    session.run("coverage", "report", "-m")
+    print_standard_logs(session)
+    uv_run = functools.partial(session.run, "uv", "run", "--active")
+
+    session.run("uv", "sync", "--active", "--no-dev", "--group", "test")
+    uv_run("coverage", "erase")
+    uv_run("coverage", "run", "-m", "pytest", TESTS_PATH)
+    uv_run("coverage", "report", "-m")
+    uv_run("coverage", "html")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
+@nox.session(python=False, venv_backend=VENV_BACKEND)
 def build(session: nox.Session) -> None:
-    """Build distribution files."""
-    print_standard_logs(session)
-
-    session.install("build")
-    session.run("python", "-m", "build")
+    """Generate sdist and wheel."""
+    session.run("uv", "build")
 
 
 @nox.session(python=False, venv_backend=VENV_BACKEND)
-def install(session: nox.Session) -> None:
-    """Setup a development environment. Uses active venv if available, builds one if not."""
-    # Use the active environement if it exists, otherwise create a new one
-    venv_path = os.environ.get("VIRTUAL_ENV", VENV_PATH)
-
-    if sys.platform == "win32":
-        py_command = "py"
-        venv_path = f"{venv_path}/Scripts"
-        activate_command = f"{venv_path}/activate"
-    else:
-        py_command = f"python{DEFAULT_PYTHON_VERSION}"
-        venv_path = f"{venv_path}/bin"
-        activate_command = f"source {venv_path}/activate"
-
-    if not os.path.exists(VENV_PATH):
-        session.run(py_command, "-m", "venv", VENV_PATH, "--upgrade-deps")
-
-    session.run(f"{venv_path}/python", "-m", "pip", "install", "-e", ".[dev,test]")
-    session.run(f"{venv_path}/pre-commit", "install")
-
-    if not venv_path:
-        session.log(f"\n\nRun '{activate_command}' to enter the virtual environment.\n")
-
-
-@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
-def update(session: nox.Session) -> None:
-    """Process requirement*.in files, updating only additions/removals."""
-    print_standard_logs(session)
-
-    session.install("pip-tools")
-    for filename in REQUIREMENT_IN_FILES:
-        session.run("pip-compile", "--no-emit-index-url", str(filename))
-
-
-@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
-def upgrade(session: nox.Session) -> None:
-    """Process requirement*.in files and upgrade all libraries as possible."""
-    print_standard_logs(session)
-
-    session.install("pip-tools")
-    for filename in REQUIREMENT_IN_FILES:
-        session.run("pip-compile", "--no-emit-index-url", "--upgrade", str(filename))
-
-
-@nox.session(python=False, venv_backend=VENV_BACKEND)
-def clean(_: nox.Session) -> None:
+def clean(session: nox.Session) -> None:
     """Clean cache, .pyc, .pyo, and test/build artifact files from project."""
     count = 0
     for searchpath in CLEANABLE_TARGETS:
@@ -149,7 +101,7 @@ def clean(_: nox.Session) -> None:
                 filepath.unlink()
             count += 1
 
-    print(f"{count} files cleaned.")
+    session.log(f"{count} files cleaned.")
 
 
 def print_standard_logs(session: nox.Session) -> None:
