@@ -4,6 +4,7 @@ name: "python tests and coverage"
 # https://github.com/actions/checkout : 11bd71901bbe5b1630ceea73d27597364c9af683
 # https://github.com/actions/download-artifact : fa0a91b85d4f404e444e00e005971372dc801d16
 # https://github.com/actions/upload-artifact : 6f51ac03b9356f520e9adb1b1b7802705f340c2b
+# https://github.com/astral-sh/setup-uv : 1edb52594c857e2b5b13128931090f0640537287
 
 on:
   pull_request:
@@ -14,8 +15,8 @@ on:
       - "main"
 
 env:
+  UV_PYTHON_PREFERENCE: "only-system"
   UV_LOCKED: "true"
-  UV_SYSTEM_PYTHON: "true"
 
 jobs:
   run-tests-and-coverage:
@@ -45,9 +46,12 @@ jobs:
           python-version: "${{ matrix.python-version }}"
           allow-prereleases: true
 
-      - name: "Install uv"
-        run: |
-          python -m pip install --upgrade pip uv
+      - name: "Install the latest version of uv"
+        uses: "astral-sh/setup-uv@1edb52594c857e2b5b13128931090f0640537287"
+        with:
+          version: "latest"
+          python-version: "${{ matrix.python-version }}"
+          enable-cache: true
 
       - name: "Run tests and coverage via nox"
         run: |
@@ -74,9 +78,12 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: "Install uv"
-        run: |
-          python -m pip install --upgrade pip uv
+      - name: "Install the latest version of uv"
+        uses: "astral-sh/setup-uv@1edb52594c857e2b5b13128931090f0640537287"
+        with:
+          version: "latest"
+          python-version: "3.12"
+          enable-cache: true
 
       - name: "Download coverage artifacts"
         uses: "actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16"
@@ -84,9 +91,12 @@ jobs:
           pattern: "coverage-artifact-*"
           merge-multiple: true
 
-      - name: "Compile coverage data, print report"
+      - name: "Compile coverage data"
         run: |
           uv run nox --session coverage_combine
+
+      - name: "Post summary to step summary."
+        run: |
           export TOTAL=$(python -c "import json;print(json.load(open('coverage.json'))['totals']['percent_covered_display'])")
           echo "TOTAL=$TOTAL" >> $GITHUB_ENV
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
@@ -103,9 +113,12 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: "Install uv"
-        run: |
-          python -m pip install --upgrade pip uv
+      - name: "Install the latest version of uv"
+        uses: "astral-sh/setup-uv@1edb52594c857e2b5b13128931090f0640537287"
+        with:
+          version: "latest"
+          python-version: "3.12"
+          enable-cache: true
 
       - name: "Enforce strict type annotations with mypy"
         run: |
