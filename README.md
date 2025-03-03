@@ -14,27 +14,23 @@ This is not the one-shot solution to project structure or packaging. This is
 just what works well for one egg on the Internet. Feel free to use it as you see
 fit.
 
+## Prerequisites
+
+- [**uv**](https://docs.astral.sh/uv) >= 0.6.3
+
 ## FAQ
+
+- **Q:** Why uv over venv and setup-tools?
+  - **A:** Primarily because of the lower barrier of entry that the uv workflow
+    offers to the next-dev and the non-dev. Speed is nice, but where Astral has
+    really pushed value with uv is in the simplicity.
 
 - **Q:** Should I follow everything to the absolute letter in this template?
   - **A:** Heck no, I don't even do that! This is just the closest
     one-size-fits-most template I've put together. Use what you want how you
     want.
 
-- **Q:** Why not put the requirements into the `pyproject.toml`?
-  - **A:** Mostly because `pip-compile` does all the work for me and doesn't
-    target the `pyproject.toml`. Partly because many of my projects need to be
-    scanned by utilities that still think `requirements.txt` is the only pattern
-    to use.
-
 - **Q:** Why does this template change so often?
   - **A:** I'm constantly finding new tweaks that make the template fit just a
     little better. I'm also open to ideas and suggestions so please drop an
     issue if you have one.
-
-- **Q:** Have I heard of uv?
-  - **A:** Yes. I'm already exploring a uv driven workflow for this template.
-    You can see it on the `uv-workflow` branch. I will be waiting until the
-    April 2025 release of pip for support of
-    [dependency-groups](https://packaging.python.org/en/latest/specifications/dependency-groups/)
-    before committing to any changes.
