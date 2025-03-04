@@ -15,7 +15,7 @@ repos:
 
   # Adds a standard feel to import segments
   - repo: https://github.com/pycqa/isort
-    rev: 6.0.0
+    rev: 6.0.1
     hooks:
       - id: isort
         args:
@@ -33,7 +33,7 @@ repos:
 
   # Flake8 for linting, line-length adjusted to match Black default
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.1
+    rev: 7.1.2
     hooks:
       - id: flake8
         additional_dependencies:
@@ -43,6 +43,6 @@ repos:
 
   # Type enforcement for Python
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.1
+    rev: v1.15.0
     hooks:
       - id: mypy
