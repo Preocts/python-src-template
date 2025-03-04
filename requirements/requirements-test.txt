@@ -1,6 +1,0 @@
-# Testing Requirements
-
-pytest
-pytest-randomly
-coverage
-nox
