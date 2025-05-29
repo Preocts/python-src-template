@@ -78,7 +78,9 @@ def version_coverage(session: nox.Session) -> None:
     """Run unit tests with coverage saved to partial file."""
     print_standard_logs(session)
 
-    session.install(".[test]")
+    session.install(".")
+    session.install("-r", "requirements/requirements.txt")
+    session.install("-r", "requirements/requirements-test.txt")
     session.run("coverage", "run", "-p", "-m", "pytest", TESTS_PATH)
 
 
@@ -89,7 +91,9 @@ def coverage_combine(session: nox.Session) -> None:
 
     fail_under = f"--fail-under={COVERAGE_FAIL_UNDER}"
 
-    session.install(".[test]")
+    session.install(".")
+    session.install("-r", "requirements/requirements.txt")
+    session.install("-r", "requirements/requirements-test.txt")
     session.run("python", "-m", "coverage", "combine")
     session.run("python", "-m", "coverage", "report", "-m", fail_under)
     session.run("python", "-m", "coverage", "json")
@@ -101,7 +105,8 @@ def mypy(session: nox.Session) -> None:
     print_standard_logs(session)
 
     session.install(".")
-    session.install("mypy")
+    session.install("-r", "requirements/requirements.txt")
+    session.install("-r", "requirements/requirements-dev.txt")
     session.run("mypy", "-p", MODULE_NAME, "--no-incremental")
 
 
