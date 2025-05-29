@@ -1,6 +1,6 @@
 # Testing Requirements
+--constraint ./constraints.txt
 
 pytest
 pytest-randomly
 coverage
-nox
