@@ -1,4 +1,14 @@
 # Development Requirements - linting, formatting, etc.
+--constraint ./constraints.txt
 
-pre-commit
+# Linting
+flake8
+flake8-builtins
+flake8-pep585
+
+# formatters
+black
+isort
+
+# type checking
 mypy
