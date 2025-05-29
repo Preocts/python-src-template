@@ -7,6 +7,11 @@
 
 # python-src-template
 
+- [Contributing Guide and Developer Setup Guide](./CONTRIBUTING.md)
+- [License: MIT](./LICENSE)
+
+---
+
 A template I use for most projects and is setup to jive with my environment at
 the company I work with.
 
