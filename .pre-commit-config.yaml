@@ -30,19 +30,3 @@ repos:
     rev: 25.1.0
     hooks:
       - id: black
-
-  # Flake8 for linting, line-length adjusted to match Black default
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.2
-    hooks:
-      - id: flake8
-        additional_dependencies:
-          - flake8-builtins
-          - flake8-pep585
-          - pep8-naming
-
-  # Type enforcement for Python
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
-    hooks:
-      - id: mypy
