@@ -114,6 +114,7 @@ def run_linters_and_formatters(session: nox.Session) -> None:
     # Handle anything tool that applies corrections first.
     python(
         "isort",
+        "--verbose",
         "--force-single-line-imports",
         "--profile",
         "black",
