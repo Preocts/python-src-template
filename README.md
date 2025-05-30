@@ -28,9 +28,7 @@ fit.
 
 - **Q:** Why not put the requirements into the `pyproject.toml`?
   - **A:** Mostly because `pip-compile` does all the work for me and doesn't
-    target the `pyproject.toml`. Partly because many of my projects need to be
-    scanned by utilities that still think `requirements.txt` is the only pattern
-    to use.
+    target the `pyproject.toml` dependency groups yet.
 
 - **Q:** Why does this template change so often?
   - **A:** I'm constantly finding new tweaks that make the template fit just a
@@ -39,7 +37,3 @@ fit.
 
 - **Q:** Have I heard of uv?
   - **A:** Yes. I'm already exploring a uv driven workflow for this template.
-    You can see it on the `uv-workflow` branch. I will be waiting until the
-    April 2025 release of pip for support of
-    [dependency-groups](https://packaging.python.org/en/latest/specifications/dependency-groups/)
-    before committing to any changes.
