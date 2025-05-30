@@ -4,6 +4,7 @@ import os
 import pathlib
 import shutil
 import sys
+from functools import partial
 
 import nox
 
@@ -12,8 +13,6 @@ MODULE_NAME = "module_name"
 TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
 DEFAULT_PYTHON = "3.12"
-PYTHON_MATRIX = ["3.9", "3.10", "3.11", "3.12", "3.13"]
-VENV_BACKEND = "venv"
 VENV_PATH = ".venv"
 REQUIREMENTS_PATH = "./requirements"
 
@@ -32,11 +31,10 @@ CLEANABLE_TARGETS = [
     "./**/*.pyo",
 ]
 
-
 # Define the default sessions run when `nox` is called on the CLI
+nox.options.default_venv_backend = "virtualenv"
 nox.options.sessions = [
-    "version_coverage",
-    "coverage_combine",
+    "test",
     "mypy",
 ]
 
@@ -73,33 +71,40 @@ def dev(session: nox.Session) -> None:
         session.log(f"\n\nRun '{activate_command}' to enter the virtual environment.\n")
 
 
-@nox.session(python=PYTHON_MATRIX, venv_backend=VENV_BACKEND)
-def version_coverage(session: nox.Session) -> None:
-    """Run unit tests with coverage saved to partial file."""
+@nox.session(name="test")
+def run_tests_with_coverage(session: nox.Session) -> None:
+    """Run pytest with coverage, outputs console report and json."""
     print_standard_logs(session)
 
     session.install(".")
-    session.install("-r", "requirements/requirements.txt")
-    session.install("-r", "requirements/requirements-test.txt")
-    session.run("coverage", "run", "-p", "-m", "pytest", TESTS_PATH)
+    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
+
+    coverage = partial(session.run, "python", "-m", "coverage")
+
+    coverage("erase")
+
+    if "partial-coverage" in session.posargs:
+        coverage("run", "--parallel-mode", "--module", "pytest", TESTS_PATH)
+    else:
+        coverage("run", "--module", "pytest", TESTS_PATH)
+        coverage("report", "--show-missing", f"--fail-under={COVERAGE_FAIL_UNDER}")
+        coverage("json")
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND)
+@nox.session()
 def coverage_combine(session: nox.Session) -> None:
-    """Combine all coverage partial files and generate JSON report."""
+    """CI: Combine parallel-mode coverage files and produce reports."""
     print_standard_logs(session)
 
-    fail_under = f"--fail-under={COVERAGE_FAIL_UNDER}"
+    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
 
-    session.install(".")
-    session.install("-r", "requirements/requirements.txt")
-    session.install("-r", "requirements/requirements-test.txt")
-    session.run("python", "-m", "coverage", "combine")
-    session.run("python", "-m", "coverage", "report", "-m", fail_under)
-    session.run("python", "-m", "coverage", "json")
+    coverage = partial(session.run, "python", "-m", "coverage")
+    coverage("combine")
+    coverage("report", "--show-missing", f"--fail-under={COVERAGE_FAIL_UNDER}")
+    coverage("json")
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND)
+@nox.session(python=DEFAULT_PYTHON)
 def mypy(session: nox.Session) -> None:
     """Run mypy against package and all required dependencies."""
     print_standard_logs(session)
@@ -110,15 +115,7 @@ def mypy(session: nox.Session) -> None:
     session.run("mypy", "-p", MODULE_NAME, "--no-incremental")
 
 
-@nox.session(python=False, venv_backend=VENV_BACKEND)
-def coverage(session: nox.Session) -> None:
-    """Generate a coverage report. Does not use a venv."""
-    session.run("coverage", "erase")
-    session.run("coverage", "run", "-m", "pytest", TESTS_PATH)
-    session.run("coverage", "report", "-m")
-
-
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND)
+@nox.session(python=DEFAULT_PYTHON)
 def build(session: nox.Session) -> None:
     """Build distribution files."""
     print_standard_logs(session)
@@ -127,7 +124,7 @@ def build(session: nox.Session) -> None:
     session.run("python", "-m", "build")
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND, name="update-deps")
+@nox.session(python=DEFAULT_PYTHON, name="update-deps")
 def update_deps(session: nox.Session) -> None:
     """Process requirement*.txt files, updating only additions/removals."""
     print_standard_logs(session)
@@ -145,7 +142,7 @@ def update_deps(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND, name="upgrade-deps")
+@nox.session(python=DEFAULT_PYTHON, name="upgrade-deps")
 def upgrade_deps(session: nox.Session) -> None:
     """Process requirement*.txt files and upgrade all libraries as possible."""
     print_standard_logs(session)
@@ -164,7 +161,7 @@ def upgrade_deps(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=False, venv_backend=VENV_BACKEND)
+@nox.session(python=False)
 def clean(_: nox.Session) -> None:
     """Clean cache, .pyc, .pyo, and test/build artifact files from project."""
     count = 0
