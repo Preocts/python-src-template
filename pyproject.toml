@@ -30,10 +30,6 @@ homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
 [tool.setuptools_scm]
 # Purposely left empty
 
-[tool.black]
-line-length = 100
-target-version = ['py39']
-
 [tool.setuptools.package-data]
 "module_name" = ["py.typed"]
 

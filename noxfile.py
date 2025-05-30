@@ -13,7 +13,8 @@ MODULE_NAME = "module_name"
 TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
 DEFAULT_PYTHON = "3.12"
-VENV_PATH = ".venv"
+VENV_PATH = "./.venv"
+LINT_PATH = "./src"
 REQUIREMENTS_PATH = "./requirements"
 
 # What we allowed to clean (delete)
@@ -33,10 +34,7 @@ CLEANABLE_TARGETS = [
 
 # Define the default sessions run when `nox` is called on the CLI
 nox.options.default_venv_backend = "virtualenv"
-nox.options.sessions = [
-    "test",
-    "mypy",
-]
+nox.options.sessions = ["lint", "test"]
 
 
 @nox.session(python=False)
@@ -104,15 +102,31 @@ def coverage_combine(session: nox.Session) -> None:
     coverage("json")
 
 
-@nox.session(python=DEFAULT_PYTHON)
-def mypy(session: nox.Session) -> None:
-    """Run mypy against package and all required dependencies."""
+@nox.session(name="lint")
+def run_linters_and_formatters(session: nox.Session) -> None:
+    """Run code formatters, linters, and type checking against all files."""
     print_standard_logs(session)
 
-    session.install(".")
-    session.install("-r", "requirements/requirements.txt")
-    session.install("-r", "requirements/requirements-dev.txt")
-    session.run("mypy", "-p", MODULE_NAME, "--no-incremental")
+    session.install(".", "-r", f"{REQUIREMENTS_PATH}/requirements-dev.txt")
+
+    python = partial(session.run, "python", "-m")
+
+    # Handle anything tool that applies corrections first.
+    python(
+        "isort",
+        "--verbose",
+        "--force-single-line-imports",
+        "--profile",
+        "black",
+        "--add-import",
+        "from __future__ import annotations",
+        LINT_PATH,
+    )
+    python("black", "--verbose", LINT_PATH)
+
+    # Linters: aka, things that yell but want you to fix things
+    python("flake8", "--show-source", "--verbose", LINT_PATH)
+    python("mypy", "--no-incremental", "--package", MODULE_NAME)
 
 
 @nox.session(python=DEFAULT_PYTHON)
