@@ -71,8 +71,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
     """Run pytest with coverage, outputs console report and json."""
     print_standard_logs(session)
 
-    session.install(".")
-    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
+    session.install(".", "-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
 
     coverage = partial(session.run, "python", "-m", "coverage")
 
