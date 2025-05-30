@@ -12,7 +12,6 @@ import nox
 MODULE_NAME = "module_name"
 TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
-DEFAULT_PYTHON = "3.12"
 VENV_PATH = "./.venv"
 LINT_PATH = "./src"
 REQUIREMENTS_PATH = "./requirements"
@@ -37,33 +36,31 @@ nox.options.default_venv_backend = "virtualenv"
 nox.options.sessions = ["lint", "test"]
 
 
-@nox.session(python=False)
+@nox.session()
 def dev(session: nox.Session) -> None:
     """Setup a development environment by creating the venv and installs dependencies."""
     # Use the active environement if it exists, otherwise create a new one
     venv_path = os.environ.get("VIRTUAL_ENV", VENV_PATH)
 
     if sys.platform == "win32":
-        py_command = "py"
         venv_path = f"{venv_path}/Scripts"
         activate_command = f"{venv_path}/activate"
     else:
-        py_command = f"python{DEFAULT_PYTHON}"
         venv_path = f"{venv_path}/bin"
         activate_command = f"source {venv_path}/activate"
 
     if not os.path.exists(VENV_PATH):
-        session.run(py_command, "-m", "venv", VENV_PATH, "--upgrade-deps")
+        session.run("python", "-m", "venv", VENV_PATH, "--upgrade-deps")
 
-    python = f"{venv_path}/python"
+    python = partial(session.run, f"{venv_path}/python", "-m")
+
     requirement_files = get_requirement_files()
-
-    session.run(python, "-m", "pip", "install", "-e", ".")
     for requirement_file in requirement_files:
-        session.run(python, "-m", "pip", "install", "-r", requirement_file)
+        python("pip", "install", "-r", requirement_file, external=True)
+    python("pip", "install", "--editable", ".", external=True)
 
-    session.run(python, "-m", "pip", "install", "pre-commit")
-    session.run(f"{venv_path}/pre-commit", "install")
+    python("pip", "install", "pre-commit", external=True)
+    session.run(f"{venv_path}/pre-commit", "install", external=True)
 
     if not os.environ.get("VIRTUAL_ENV"):
         session.log(f"\n\nRun '{activate_command}' to enter the virtual environment.\n")
@@ -74,8 +71,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
     """Run pytest with coverage, outputs console report and json."""
     print_standard_logs(session)
 
-    session.install(".")
-    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
+    session.install(".", "-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
 
     coverage = partial(session.run, "python", "-m", "coverage")
 
@@ -129,7 +125,7 @@ def run_linters_and_formatters(session: nox.Session) -> None:
     python("mypy", "--no-incremental", "--package", MODULE_NAME)
 
 
-@nox.session(python=DEFAULT_PYTHON)
+@nox.session()
 def build(session: nox.Session) -> None:
     """Build distribution files."""
     print_standard_logs(session)
@@ -138,7 +134,7 @@ def build(session: nox.Session) -> None:
     session.run("python", "-m", "build")
 
 
-@nox.session(python=DEFAULT_PYTHON, name="update-deps")
+@nox.session(name="update-deps")
 def update_deps(session: nox.Session) -> None:
     """Process requirement*.txt files, updating only additions/removals."""
     print_standard_logs(session)
@@ -156,7 +152,7 @@ def update_deps(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=DEFAULT_PYTHON, name="upgrade-deps")
+@nox.session(name="upgrade-deps")
 def upgrade_deps(session: nox.Session) -> None:
     """Process requirement*.txt files and upgrade all libraries as possible."""
     print_standard_logs(session)

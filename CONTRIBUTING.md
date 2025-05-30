@@ -25,8 +25,7 @@ All pull requests must:
 
 Follow the patterns seen in the code. Walk where others have walked.
 
-The majority of code style nits will be met when passing `pre-commit` checks
-prior to submitting a pull request.
+Be sure to run the expected formatters and linters prior to opening the PR.
 
 ### Tests
 
@@ -70,22 +69,22 @@ package, and installs all dependency files.
 nox -s dev
 ```
 
-### Run tests with coverage (quick)
+### Run tests with coverage
 
 ```console
-nox -e coverage
+nox -s test
 ```
 
-### Run tests (slow)
+### Run formatters and linters
 
 ```console
-nox
+nox -s lint
 ```
 
 ### Build dist
 
 ```console
-nox -e build
+nox -s build
 ```
 
 ---
@@ -119,9 +118,3 @@ nox -s upgrade-deps
 
 This repo is setup with a `.pre-commit-config.yaml` with the expectation that
 any code submitted for review already passes all selected pre-commit checks.
-
----
-
-## Error: File "setup.py" not found
-
-Update `pip` to at least version 22.3.1
