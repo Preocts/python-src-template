@@ -14,8 +14,18 @@ on:
       - "main"
 
 jobs:
+  settings:
+    runs-on: "ubuntu-latest"
+    name: "Define workflow settings"
+    outputs:
+      default-python-version: "3.12"
+    steps:
+      - name: "Define settings"
+        run: ""
+
   run-tests-and-coverage:
     name: "Run pytest with coverage."
+    needs: ["settings"]
     runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
@@ -30,6 +40,7 @@ jobs:
           - "3.11"
           - "3.12"
           - "3.13"
+          - "3.14"
 
     steps:
       - name: "Repo checkout"
@@ -59,7 +70,7 @@ jobs:
 
   coverage-compile:
     name: "Compile coverage reports."
-    needs: "run-tests-and-coverage"
+    needs: ["settings", "run-tests-and-coverage"]
     runs-on: "ubuntu-latest"
     steps:
       - name: "Repo checkout"
@@ -68,7 +79,7 @@ jobs:
       - name: "Set up Python"
         uses: "actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b"
         with:
-          python-version: "3.12"
+          python-version: "${{ needs.settings.outputs.default-python-version }}"
 
       - name: "Install nox"
         run: |
@@ -89,6 +100,7 @@ jobs:
 
   linting:
     name: "Check linting and formatting requirements"
+    needs: ["settings"]
     runs-on: "ubuntu-latest"
     steps:
       - name: "Repo checkout"
@@ -97,7 +109,7 @@ jobs:
       - name: "Set up Python"
         uses: "actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b"
         with:
-          python-version: "3.12"
+          python-version: "${{ needs.settings.outputs.default-python-version }}"
 
       - name: "Install nox"
         run: |
