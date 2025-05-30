@@ -71,7 +71,9 @@ def run_tests_with_coverage(session: nox.Session) -> None:
     """Run pytest with coverage, outputs console report and json."""
     print_standard_logs(session)
 
-    session.install(".", "-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
+    session.install(".")
+    session.install("-r", f"{REQUIREMENTS_PATH}/requirements.txt")
+    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
 
     coverage = partial(session.run, "python", "-m", "coverage")
 
@@ -103,7 +105,9 @@ def run_linters_and_formatters(session: nox.Session) -> None:
     """Run code formatters, linters, and type checking against all files."""
     print_standard_logs(session)
 
-    session.install(".", "-r", f"{REQUIREMENTS_PATH}/requirements-dev.txt")
+    session.install(".")
+    session.install("-r", f"{REQUIREMENTS_PATH}/requirements.txt")
+    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-dev.txt")
 
     python = partial(session.run, "python", "-m")
 
