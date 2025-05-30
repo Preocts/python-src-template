@@ -13,7 +13,6 @@ TESTS_PATH = "tests"
 COVERAGE_FAIL_UNDER = 50
 DEFAULT_PYTHON = "3.12"
 PYTHON_MATRIX = ["3.9", "3.10", "3.11", "3.12", "3.13"]
-VENV_BACKEND = "venv"
 VENV_PATH = ".venv"
 REQUIREMENTS_PATH = "./requirements"
 
@@ -32,8 +31,8 @@ CLEANABLE_TARGETS = [
     "./**/*.pyo",
 ]
 
-
 # Define the default sessions run when `nox` is called on the CLI
+nox.options.default_venv_backend = "uv|virtualenv"
 nox.options.sessions = [
     "version_coverage",
     "coverage_combine",
@@ -73,7 +72,7 @@ def dev(session: nox.Session) -> None:
         session.log(f"\n\nRun '{activate_command}' to enter the virtual environment.\n")
 
 
-@nox.session(python=PYTHON_MATRIX, venv_backend=VENV_BACKEND)
+@nox.session(python=PYTHON_MATRIX)
 def version_coverage(session: nox.Session) -> None:
     """Run unit tests with coverage saved to partial file."""
     print_standard_logs(session)
@@ -84,7 +83,7 @@ def version_coverage(session: nox.Session) -> None:
     session.run("coverage", "run", "-p", "-m", "pytest", TESTS_PATH)
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND)
+@nox.session(python=DEFAULT_PYTHON)
 def coverage_combine(session: nox.Session) -> None:
     """Combine all coverage partial files and generate JSON report."""
     print_standard_logs(session)
@@ -99,7 +98,7 @@ def coverage_combine(session: nox.Session) -> None:
     session.run("python", "-m", "coverage", "json")
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND)
+@nox.session(python=DEFAULT_PYTHON)
 def mypy(session: nox.Session) -> None:
     """Run mypy against package and all required dependencies."""
     print_standard_logs(session)
@@ -110,7 +109,7 @@ def mypy(session: nox.Session) -> None:
     session.run("mypy", "-p", MODULE_NAME, "--no-incremental")
 
 
-@nox.session(python=False, venv_backend=VENV_BACKEND)
+@nox.session(python=False)
 def coverage(session: nox.Session) -> None:
     """Generate a coverage report. Does not use a venv."""
     session.run("coverage", "erase")
@@ -118,7 +117,7 @@ def coverage(session: nox.Session) -> None:
     session.run("coverage", "report", "-m")
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND)
+@nox.session(python=DEFAULT_PYTHON)
 def build(session: nox.Session) -> None:
     """Build distribution files."""
     print_standard_logs(session)
@@ -127,7 +126,7 @@ def build(session: nox.Session) -> None:
     session.run("python", "-m", "build")
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND, name="update-deps")
+@nox.session(python=DEFAULT_PYTHON, name="update-deps")
 def update_deps(session: nox.Session) -> None:
     """Process requirement*.txt files, updating only additions/removals."""
     print_standard_logs(session)
@@ -145,7 +144,7 @@ def update_deps(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=DEFAULT_PYTHON, venv_backend=VENV_BACKEND, name="upgrade-deps")
+@nox.session(python=DEFAULT_PYTHON, name="upgrade-deps")
 def upgrade_deps(session: nox.Session) -> None:
     """Process requirement*.txt files and upgrade all libraries as possible."""
     print_standard_logs(session)
@@ -164,7 +163,7 @@ def upgrade_deps(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=False, venv_backend=VENV_BACKEND)
+@nox.session(python=False)
 def clean(_: nox.Session) -> None:
     """Clean cache, .pyc, .pyo, and test/build artifact files from project."""
     count = 0
