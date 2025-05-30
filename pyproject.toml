@@ -1,10 +1,11 @@
 [build-system]
-requires = ["setuptools>=64", "setuptools_scm>=8"]
+requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "module-name"
 requires-python = ">=3.9"
+version = "0.1.0"
 description = "Module Description"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -19,16 +20,12 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
-dynamic = ["version"]
 
 [project.urls]
 homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
 
 # [project.scripts]
 # python-src-example = "module_name.sample:main"
-
-[tool.setuptools_scm]
-# Purposely left empty
 
 [tool.setuptools.package-data]
 "module_name" = ["py.typed"]
