@@ -44,7 +44,7 @@ The following steps outline how to install this repo for local development.
 
 ### Clone repo
 
-```console
+```bash
 git clone https://github.com/[ORG NAME]/[REPO NAME]
 
 cd [REPO NAME]
@@ -71,19 +71,19 @@ nox -s dev
 
 ### Run tests with coverage
 
-```console
+```bash
 nox -s test
 ```
 
 ### Run formatters and linters
 
-```console
+```bash
 nox -s lint
 ```
 
 ### Build dist
 
-```console
+```bash
 nox -s build
 ```
 
@@ -100,13 +100,13 @@ Once updated following the steps below, the package can be installed if needed.
 
 ### Update the generated files with changes
 
-```console
+```bash
 nox -s update-deps
 ```
 
 ### Upgrade all generated dependencies
 
-```console
+```bash
 nox -s upgrade-deps
 ```
 
