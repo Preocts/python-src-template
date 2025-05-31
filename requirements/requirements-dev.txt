@@ -1,5 +1,4 @@
 # Development Requirements - linting, formatting, etc.
---constraint ./constraints.txt
 
 # Linting
 flake8

@@ -53,11 +53,12 @@ def dev(session: nox.Session) -> None:
         session.run("python", "-m", "venv", VENV_PATH, "--upgrade-deps")
 
     python = partial(session.run, f"{venv_path}/python", "-m")
+    contraint = ("--constraint", f"{REQUIREMENTS_PATH}/constraints.txt")
 
-    requirement_files = get_requirement_files()
-    for requirement_file in requirement_files:
-        python("pip", "install", "-r", requirement_file, external=True)
-    python("pip", "install", "--editable", ".", external=True)
+    for requirement_file in get_requirement_files():
+        python("pip", "install", "-r", requirement_file, *contraint, external=True)
+
+    python("pip", "install", "--editable", ".", *contraint, external=True)
 
     python("pip", "install", "pre-commit", external=True)
     session.run(f"{venv_path}/pre-commit", "install", external=True)
@@ -71,9 +72,9 @@ def run_tests_with_coverage(session: nox.Session) -> None:
     """Run pytest with coverage, outputs console report and json."""
     print_standard_logs(session)
 
-    session.install(".")
-    session.install("-r", f"{REQUIREMENTS_PATH}/requirements.txt")
-    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
+    contraint = ("--constraint", f"{REQUIREMENTS_PATH}/constraints.txt")
+
+    session.install(".[test]", *contraint)
 
     coverage = partial(session.run, "python", "-m", "coverage")
 
@@ -92,7 +93,9 @@ def coverage_combine(session: nox.Session) -> None:
     """CI: Combine parallel-mode coverage files and produce reports."""
     print_standard_logs(session)
 
-    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-test.txt")
+    contraint = ("--constraint", f"{REQUIREMENTS_PATH}/constraints.txt")
+
+    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-test.txt", *contraint)
 
     coverage = partial(session.run, "python", "-m", "coverage")
     coverage("combine")
@@ -105,9 +108,8 @@ def run_linters_and_formatters(session: nox.Session) -> None:
     """Run code formatters, linters, and type checking against all files."""
     print_standard_logs(session)
 
-    session.install(".")
-    session.install("-r", f"{REQUIREMENTS_PATH}/requirements.txt")
-    session.install("-r", f"{REQUIREMENTS_PATH}/requirements-dev.txt")
+    contraint = ("--constraint", f"{REQUIREMENTS_PATH}/constraints.txt")
+    session.install(".[dev]", *contraint)
 
     python = partial(session.run, "python", "-m")
 
@@ -143,16 +145,15 @@ def update_deps(session: nox.Session) -> None:
     """Process requirement*.txt files, updating only additions/removals."""
     print_standard_logs(session)
 
-    requirement_files = get_requirement_files()
-
     session.install("pip-tools")
     session.run(
         "pip-compile",
+        "--strip-extras",
         "--no-annotate",
         "--no-emit-index-url",
         "--output-file",
         f"{REQUIREMENTS_PATH}/constraints.txt",
-        *requirement_files,
+        *get_requirement_files(),
     )
 
 
@@ -161,17 +162,16 @@ def upgrade_deps(session: nox.Session) -> None:
     """Process requirement*.txt files and upgrade all libraries as possible."""
     print_standard_logs(session)
 
-    requirement_files = get_requirement_files()
-
     session.install("pip-tools")
     session.run(
         "pip-compile",
+        "--strip-extras",
         "--no-annotate",
         "--no-emit-index-url",
         "--upgrade",
         "--output-file",
         f"{REQUIREMENTS_PATH}/constraints.txt",
-        *requirement_files,
+        *get_requirement_files(),
     )
 
 

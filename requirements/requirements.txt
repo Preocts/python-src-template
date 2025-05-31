@@ -1,4 +1,3 @@
 # Core Dependencies
---constraint ./constraints.txt
 
 requests
