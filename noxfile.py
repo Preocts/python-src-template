@@ -16,6 +16,25 @@ VENV_PATH = "./.venv"
 LINT_PATH = "./src"
 REQUIREMENTS_PATH = "./requirements"
 
+
+LINTING_COMMANDS = (
+    (
+        "isort",
+        "--verbose",
+        "--force-single-line-imports",
+        "--profile",
+        "black",
+        "--add-import",
+        "from __future__ import annotations",
+        LINT_PATH,
+        TESTS_PATH,
+    ),
+    ("black", "--verbose", LINT_PATH, TESTS_PATH),
+    ("flake8", "--show-source", "--verbose", LINT_PATH, TESTS_PATH),
+    ("mypy", "--no-incremental", "--package", MODULE_NAME),
+    ("mypy", "--no-incremental", TESTS_PATH),
+)
+
 # What we allowed to clean (delete)
 CLEANABLE_TARGETS = [
     "./dist",
@@ -55,10 +74,7 @@ def dev(session: nox.Session) -> None:
     python = partial(session.run, f"{venv_path}/python", "-m")
     contraint = ("--constraint", f"{REQUIREMENTS_PATH}/constraints.txt")
 
-    for requirement_file in get_requirement_files():
-        python("pip", "install", "-r", requirement_file, *contraint, external=True)
-
-    python("pip", "install", "--editable", ".", *contraint, external=True)
+    python("pip", "install", "--editable", ".[dev,test]", *contraint, external=True)
 
     python("pip", "install", "pre-commit", external=True)
     session.run(f"{venv_path}/pre-commit", "install", external=True)
@@ -109,26 +125,12 @@ def run_linters_and_formatters(session: nox.Session) -> None:
     print_standard_logs(session)
 
     contraint = ("--constraint", f"{REQUIREMENTS_PATH}/constraints.txt")
-    session.install(".[dev]", *contraint)
+    session.install(".[dev,test]", *contraint)
 
     python = partial(session.run, "python", "-m")
 
-    # Handle anything tool that applies corrections first.
-    python(
-        "isort",
-        "--verbose",
-        "--force-single-line-imports",
-        "--profile",
-        "black",
-        "--add-import",
-        "from __future__ import annotations",
-        LINT_PATH,
-    )
-    python("black", "--verbose", LINT_PATH)
-
-    # Linters: aka, things that yell but want you to fix things
-    python("flake8", "--show-source", "--verbose", LINT_PATH)
-    python("mypy", "--no-incremental", "--package", MODULE_NAME)
+    for linter_command in LINTING_COMMANDS:
+        python(*linter_command)
 
 
 @nox.session()
