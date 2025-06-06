@@ -55,10 +55,7 @@ def dev(session: nox.Session) -> None:
     python = partial(session.run, f"{venv_path}/python", "-m")
     contraint = ("--constraint", f"{REQUIREMENTS_PATH}/constraints.txt")
 
-    for requirement_file in get_requirement_files():
-        python("pip", "install", "-r", requirement_file, *contraint, external=True)
-
-    python("pip", "install", "--editable", ".", *contraint, external=True)
+    python("pip", "install", "--editable", ".[dev,test]", *contraint, external=True)
 
     python("pip", "install", "pre-commit", external=True)
     session.run(f"{venv_path}/pre-commit", "install", external=True)
