@@ -76,9 +76,6 @@ def dev(session: nox.Session) -> None:
 
     python("pip", "install", "--editable", ".[dev,test]", *contraint, external=True)
 
-    python("pip", "install", "pre-commit", external=True)
-    session.run(f"{venv_path}/pre-commit", "install", external=True)
-
     if not os.environ.get("VIRTUAL_ENV"):
         session.log(f"\n\nRun '{activate_command}' to enter the virtual environment.\n")
 

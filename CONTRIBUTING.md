@@ -109,12 +109,3 @@ nox -s update-deps
 ```bash
 nox -s upgrade-deps
 ```
-
----
-
-## [pre-commit](https://pre-commit.com)
-
-> A framework for managing and maintaining multi-language pre-commit hooks.
-
-This repo is setup with a `.pre-commit-config.yaml` with the expectation that
-any code submitted for review already passes all selected pre-commit checks.
