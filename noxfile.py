@@ -56,8 +56,7 @@ FORMATTERS: list[tuple[str, ...]] = [
 @nox.session(name="dev", python=False)
 def dev_session(session: nox.Session) -> None:
     """Create a development environment."""
-    session.run_install("uv", "sync", "--group", "tool", "--frozen", "--quiet")
-    session.run_install("uv", "run", "pre-commit", "install")
+    session.run_install("uv", "sync", "--frozen", "--quiet")
 
 
 @nox.session(name="test", python=False)

@@ -35,10 +35,6 @@ lint = [
     "flake8-pep585",
     "mypy",
 ]
-tool = [
-    "pre-commit",
-    "nox",
-]
 test = [
     "pytest",
     "pytest-randomly",
