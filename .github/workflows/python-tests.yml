@@ -63,7 +63,7 @@ jobs:
           enable-cache: true
 
       - name: "Run tests and coverage via nox"
-        run: "uv run nox --session test -- partial-coverage no-config"
+        run: "uvx nox --session test -- partial-coverage no-config"
 
       - name: "Save coverage artifact"
         uses: "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
@@ -100,7 +100,7 @@ jobs:
           merge-multiple: true
 
       - name: "Compile coverage data"
-        run: "uv run nox --session combine"
+        run: "uvx nox --session combine"
 
       - name: "Post summary to step summary."
         run: |
@@ -128,4 +128,4 @@ jobs:
           enable-cache: true
 
       - name: "Enforce strict type annotations with mypy"
-        run: "uv run nox --session lint"
+        run: "uvx nox --session lint"
