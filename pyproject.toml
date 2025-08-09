@@ -21,7 +21,7 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "requests",
+    "httpx",
 ]
 
 [dependency-groups]
@@ -34,7 +34,6 @@ lint = [
     "flake8-builtins",
     "flake8-pep585",
     "mypy",
-    "types-requests",
 ]
 tool = [
     "pre-commit",
