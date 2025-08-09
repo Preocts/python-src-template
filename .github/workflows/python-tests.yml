@@ -16,7 +16,6 @@ on:
 
 env:
   UV_PYTHON_PREFERENCE: "only-system"
-  UV_LOCKED: "true"
 
 jobs:
   settings:
