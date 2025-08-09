@@ -41,11 +41,6 @@ test = [
     "pytest-randomly",
     "coverage",
 ]
-dev = [
-    {include-group = "lint"},
-    {include-group = "test"},
-    {include-group = "tool"},
-]
 
 [project.urls]
 homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
