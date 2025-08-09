@@ -56,24 +56,22 @@ FORMATTERS: list[tuple[str, ...]] = [
 @nox.session(name="dev", python=False)
 def dev_session(session: nox.Session) -> None:
     """Create a development environment."""
-    session.run_install("uv", "sync", "--group", "tool", "--frozen", "--quiet", external=True)
-    session.run_install("uv", "run", "pre-commit", "install", external=True)
+    session.run_install("uv", "sync", "--group", "tool", "--frozen", "--quiet")
+    session.run_install("uv", "run", "pre-commit", "install")
 
 
-@nox.session(name="test")
+@nox.session(name="test", python=False)
 def run_tests_with_coverage(session: nox.Session) -> None:
     """Run pytest in isolated environment, display coverage. Extra arguements passed to pytest."""
-    print_standard_logs(session)
-
     partial = "partial-coverage" in session.posargs
     extra: list[str] = []
     if "no-config" in session.posargs:
         session.posargs.remove("no-config")
         extra = ["--no-config"]
 
-    session.run_install("uv", "sync", "--frozen", "--active", "--group", "test", *extra)
+    session.run_install("uv", "sync", "--frozen", "--quiet", "--group", "test", *extra)
 
-    coverage = functools.partial(session.run, "uv", "run", "--active", *extra, "coverage")
+    coverage = functools.partial(session.run, "uv", "run", *extra, "coverage")
 
     coverage("erase")
 
@@ -86,14 +84,12 @@ def run_tests_with_coverage(session: nox.Session) -> None:
         coverage("html")
 
 
-@nox.session(name="combine")
+@nox.session(name="combine", python=False)
 def combine_coverage(session: nox.Session) -> None:
     """Combine parallel-mode coverage files and produce reports."""
-    print_standard_logs(session)
+    session.run_install("uv", "sync", "--frozen", "--quiet", "--group", "test")
 
-    session.run_install("uv", "sync", "--frozen", "--active", "--group", "test")
-
-    coverage = functools.partial(session.run, "uv", "run", "--active", "coverage")
+    coverage = functools.partial(session.run, "uv", "run", "coverage")
 
     coverage("combine")
     coverage("report", "--show-missing", f"--fail-under={COVERAGE_FAIL_UNDER}")
@@ -101,49 +97,39 @@ def combine_coverage(session: nox.Session) -> None:
     coverage("json")
 
 
-@nox.session(name="lint")
+@nox.session(name="lint", python=False)
 def run_linters(session: nox.Session) -> None:
     """Run code linters, and type checking against all files."""
-    print_standard_logs(session)
-
-    session.run_install("uv", "sync", "--frozen", "--active", "--group", "test", "--group", "lint")
+    session.run_install("uv", "sync", "--frozen", "--quiet", "--group", "test", "--group", "lint")
 
     for linter_args in LINTERS:
-        session.run("uv", "run", "--active", *linter_args)
+        session.run("uv", "run", *linter_args)
 
 
-@nox.session(name="format")
+@nox.session(name="format", python=False)
 def run_formatters(session: nox.Session) -> None:
     """Run code formatters against all files."""
-    print_standard_logs(session)
-
-    session.run_install("uv", "sync", "--frozen", "--active", "--group", "format")
+    session.run_install("uv", "sync", "--frozen", "--quiet", "--group", "format")
 
     for formatter_args in FORMATTERS:
-        session.run("uv", "run", "--active", *formatter_args)
+        session.run("uv", "run", *formatter_args)
 
 
-@nox.session(name="build")
+@nox.session(name="build", python=False)
 def build_artifacts(session: nox.Session) -> None:
     """Build a sdist and wheel."""
-    print_standard_logs(session)
-
     session.run("uv", "build")
 
 
-@nox.session(name="upgrade")
+@nox.session(name="upgrade", python=False)
 def upgrade_dependencies(session: nox.Session) -> None:
     """Upgrade all versions of all dependencies."""
-    print_standard_logs(session)
-
     session.run("uv", "lock", "--upgrade")
 
 
-@nox.session(name="upgrade-package")
+@nox.session(name="upgrade-package", python=False)
 def upgrade_specific_package(session: nox.Session) -> None:
     """Upgrade specific package name given in extra args."""
-    print_standard_logs(session)
-
     if not session.posargs:
         session.log("No package name provided, nothing to do.")
 
@@ -151,8 +137,8 @@ def upgrade_specific_package(session: nox.Session) -> None:
         session.run("uv", "lock", "--upgrade-package", *session.posargs)
 
 
-@nox.session(python=False)
-def clean(session: nox.Session) -> None:
+@nox.session(name="clean", python=False)
+def clean_project_files(session: nox.Session) -> None:
     """Clean cache, .pyc, .pyo, and build artifact files from project."""
     count = 0
     for searchpath in CLEANABLE_TARGETS:
@@ -164,10 +150,3 @@ def clean(session: nox.Session) -> None:
             count += 1
 
     session.log(f"{count} files cleaned.")
-
-
-def print_standard_logs(session: nox.Session) -> None:
-    """Reusable output for monitoring environment factors."""
-    version = session.run("python", "--version", silent=True)
-    session.log(f"Running from: {session.bin}")
-    session.log(f"Running with: {version}")
