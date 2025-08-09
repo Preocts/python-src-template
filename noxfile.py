@@ -55,12 +55,8 @@ FORMATTERS: list[tuple[str, ...]] = [
 
 @nox.session(name="dev", python=False)
 def dev_session(session: nox.Session) -> None:
-    """Create a development environment. Optionally: Provide the python version to use."""
-    python_version: list[str] = []
-    if session.posargs:
-        python_version = ["--python", session.posargs[0]]
-
-    session.run_install("uv", "sync", "--frozen", "--all-groups", *python_version, external=True)
+    """Create a development environment."""
+    session.run_install("uv", "sync", "--group", "tool", "--frozen", "--quiet", external=True)
     session.run_install("uv", "run", "pre-commit", "install", external=True)
 
 
