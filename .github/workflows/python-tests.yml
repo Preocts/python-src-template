@@ -31,6 +31,7 @@ jobs:
 
   run-tests-and-coverage:
     name: "Run nox for tests and coverage"
+    needs: "settings"
     runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
@@ -112,6 +113,7 @@ jobs:
 
   linters-and-formatters:
     name: "linters and formattrs"
+    needs: "settings"
     runs-on: "ubuntu-latest"
     steps:
       - name: "Repo checkout"
