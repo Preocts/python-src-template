@@ -1,11 +1,10 @@
 [build-system]
-requires = ["uv_build>=0.8.7"]
-build-backend = "uv_build"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
 [project]
 name = "module-name"
 requires-python = ">=3.9"
-version = "2.3.0"
 description = "Module Description"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -20,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
+dynamic = ["version"]
 dependencies = [
     "httpx",
 ]
@@ -47,11 +47,11 @@ homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
 # [project.scripts]
 # python-src-example = "module_name.sample:main"
 
+[tool.hatch.version]
+source = "vcs"
+
 [tool.black]
 line-length = 100
-
-[tool.setuptools.package-data]
-"module_name" = ["py.typed"]
 
 [tool.mypy]
 check_untyped_defs = true

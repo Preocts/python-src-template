@@ -337,7 +337,6 @@ wheels = [
 
 [[package]]
 name = "module-name"
-version = "2.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "httpx" },
