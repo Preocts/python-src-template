@@ -30,7 +30,7 @@ CLEANABLE_TARGETS = [
 
 # Define the default sessions run when `nox` is called on the CLI
 nox.options.default_venv_backend = "uv"
-nox.options.sessions = ["format", "lint", "test"]
+nox.options.sessions = ["lock", "format", "lint", "test"]
 
 # All linters and formatters are run with `uv run --active`
 LINTERS: list[tuple[str, ...]] = [
@@ -121,6 +121,12 @@ def run_formatters(session: nox.Session) -> None:
 def build_artifacts(session: nox.Session) -> None:
     """Build a sdist and wheel."""
     session.run("uv", "build")
+
+
+@nox.session(name="lock", python=False)
+def validate_lock_file(session: nox.Session) -> None:
+    """Ensure the uv.lock file exists and is aligned with dependencies."""
+    session.run("uv", "lock")
 
 
 @nox.session(name="upgrade", python=False)

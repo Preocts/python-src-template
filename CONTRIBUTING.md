@@ -59,6 +59,12 @@ pre-commit.
 uvx nox -s dev
 ```
 
+### Validate uv.lock
+
+```console
+uvx nox -s lock
+```
+
 ### Run tests and display coverage
 
 ```console
@@ -68,7 +74,7 @@ uvx nox -s test
 Passing extra arguements to pytest:
 
 ```console
-uvx nos -s test -- -vvv -x --full-trace
+uvx nox -s test -- -vvv -x --full-trace
 ```
 
 ### Run linters
