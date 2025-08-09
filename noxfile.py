@@ -70,10 +70,14 @@ def run_tests_with_coverage(session: nox.Session) -> None:
     print_standard_logs(session)
 
     partial = "partial-coverage" in session.posargs
+    extra: list[str] = []
+    if "no-config" in session.posargs:
+        session.posargs.remove("no-config")
+        extra = ["--no-config"]
 
-    session.run_install("uv", "sync", "--frozen", "--active", "--group", "test")
+    session.run_install("uv", "sync", "--frozen", "--active", "--group", "test", *extra)
 
-    coverage = functools.partial(session.run, "uv", "run", "--active", "coverage")
+    coverage = functools.partial(session.run, "uv", "run", "--active", *extra, "coverage")
 
     coverage("erase")
 
