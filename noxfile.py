@@ -30,11 +30,15 @@ CLEANABLE_TARGETS = [
 
 # Define the default sessions run when `nox` is called on the CLI
 nox.options.default_venv_backend = "uv"
-nox.options.sessions = ["lint", "test"]
+nox.options.sessions = ["format", "lint", "test"]
 
-# All linters are run with `uv run --active`
-# Ordering matters. Formatters should run before static checks.
+# All linters and formatters are run with `uv run --active`
 LINTERS: list[tuple[str, ...]] = [
+    ("flake8", "--verbose", "--show-source", LINT_PATH, TESTS_PATH),
+    ("mypy", "--pretty", "--no-incremental", "--package", MODULE_NAME),
+    ("mypy", "--pretty", "--no-incremental", TESTS_PATH),
+]
+FORMATTERS: list[tuple[str, ...]] = [
     (
         "isort",
         "--verbose",
@@ -47,9 +51,6 @@ LINTERS: list[tuple[str, ...]] = [
         TESTS_PATH,
     ),
     ("black", "--verbose", LINT_PATH, TESTS_PATH),
-    ("flake8", "--verbose", "--show-source", LINT_PATH, TESTS_PATH),
-    ("mypy", "--pretty", "--no-incremental", "--package", MODULE_NAME),
-    ("mypy", "--pretty", "--no-incremental", TESTS_PATH),
 ]
 
 
@@ -106,14 +107,25 @@ def combine_coverage(session: nox.Session) -> None:
 
 
 @nox.session(name="lint")
-def run_linters_and_formatters(session: nox.Session) -> None:
-    """Run code formatters, linters, and type checking against all files."""
+def run_linters(session: nox.Session) -> None:
+    """Run code linters, and type checking against all files."""
     print_standard_logs(session)
 
     session.run_install("uv", "sync", "--frozen", "--active", "--group", "test", "--group", "lint")
 
     for linter_args in LINTERS:
         session.run("uv", "run", "--active", *linter_args)
+
+
+@nox.session(name="format")
+def run_formatters(session: nox.Session) -> None:
+    """Run code formatters against all files."""
+    print_standard_logs(session)
+
+    session.run_install("uv", "sync", "--frozen", "--active", "--group", "format")
+
+    for formatter_args in FORMATTERS:
+        session.run("uv", "run", "--active", *formatter_args)
 
 
 @nox.session(name="build")

@@ -71,13 +71,19 @@ Passing extra arguements to pytest:
 uvx nos -s test -- -vvv -x --full-trace
 ```
 
-### Run formatters and linters
+### Run linters
 
 ```console
 uvx nox -s lint
 ```
 
-### Run tests, formatters, and linters
+### Run formatters
+
+```console
+uvx nox -s format
+```
+
+### Run all checks
 
 ```console
 uvx nox
