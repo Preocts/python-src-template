@@ -102,6 +102,7 @@ def combine_coverage(session: nox.Session) -> None:
     coverage("combine")
     coverage("report", "--show-missing", f"--fail-under={COVERAGE_FAIL_UNDER}")
     coverage("html")
+    coverage("json")
 
 
 @nox.session(name="lint")
