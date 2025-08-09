@@ -60,8 +60,8 @@ def dev_session(session: nox.Session) -> None:
     if session.posargs:
         python_version = ["--python", session.posargs[0]]
 
-    session.run("uv", "sync", *python_version, external=True)
-    session.run("uv", "run", "pre-commit", "install", external=True)
+    session.run_install("uv", "sync", "--all-groups", *python_version, external=True)
+    session.run_install("uv", "run", "pre-commit", "install", external=True)
 
 
 @nox.session(name="test")
@@ -69,7 +69,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
     """Run pytest in isolated environment, display coverage. Extra arguements passed to pytest."""
     partial = "partial-coverage" in session.posargs
 
-    session.run("uv", "sync", "--active", "--no-dev", "--group", "test")
+    session.run_install("uv", "sync", "--active", "--group", "test")
 
     coverage = functools.partial(session.run, "uv", "run", "--active", "coverage")
 
@@ -87,7 +87,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
 @nox.session(name="combine")
 def combine_coverage(session: nox.Session) -> None:
     """Combine parallel-mode coverage files and produce reports."""
-    session.run("uv", "sync", "--active", "--no-dev", "--group", "test")
+    session.run_install("uv", "sync", "--active", "--group", "test")
 
     coverage = functools.partial(session.run, "uv", "run", "--active", "coverage")
 
@@ -99,7 +99,7 @@ def combine_coverage(session: nox.Session) -> None:
 @nox.session(name="lint")
 def run_linters_and_formatters(session: nox.Session) -> None:
     """Run code formatters, linters, and type checking against all files."""
-    session.run("uv", "sync", "--active", "--no-dev", "--group", "test", "--group", "lint")
+    session.run_install("uv", "sync", "--active", "--group", "test", "--group", "lint")
 
     for linter_args in LINTERS:
         session.run("uv", "run", "--active", *linter_args)
@@ -111,13 +111,25 @@ def build_artifacts(session: nox.Session) -> None:
     session.run("uv", "build")
 
 
-# update-deps
-# upgrade-deps
+@nox.session(name="upgrade")
+def upgrade_dependencies(session: nox.Session) -> None:
+    """Upgrade all versions of all dependencies."""
+    session.run("uv", "lock", "--upgrade")
+
+
+@nox.session(name="upgrade-package")
+def upgrade_specific_package(session: nox.Session) -> None:
+    """Upgrade specific package name given in extra args."""
+    if not session.posargs:
+        session.log("No package name provided, nothing to do.")
+
+    else:
+        session.run("uv", "lock", "--upgrade-package", *session.posargs)
 
 
 @nox.session(python=False)
 def clean(session: nox.Session) -> None:
-    """Clean cache, .pyc, .pyo, and test/build artifact files from project."""
+    """Clean cache, .pyc, .pyo, and build artifact files from project."""
     count = 0
     for searchpath in CLEANABLE_TARGETS:
         for filepath in pathlib.Path(".").glob(searchpath):
