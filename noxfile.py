@@ -35,8 +35,8 @@ nox.options.sessions = ["format", "lint", "test"]
 # All linters and formatters are run with `uv run --active`
 LINTERS: list[tuple[str, ...]] = [
     ("flake8", "--show-source", LINT_PATH, TESTS_PATH),
-    ("mypy", "--pretty", "--no-incremental", "--package", MODULE_NAME),
-    ("mypy", "--pretty", "--no-incremental", TESTS_PATH),
+    ("mypy", "--pretty", "--package", MODULE_NAME),
+    ("mypy", "--pretty", TESTS_PATH),
 ]
 FORMATTERS: list[tuple[str, ...]] = [
     (
