@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import requests
+import httpx
 
 
 def main() -> bool:
@@ -16,11 +16,6 @@ def squared(value: int) -> int:
     return value * value
 
 
-def isodd(value: int) -> bool:
-    """Return if value is odd."""
-    return bool(value % 2)
-
-
 def health_check() -> bool:
     """Returns true when github.com is accessible."""
-    return requests.get("https://github.com").ok
+    return httpx.get("https://github.com").is_success

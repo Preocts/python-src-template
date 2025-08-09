@@ -1,32 +1,45 @@
 [build-system]
-requires = [ "setuptools>=64" ]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
 [project]
 name = "module-name"
 requires-python = ">=3.9"
-version = "0.1.0"
 description = "Module Description"
 readme = "README.md"
-license = "MIT"
+license = { file = "LICENSE" }
 authors = [
     { email = "yourname@email.invalid", name = "[YOUR NAME]" },
 ]
 maintainers = []
 keywords = []
 classifiers = [
+    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
-dynamic = [ "dependencies", "optional-dependencies" ]
+dynamic = ["version"]
+dependencies = [
+    "httpx",
+]
 
-[tool.setuptools.dynamic.dependencies]
-file = [ "requirements/requirements.txt" ]
-
-[tool.setuptools.dynamic.optional-dependencies]
-dev = { file = [ "requirements/requirements-dev.txt" ] }
-test = { file = [ "requirements/requirements-test.txt" ] }
+[dependency-groups]
+format = [
+    "black",
+    "isort",
+]
+lint = [
+    "flake8",
+    "flake8-builtins",
+    "flake8-pep585",
+    "mypy",
+]
+test = [
+    "pytest",
+    "pytest-randomly",
+    "coverage",
+]
 
 [project.urls]
 homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
@@ -34,8 +47,11 @@ homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
 # [project.scripts]
 # python-src-example = "module_name.sample:main"
 
-[tool.setuptools.package-data]
-"module_name" = ["py.typed"]
+[tool.hatch.version]
+source = "vcs"
+
+[tool.black]
+line-length = 100
 
 [tool.mypy]
 check_untyped_defs = true
@@ -58,7 +74,7 @@ source = ["tests"]
 source_pkgs = ["module_name"]
 
 [tool.coverage.paths]
-source = ["src/", "*/site-packages"]
+source = ["src/", "*/site-packages", "*/src"]
 test = ["tests/", "*/tests"]
 
 [tool.coverage.report]

@@ -29,7 +29,6 @@ REPO = r"python\-src\-template"
 class ProjectData:
     name: str = "module-name"
     module: str = "module_name"
-    version: str = "0.1.0"
     description: str = "Module Description"
     author_email: str = "yourname@email.invalid"
     author_name: str = "[YOUR NAME]"

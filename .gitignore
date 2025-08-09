@@ -11,5 +11,5 @@ htmlcov
 coverage.*
 
 .venv*
-temp*
+temp_*
 .env
