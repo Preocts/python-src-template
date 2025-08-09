@@ -67,6 +67,8 @@ def dev_session(session: nox.Session) -> None:
 @nox.session(name="test")
 def run_tests_with_coverage(session: nox.Session) -> None:
     """Run pytest in isolated environment, display coverage. Extra arguements passed to pytest."""
+    print_standard_logs(session)
+
     partial = "partial-coverage" in session.posargs
 
     session.run_install("uv", "sync", "--frozen", "--active", "--group", "test")
@@ -87,6 +89,8 @@ def run_tests_with_coverage(session: nox.Session) -> None:
 @nox.session(name="combine")
 def combine_coverage(session: nox.Session) -> None:
     """Combine parallel-mode coverage files and produce reports."""
+    print_standard_logs(session)
+
     session.run_install("uv", "sync", "--frozen", "--active", "--group", "test")
 
     coverage = functools.partial(session.run, "uv", "run", "--active", "coverage")
@@ -99,6 +103,8 @@ def combine_coverage(session: nox.Session) -> None:
 @nox.session(name="lint")
 def run_linters_and_formatters(session: nox.Session) -> None:
     """Run code formatters, linters, and type checking against all files."""
+    print_standard_logs(session)
+
     session.run_install("uv", "sync", "--frozen", "--active", "--group", "test", "--group", "lint")
 
     for linter_args in LINTERS:
@@ -108,18 +114,24 @@ def run_linters_and_formatters(session: nox.Session) -> None:
 @nox.session(name="build")
 def build_artifacts(session: nox.Session) -> None:
     """Build a sdist and wheel."""
+    print_standard_logs(session)
+
     session.run("uv", "build")
 
 
 @nox.session(name="upgrade")
 def upgrade_dependencies(session: nox.Session) -> None:
     """Upgrade all versions of all dependencies."""
+    print_standard_logs(session)
+
     session.run("uv", "lock", "--upgrade")
 
 
 @nox.session(name="upgrade-package")
 def upgrade_specific_package(session: nox.Session) -> None:
     """Upgrade specific package name given in extra args."""
+    print_standard_logs(session)
+
     if not session.posargs:
         session.log("No package name provided, nothing to do.")
 
@@ -140,3 +152,10 @@ def clean(session: nox.Session) -> None:
             count += 1
 
     session.log(f"{count} files cleaned.")
+
+
+def print_standard_logs(session: nox.Session) -> None:
+    """Reusable output for monitoring environment factors."""
+    version = session.run("python", "--version", silent=True)
+    session.log(f"Running from: {session.bin}")
+    session.log(f"Running with: {version}")
