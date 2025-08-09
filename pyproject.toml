@@ -25,9 +25,11 @@ dependencies = [
 ]
 
 [dependency-groups]
-lint = [
+format = [
     "black",
     "isort",
+]
+lint = [
     "flake8",
     "flake8-builtins",
     "flake8-pep585",
