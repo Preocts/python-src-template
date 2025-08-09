@@ -12,8 +12,3 @@ def main() -> bool:
 def squared(value: int) -> int:
     """Returns the squared value"""
     return value * value
-
-
-def isodd(value: int) -> bool:
-    """Return if value is odd."""
-    return bool(value % 2)
