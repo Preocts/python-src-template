@@ -52,11 +52,14 @@ FORMATTERS: list[tuple[str, ...]] = [
     ("black", LINT_PATH, TESTS_PATH),
 ]
 
+# Default args for all uv sync calls
+SYNC_ARGS = ["--frozen", "--quiet"]
+
 
 @nox.session(name="dev", python=False)
 def dev_session(session: nox.Session) -> None:
     """Create a development environment."""
-    session.run_install("uv", "sync", "--frozen", "--quiet")
+    session.run_install("uv", "sync", *SYNC_ARGS)
 
 
 @nox.session(name="test", python=False)
@@ -68,7 +71,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
         session.posargs.remove("no-config")
         extra = ["--no-config"]
 
-    session.run_install("uv", "sync", "--frozen", "--quiet", "--group", "test", *extra)
+    session.run_install("uv", "sync", "--group", "test", *SYNC_ARGS, *extra)
 
     coverage = functools.partial(session.run, "uv", "run", *extra, "coverage")
 
@@ -86,7 +89,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
 @nox.session(name="combine", python=False)
 def combine_coverage(session: nox.Session) -> None:
     """Combine parallel-mode coverage files and produce reports."""
-    session.run_install("uv", "sync", "--frozen", "--quiet", "--group", "test")
+    session.run_install("uv", "sync", "--group", "test", *SYNC_ARGS)
 
     coverage = functools.partial(session.run, "uv", "run", "coverage")
 
@@ -99,7 +102,7 @@ def combine_coverage(session: nox.Session) -> None:
 @nox.session(name="lint", python=False)
 def run_linters(session: nox.Session) -> None:
     """Run code linters, and type checking against all files."""
-    session.run_install("uv", "sync", "--frozen", "--quiet", "--group", "test", "--group", "lint")
+    session.run_install("uv", "sync", "--group", "test", "--group", "lint", *SYNC_ARGS)
 
     for linter_args in LINTERS:
         session.run("uv", "run", *linter_args)
@@ -108,7 +111,7 @@ def run_linters(session: nox.Session) -> None:
 @nox.session(name="format", python=False)
 def run_formatters(session: nox.Session) -> None:
     """Run code formatters against all files."""
-    session.run_install("uv", "sync", "--frozen", "--quiet", "--group", "format")
+    session.run_install("uv", "sync", "--group", "format", *SYNC_ARGS)
 
     for formatter_args in FORMATTERS:
         session.run("uv", "run", *formatter_args)
