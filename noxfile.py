@@ -8,11 +8,9 @@ import nox
 
 # Control factors for finding pieces of the module
 MODULE_NAME = "module_name"
-TESTS_PATH = "tests"
-COVERAGE_FAIL_UNDER = 50
-DEFAULT_PYTHON_VERSION = None
-PYTHON_MATRIX = ["3.9", "3.10", "3.11", "3.12", "3.13"]
-VENV_BACKEND = "uv"
+COVERAGE_FAIL_UNDER = "100"
+LINT_PATH = "./src"
+TESTS_PATH = "./tests"
 
 # What we allowed to clean (delete)
 CLEANABLE_TARGETS = [
@@ -22,6 +20,7 @@ CLEANABLE_TARGETS = [
     "./.coverage",
     "./.coverage.*",
     "./coverage.json",
+    "./htmlcov",
     "./**/.mypy_cache",
     "./**/.pytest_cache",
     "./**/__pycache__",
@@ -29,67 +28,94 @@ CLEANABLE_TARGETS = [
     "./**/*.pyo",
 ]
 
-
 # Define the default sessions run when `nox` is called on the CLI
-nox.options.sessions = [
-    "version_coverage",
-    "coverage_combine",
-    "mypy",
+nox.options.default_venv_backend = "uv"
+nox.options.sessions = ["lint", "test"]
+
+# All linters are run with `uv run --active`
+# Ordering matters. Formatters should run before static checks.
+LINTERS: list[tuple[str, ...]] = [
+    (
+        "isort",
+        "--verbose",
+        "--force-single-line-imports",
+        "--profile",
+        "black",
+        "--add-import",
+        "from __future__ import annotations",
+        LINT_PATH,
+        TESTS_PATH,
+    ),
+    ("black", "--verbose", LINT_PATH, TESTS_PATH),
+    ("flake8", "--verbose", "--show-source", LINT_PATH, TESTS_PATH),
+    ("mypy", "--pretty", "--no-incremental", "--package", MODULE_NAME),
+    ("mypy", "--pretty", "--no-incremental", TESTS_PATH),
 ]
 
 
-@nox.session(python=PYTHON_MATRIX, venv_backend=VENV_BACKEND)
-def version_coverage(session: nox.Session) -> None:
-    """Run unit tests with coverage saved to partial file."""
-    print_standard_logs(session)
-    uv_run = functools.partial(session.run, "uv", "run", "--active")
+@nox.session(name="dev", python=False)
+def dev_session(session: nox.Session) -> None:
+    """Create a development environment. Optionally: Provide the python version to use."""
+    python_version: list[str] = []
+    if session.posargs:
+        python_version = ["--python", session.posargs[0]]
+
+    session.run("uv", "sync", *python_version, external=True)
+    session.run("uv", "run", "pre-commit", "install", external=True)
+
+
+@nox.session(name="test")
+def run_tests_with_coverage(session: nox.Session) -> None:
+    """Run pytest in isolated environment, display coverage. Extra arguements passed to pytest."""
+    partial = "partial-coverage" in session.posargs
 
     session.run("uv", "sync", "--active", "--no-dev", "--group", "test")
-    uv_run("coverage", "run", "-p", "-m", "pytest", TESTS_PATH)
+
+    coverage = functools.partial(session.run, "uv", "run", "--active", "coverage")
+
+    coverage("erase")
+
+    if partial:
+        session.posargs.remove("partial-coverage")
+        coverage("run", "--parallel-mode", "--module", "pytest", *session.posargs)
+    else:
+        coverage("run", "--module", "pytest", *session.posargs)
+        coverage("report", "--show-missing", f"--fail-under={COVERAGE_FAIL_UNDER}")
+        coverage("html")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
-def coverage_combine(session: nox.Session) -> None:
-    """Combine all coverage partial files and generate JSON report."""
-    print_standard_logs(session)
-    uv_run = functools.partial(session.run, "uv", "run", "--active")
-
+@nox.session(name="combine")
+def combine_coverage(session: nox.Session) -> None:
+    """Combine parallel-mode coverage files and produce reports."""
     session.run("uv", "sync", "--active", "--no-dev", "--group", "test")
-    uv_run("coverage", "combine")
-    uv_run("coverage", "report", "-m", f"--fail-under={COVERAGE_FAIL_UNDER}")
-    uv_run("coverage", "json")
+
+    coverage = functools.partial(session.run, "uv", "run", "--active", "coverage")
+
+    coverage("combine")
+    coverage("report", "--show-missing", f"--fail-under={COVERAGE_FAIL_UNDER}")
+    coverage("html")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
-def mypy(session: nox.Session) -> None:
-    """Run mypy against package and all required dependencies."""
-    print_standard_logs(session)
-    uv_run = functools.partial(session.run, "uv", "run", "--active")
+@nox.session(name="lint")
+def run_linters_and_formatters(session: nox.Session) -> None:
+    """Run code formatters, linters, and type checking against all files."""
+    session.run("uv", "sync", "--active", "--no-dev", "--group", "test", "--group", "lint")
 
-    session.run("uv", "sync", "--active", "--no-dev", "--group", "lint")
-    uv_run("mypy", "-p", MODULE_NAME, "--no-incremental")
-
-
-@nox.session(python=DEFAULT_PYTHON_VERSION, venv_backend=VENV_BACKEND)
-def coverage(session: nox.Session) -> None:
-    """Generate a coverage report. Does not use a venv."""
-    print_standard_logs(session)
-    uv_run = functools.partial(session.run, "uv", "run", "--active")
-
-    session.run("uv", "sync", "--active", "--no-dev", "--group", "test")
-    uv_run("coverage", "erase")
-    uv_run("coverage", "run", "-m", "pytest", TESTS_PATH)
-    uv_run("coverage", "report", "-m")
-    uv_run("coverage", "html")
+    for linter_args in LINTERS:
+        session.run("uv", "run", "--active", *linter_args)
 
 
-@nox.session(python=False, venv_backend=VENV_BACKEND)
-def build(session: nox.Session) -> None:
-    """Generate sdist and wheel."""
+@nox.session(name="build")
+def build_artifacts(session: nox.Session) -> None:
+    """Build a sdist and wheel."""
     session.run("uv", "build")
 
 
-@nox.session(python=False, venv_backend=VENV_BACKEND)
+# update-deps
+# upgrade-deps
+
+
+@nox.session(python=False)
 def clean(session: nox.Session) -> None:
     """Clean cache, .pyc, .pyo, and test/build artifact files from project."""
     count = 0
@@ -102,10 +128,3 @@ def clean(session: nox.Session) -> None:
             count += 1
 
     session.log(f"{count} files cleaned.")
-
-
-def print_standard_logs(session: nox.Session) -> None:
-    """Reusable output for monitoring environment factors."""
-    version = session.run("python", "--version", silent=True)
-    session.log(f"Running from: {session.bin}")
-    session.log(f"Running with: {version}")

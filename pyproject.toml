@@ -25,6 +25,11 @@ dependencies = []
 
 [dependency-groups]
 lint = [
+    "black",
+    "isort",
+    "flake8",
+    "flake8-builtins",
+    "flake8-pep585",
     "mypy",
 ]
 tool = [
@@ -53,7 +58,6 @@ homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
 
 [tool.black]
 line-length = 100
-target-version = ['py39']
 
 [tool.setuptools.package-data]
 "module_name" = ["py.typed"]
