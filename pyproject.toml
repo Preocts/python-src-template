@@ -34,7 +34,7 @@ lint = [
     "flake8-pep585",
     "mypy",
 ]
-test = [
+dev = [
     "pytest",
     "pytest-randomly",
     "coverage",
