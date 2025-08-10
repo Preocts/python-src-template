@@ -71,7 +71,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
         session.posargs.remove("no-config")
         extra = ["--no-config"]
 
-    session.run_install("uv", "sync", "--group", "test", *SYNC_ARGS, *extra)
+    session.run_install("uv", "sync", *SYNC_ARGS, *extra)
 
     coverage = functools.partial(session.run, "uv", "run", *extra, "coverage")
 
@@ -89,7 +89,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
 @nox.session(name="combine", python=False)
 def combine_coverage(session: nox.Session) -> None:
     """Combine parallel-mode coverage files and produce reports."""
-    session.run_install("uv", "sync", "--group", "test", *SYNC_ARGS)
+    session.run_install("uv", "sync", *SYNC_ARGS)
 
     coverage = functools.partial(session.run, "uv", "run", "coverage")
 
@@ -102,7 +102,7 @@ def combine_coverage(session: nox.Session) -> None:
 @nox.session(name="lint", python=False)
 def run_linters(session: nox.Session) -> None:
     """Run code linters, and type checking against all files."""
-    session.run_install("uv", "sync", "--group", "test", "--group", "lint", *SYNC_ARGS)
+    session.run_install("uv", "sync", "--group", "lint", *SYNC_ARGS)
 
     for linter_args in LINTERS:
         session.run("uv", "run", *linter_args)
