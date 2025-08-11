@@ -111,7 +111,7 @@ jobs:
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
 
   linters-and-formatters:
-    name: "linters and formattrs"
+    name: "linters and formatters"
     needs: "settings"
     runs-on: "ubuntu-latest"
     steps:
