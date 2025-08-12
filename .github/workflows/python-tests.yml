@@ -77,7 +77,7 @@ jobs:
 
   coverage-compile:
     name: "coverage compile"
-    needs: "run-tests-and-coverage"
+    needs: ["settings", "run-tests-and-coverage"]
     runs-on: "ubuntu-latest"
     steps:
       - name: "Repo checkout"
@@ -104,11 +104,16 @@ jobs:
       - name: "Compile coverage data"
         run: "uvx nox --session combine"
 
-      - name: "Post summary to step summary."
+      - name: "Post summary to step summary"
         run: |
+          export COVERAGE_REQUIRED=$(<.required-coverage)
           export TOTAL=$(python -c "import json;print(json.load(open('coverage.json'))['totals']['percent_covered_display'])")
           echo "TOTAL=$TOTAL" >> $GITHUB_ENV
+          echo "### Minimum coverage required: ${COVERAGE_REQUIRED}%" >> $GITHUB_STEP_SUMMARY
           echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
+          if [ ${COVERAGE_REQUIRED} -gt $TOTAL ]; then
+            exit 1
+          fi
 
   linters-and-formatters:
     name: "linters and formatters"
