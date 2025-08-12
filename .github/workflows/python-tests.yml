@@ -43,7 +43,7 @@ jobs:
           enable-cache: true
 
       - name: "Run tests and coverage via nox"
-        run: "uvx nox --session test -- partial-coverage no-config"
+        run: "uvx nox --session test -- partial-coverage"
 
       - name: "Save coverage artifact"
         uses: "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
