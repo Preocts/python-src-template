@@ -66,9 +66,6 @@ def run_tests_with_coverage(session: nox.Session) -> None:
     """Run pytest in isolated environment, display coverage. Extra arguements passed to pytest."""
     partial = "partial-coverage" in session.posargs
     extra: list[str] = []
-    if "no-config" in session.posargs:
-        session.posargs.remove("no-config")
-        extra = ["--no-config"]
 
     session.run_install("uv", "sync", *SYNC_ARGS, *extra)
 
