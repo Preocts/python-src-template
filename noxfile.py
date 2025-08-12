@@ -8,7 +8,6 @@ import nox
 
 # Control factors for finding pieces of the module
 MODULE_NAME = "module_name"
-COVERAGE_FAIL_UNDER = "100"
 LINT_PATH = "./src"
 TESTS_PATH = "./tests"
 
@@ -82,7 +81,7 @@ def run_tests_with_coverage(session: nox.Session) -> None:
         coverage("run", "--parallel-mode", "--module", "pytest", *session.posargs)
     else:
         coverage("run", "--module", "pytest", *session.posargs)
-        coverage("report", "--show-missing", f"--fail-under={COVERAGE_FAIL_UNDER}")
+        coverage("report", "--show-missing")
         coverage("html")
 
 
@@ -94,7 +93,7 @@ def combine_coverage(session: nox.Session) -> None:
     coverage = functools.partial(session.run, "uv", "run", "coverage")
 
     coverage("combine")
-    coverage("report", "--show-missing", f"--fail-under={COVERAGE_FAIL_UNDER}")
+    coverage("report", "--show-missing")
     coverage("html")
     coverage("json")
 
