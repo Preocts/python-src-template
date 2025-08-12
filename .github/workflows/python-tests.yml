@@ -1,6 +1,5 @@
 name: "python tests and coverage"
 # Uses:
-# https://github.com/actions/setup-python : v5.6.0 a26af69be951a213d495a4c3e4e4022e16d87065
 # https://github.com/actions/checkout : v4.2.2 11bd71901bbe5b1630ceea73d27597364c9af683
 # https://github.com/actions/download-artifact : v5.0.0 634f93cb2916e3fdff6788551b99b062d0335ce0
 # https://github.com/actions/upload-artifact : v4.6.2 ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -39,11 +38,6 @@ jobs:
       - name: "Repo checkout"
         uses: "actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683"
 
-      - name: "Set up Python ${{ matrix.python-version }}"
-        uses: "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065"
-        with:
-          allow-prereleases: true
-
       - name: "Install the latest version of uv"
         uses: "astral-sh/setup-uv@e92bafb6253dcd438e0484186d7669ea7a8ca1cc"
         with:
@@ -69,9 +63,6 @@ jobs:
     steps:
       - name: "Repo checkout"
         uses: "actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683"
-
-      - name: "Set up Python"
-        uses: "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065"
 
       - name: "Install the latest version of uv"
         uses: "astral-sh/setup-uv@e92bafb6253dcd438e0484186d7669ea7a8ca1cc"
@@ -105,9 +96,6 @@ jobs:
     steps:
       - name: "Repo checkout"
         uses: "actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683"
-
-      - name: "Set up Python"
-        uses: "actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065"
 
       - name: "Install the latest version of uv"
         uses: "astral-sh/setup-uv@e92bafb6253dcd438e0484186d7669ea7a8ca1cc"
