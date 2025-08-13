@@ -100,3 +100,10 @@ jobs:
 
       - name: "Run linters and formatters"
         run: "uvx nox --session format lint"
+
+      - name: "Check for any unstaged changes"
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "#### Format or Lint changes found. Please run 'uvx nox' locally and push the changes." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
