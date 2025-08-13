@@ -7,8 +7,6 @@ name: "python tests and coverage"
 
 on:
   pull_request:
-    branches:
-      - "main"
   push:
     branches:
       - "main"
