@@ -69,8 +69,7 @@ warn_unused_ignores = false
 
 [tool.coverage.run]
 branch = true
-source = ["tests"]
-source_pkgs = ["module_name"]
+source = ["src", "tests"]
 
 [tool.coverage.paths]
 source = ["src/", "*/site-packages", "*/src"]
