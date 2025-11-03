@@ -193,18 +193,6 @@ wheels = [
 ]
 
 [[package]]
-name = "flake8-builtins"
-version = "2.5.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "flake8" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/7a/33/fdfe44695094124e0e518fdd4fed0c7a34a5920de7063babd4b2bbdc8a7f/flake8_builtins-2.5.0.tar.gz", hash = "sha256:bdaa3dd823e4f5308c5e712d19fa5f69daa52781ea874f5ea9c3637bcf56faa6", size = 16499, upload-time = "2024-04-09T10:57:33.399Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/14/33/e423d57dbe2a2ad664d166aeceac58b469510d6c763fada32afd47ffc9ef/flake8_builtins-2.5.0-py3-none-any.whl", hash = "sha256:8cac7c52c6f0708c0902b46b385bc7e368a9068965083796f1431c0d2e6550cf", size = 11964, upload-time = "2024-04-09T10:57:31.271Z" },
-]
-
-[[package]]
 name = "flake8-pep585"
 version = "0.1.7"
 source = { registry = "https://pypi.org/simple" }
@@ -305,7 +293,6 @@ format = [
 ]
 lint = [
     { name = "flake8" },
-    { name = "flake8-builtins" },
     { name = "flake8-pep585" },
     { name = "mypy" },
 ]
@@ -325,7 +312,6 @@ format = [
 ]
 lint = [
     { name = "flake8" },
-    { name = "flake8-builtins" },
     { name = "flake8-pep585" },
     { name = "mypy" },
 ]
