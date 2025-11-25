@@ -68,11 +68,6 @@ warn_unused_ignores = false
 
 [tool.coverage.run]
 branch = true
-source = ["src", "tests"]
-
-[tool.coverage.paths]
-source = ["src/", "*/site-packages", "*/src"]
-test = ["tests/", "*/tests"]
 
 [tool.coverage.report]
 exclude_lines = [
