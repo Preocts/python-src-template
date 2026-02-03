@@ -13,6 +13,6 @@ repos:
 
   # Ensure the uv.lock file has been updated
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.9.21
+    rev: 0.9.28
     hooks:
       - id: uv-lock
