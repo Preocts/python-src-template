@@ -68,6 +68,8 @@ warn_unused_ignores = false
 
 [tool.coverage.run]
 branch = true
+source = ["src/module_name", "tests"]
+
 
 [tool.coverage.report]
 exclude_lines = [
