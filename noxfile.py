@@ -134,22 +134,6 @@ def validate_lock_file(session: nox.Session) -> None:
     session.run("uv", "lock")
 
 
-@nox.session(name="upgrade", python=False)
-def upgrade_dependencies(session: nox.Session) -> None:
-    """Upgrade all versions of all dependencies."""
-    session.run("uv", "lock", "--upgrade")
-
-
-@nox.session(name="upgrade-package", python=False)
-def upgrade_specific_package(session: nox.Session) -> None:
-    """Upgrade specific package name given in extra args."""
-    if not session.posargs:
-        session.log("No package name provided, nothing to do.")
-
-    else:
-        session.run("uv", "lock", "--upgrade-package", *session.posargs)
-
-
 @nox.session(name="clean", python=False)
 def clean_project_files(session: nox.Session) -> None:
     """Clean cache, .pyc, .pyo, and build artifact files from project."""
