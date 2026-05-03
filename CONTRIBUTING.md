@@ -105,17 +105,14 @@ uvx nox -s build
 
 ## Updating dependencies
 
-New dependencies should be added with the uv cli command `uv add
-[package-name]`. This will ensure the `uv.lock` file is updated as well.
-
-### Upgrade an existing package to latest
+Use the `uv` cli to add, update, and remove dependencies from the project.
 
 ```console
-uvx nox -s upgrade-package -- package-name
-```
+uv add [package name]
 
-### Upgrade all packages to latest
+uv remove [package name]
 
-```console
-uvx nox -s upgrade
+uv lock --upgrade
+
+uv lock --upgrade-package [package name]
 ```
