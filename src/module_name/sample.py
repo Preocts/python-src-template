@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import httpxyz
+import requests
 
 
 def main() -> bool:
@@ -18,4 +18,4 @@ def squared(value: int) -> int:
 
 def health_check() -> bool:
     """Returns true when github.com is accessible."""
-    return httpxyz.get("https://github.com").is_success
+    return requests.get("https://github.com").ok
