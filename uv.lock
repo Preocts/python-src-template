@@ -435,6 +435,7 @@ wheels = [
 
 [[package]]
 name = "module-name"
+version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "requests" },
