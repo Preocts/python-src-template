@@ -12,16 +12,26 @@ on:
       - "main"
 
 jobs:
+  set-statics:
+    name: "Set static values"
+    runs-on: "ubuntu-slim"
+    outputs:
+      linux-version: "ubuntu-26.04"
+      uv-version: "0.11.23"
+
+    steps:
+      - name: "Set Statics"
+        run: echo ""
+
   run-tests-and-coverage:
     name: "Run nox for tests and coverage"
+    needs: "set-statics"
     runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
       matrix:
         os:
-          # - "macos-latest"
-          # - "windows-latest"
-          - "ubuntu-latest"
+          - "${{ needs.set-statics.outputs.linux-version }}"
         python-version:
           - "3.11"
           - "3.12"
@@ -36,7 +46,7 @@ jobs:
       - name: "Install the latest version of uv"
         uses: "astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b"
         with:
-          version: "latest"
+          version: "${{ needs.set-statics.outputs.uv-version }}"
           python-version: "${{ matrix.python-version }}"
           enable-cache: true
 
@@ -53,8 +63,8 @@ jobs:
 
   coverage-compile:
     name: "coverage compile"
-    needs: "run-tests-and-coverage"
-    runs-on: "ubuntu-latest"
+    needs: ["set-statics", "run-tests-and-coverage"]
+    runs-on: "${{ needs.set-statics.outputs.linux-version }}"
     steps:
       - name: "Repo checkout"
         uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd"
@@ -62,7 +72,7 @@ jobs:
       - name: "Install the latest version of uv"
         uses: "astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b"
         with:
-          version: "latest"
+          version: "${{ needs.set-statics.outputs.uv-version }}"
           enable-cache: true
 
       - name: "Download coverage artifacts"
@@ -81,7 +91,8 @@ jobs:
 
   linters-and-formatters:
     name: "linters and formatters"
-    runs-on: "ubuntu-latest"
+    needs: "set-statics"
+    runs-on: "${{ needs.set-statics.outputs.linux-version }}"
     steps:
       - name: "Repo checkout"
         uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd"
@@ -89,7 +100,7 @@ jobs:
       - name: "Install the latest version of uv"
         uses: "astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b"
         with:
-          version: "latest"
+          version: "${{ needs.set-statics.outputs.uv-version }}"
           enable-cache: true
 
       - name: "Run linters and formatters"
