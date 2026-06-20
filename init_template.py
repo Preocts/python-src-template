@@ -30,7 +30,6 @@ class ProjectData:
     name: str = "module-name"
     module: str = "module_name"
     description: str = "Module Description"
-    author_email: str = "yourname@email.invalid"
     author_name: str = "[YOUR NAME]"
     org_name: str = "[ORG NAME]"
     repo_name: str = "[REPO NAME]"
