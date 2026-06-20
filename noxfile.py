@@ -68,7 +68,7 @@ UV_ARGS = [
 @nox.session(name="dev", python=False)
 def create_dev_environment(session: nox.Session) -> None:
     """Create a development environment."""
-    session.run_install("uv", "sync")
+    session.run_install("uv", "sync", "--frozen")
 
 
 @nox.session(name="test", python=PYTHON_VERSION)
@@ -131,7 +131,7 @@ def build_artifacts(session: nox.Session) -> None:
 @nox.session(name="lock", python=False)
 def validate_lock_file(session: nox.Session) -> None:
     """Ensure the uv.lock file exists and is aligned with dependencies."""
-    session.run("uv", "lock")
+    session.run("uv", "lock", "--check")
 
 
 @nox.session(name="clean", python=False)

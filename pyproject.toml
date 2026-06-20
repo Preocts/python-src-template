@@ -42,6 +42,7 @@ homepage = "https://github.com/[ORG NAME]/[REPO NAME]"
 
 [tool.black]
 line-length = 100
+target-version = ["py311"]
 
 [tool.mypy]
 check_untyped_defs = true
